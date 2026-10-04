@@ -1,0 +1,141 @@
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created, ready for development
+#   - in-progress: Developer actively working on implementation
+#   - review: Implementation complete, ready for review
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# Action Item Status:
+#   - open: Committed during a retrospective, not yet addressed
+#   - in-progress: Actively being worked on
+#   - done: Completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when its first story starts (via build's sprint sync)
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates the next story after the previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+# - Retrospective appends its action items to action_items; the status view surfaces open ones
+
+generated: 10-04-2026 10:13
+last_updated: 10-04-2026 10:13
+project: toolbox
+project_key: TB
+tracking_system: file-system
+story_location: "_bmad-output/implementation-artifacts"
+
+development_status:
+  epic-1: backlog
+  1-1-cargo-workspace-initialization-hexagonal-crate-boundaries: backlog
+  1-2-unified-multi-call-binary-entry-point-mode-dispatcher: backlog
+  1-3-standardized-cli-json-envelope-error-taxonomy: backlog
+  1-4-base-slint-desktop-window-shell-dark-mode-theme: backlog
+  1-5-linux-desktop-integration-application-registration: backlog
+  epic-1-retrospective: optional
+
+  epic-2: backlog
+  2-1-image-engine-transcoding-hardware-simd-resize-in-tb-core: backlog
+  2-2-cli-image-convert-subcommand-tb-image-convert: backlog
+  2-3-slint-gui-drag-and-drop-view-live-copy-cli-command-parity: backlog
+  2-4-rayon-work-stealing-multi-file-batch-conversion: backlog
+  epic-2-retrospective: optional
+
+  epic-3: backlog
+  3-1-lossless-png-oxipng-jpeg-optimization-engine-in-tb-core: backlog
+  3-2-cli-image-compress-subcommand-tb-image-compress: backlog
+  3-3-slint-gui-compression-view-with-before-after-savings-badge: backlog
+  epic-3-retrospective: optional
+
+  epic-4: backlog
+  4-1-pdf-optimization-font-image-downsampling-in-tb-core: backlog
+  4-2-cli-pdf-compress-subcommand-tb-pdf-compress: backlog
+  4-3-slint-gui-pdf-compression-view-live-preset-selector: backlog
+  epic-4-retrospective: optional
+
+  epic-5: backlog
+  5-1-multi-document-pdf-merge-page-extraction-engine-in-tb-core: backlog
+  5-2-cli-pdf-merge-split-subcommands-tb-pdf-merge-tb-pdf-split: backlog
+  5-3-slint-gui-drag-and-drop-page-tile-visualizer-reorder: backlog
+  epic-5-retrospective: optional
+
+  epic-6: backlog
+  6-1-aes-256-pdf-encryption-decryption-engine-in-tb-core: backlog
+  6-2-pre-flight-password-detection-modal-1-click-repair-in-slint: backlog
+  6-3-cli-pdf-protect-unlock-subcommands-tb-pdf-protect-tb-pdf-unl: backlog
+  epic-6-retrospective: optional
+
+  epic-7: backlog
+  7-1-multi-format-archive-extraction-zip-creation-engine-in-tb-co: backlog
+  7-2-cli-archive-subcommands-tb-archive-extract-tb-archive-create: backlog
+  7-3-slint-gui-archive-dropzone-password-modal: backlog
+  epic-7-retrospective: optional
+
+  epic-8: backlog
+  8-1-high-performance-json-formatter-minifier-in-tb-core: backlog
+  8-2-cli-json-subcommand-with-unix-pipe-support-tb-dev-json: backlog
+  8-3-slint-gui-code-editor-view-with-syntax-error-pointers: backlog
+  epic-8-retrospective: optional
+
+  epic-9: backlog
+  9-1-offline-jwt-token-decoder-claim-parser-signature-verificatio: backlog
+  9-2-cli-jwt-decode-subcommand-tb-dev-jwt: backlog
+  9-3-slint-gui-jwt-token-inspector-view-with-live-expiration-coun: backlog
+  epic-9-retrospective: optional
+
+  epic-10: backlog
+  10-1-simd-accelerated-multi-hash-engine-with-zero-copy-memory-map: backlog
+  10-2-cli-hashing-checksum-verification-subcommand-tb-dev-hash: backlog
+  10-3-slint-gui-drag-and-drop-hash-calculator-checksum-matcher: backlog
+  epic-10-retrospective: optional
+
+  epic-11: backlog
+  11-1-local-id-generation-data-encoding-in-tb-core: backlog
+  11-2-cli-subcommands-for-ids-encodings-tb-dev-uuid-tb-dev-base64: backlog
+  11-3-slint-gui-multi-card-utility-view-live-copy: backlog
+  epic-11-retrospective: optional
+
+  epic-12: backlog
+  12-1-text-diffing-regex-matching-line-processing-in-tb-core: backlog
+  12-2-cli-subcommands-for-diff-regex-text-processing-tb-dev-diff-t: backlog
+  12-3-slint-gui-visual-diff-viewer-interactive-regex-tester: backlog
+  epic-12-retrospective: optional
+
+  epic-13: backlog
+  13-1-global-desktop-hotkey-listener-window-summon-super-shift-t: backlog
+  13-2-sub-16ms-fuzzy-tool-search-command-palette-in-slint-gui: backlog
+  13-3-proactive-focus-clipboard-inspection-1-click-action-chips: backlog
+  epic-13-retrospective: optional
+
+  epic-14: backlog
+  14-1-3-tier-dependency-resolution-zero-sudo-verifying-downloader: backlog
+  14-2-video-transcoding-engine-in-tb-core: backlog
+  14-3-cli-video-subcommand-tb-video-slint-gui-transcoder-view: backlog
+  epic-14-retrospective: optional
+
+  epic-15: backlog
+  15-1-engine-disk-usage-tracking-registry-management-in-tb-core-tb: backlog
+  15-2-cli-storage-management-tb-storage-slint-gui-dashboard-view: backlog
+  15-3-offline-air-gap-verification-engine-audit-badge-tb-doctor-ne: backlog
+  epic-15-retrospective: optional
+
+  epic-16: backlog
+  16-1-external-subcommand-runner-tb-ext-in-tb-ext: backlog
+  16-2-authenticated-unix-domain-socket-uds-host-ipc-server: backlog
+  16-3-embedded-slint-extensionviewport-container-lifecycle-managem: backlog
+  16-4-cli-extension-installer-manifest-security-review-tb-ext-inst: backlog
+  epic-16-retrospective: optional
+
+# Action items committed during retrospectives
+action_items: []
