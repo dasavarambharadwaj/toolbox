@@ -38,7 +38,7 @@ story_location: "_bmad-output/implementation-artifacts"
 
 development_status:
   epic-1: in-progress
-  1-1-cargo-workspace-initialization-hexagonal-crate-boundaries: review
+  1-1-cargo-workspace-initialization-hexagonal-crate-boundaries: done
   1-2-unified-multi-call-binary-entry-point-mode-dispatcher: backlog
   1-3-standardized-cli-json-envelope-error-taxonomy: backlog
   1-4-base-slint-desktop-window-shell-dark-mode-theme: backlog
