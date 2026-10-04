@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toolbox — Boxy Monochrome Color Themes</title>
+  <style>
+    /*
+      ==========================================================================
+      TOOLBOX MONOCHROME THEME COMPARISON MATRIX
+      Design Target: Slint Desktop Application (0px border-radius, strict boxy)
+      Register: Ultra-minimalist, high-contrast, technical monochrome
+      ==========================================================================
+
+      THEME 1: ZINC RAZOR (Linear / Vercel Precision Dark)
+      --canvas:        #09090B;
+      --surface:       #121215;
+      --surface-sub:   #18181B;
+      --border:        #27272A;
+      --border-focus:  #FAFAFA;
+      --text:          #FAFAFA;
+      --text-muted:    #A1A1AA;
+      --action-pri-bg: #FAFAFA;
+      --action-pri-fg: #09090B;
+      --action-sec-bg: transparent;
+      --action-sec-fg: #E4E4E7;
+      --action-sec-bd: #27272A;
+
+      THEME 2: PURE BRUTALIST (Teenage Engineering Hardware)
+      --canvas:        #000000;
+      --surface:       #0C0C0C;
+      --surface-sub:   #000000;
+      --border:        #333333;
+      --border-focus:  #FFFFFF;
+      --text:          #FFFFFF;
+      --text-muted:    #888888;
+      --action-pri-bg: #FFFFFF;
+      --action-pri-fg: #000000;
+      --action-sec-bg: #000000;
+      --action-sec-fg: #FFFFFF;
+      --action-sec-bd: #FFFFFF;
+
+      THEME 3: INDUSTRIAL GRAPHITE (Technical CAD / Slate Engineering)
+      --canvas:        #141618;
+      --surface:       #1E2124;
+      --surface-sub:   #171A1D;
+      --border:        #32383E;
+      --border-focus:  #E2E8F0;
+      --text:          #E2E8F0;
+      --text-muted:    #8B949E;
+      --action-pri-bg: #E2E8F0;
+      --action-pri-fg: #141618;
+      --action-sec-bg: #1E2124;
+      --action-sec-fg: #C9D1D9;
+      --action-sec-bd: #32383E;
+
+      THEME 4: HIGH-AFFORDANCE CHARCOAL (Utility & High Legibility)
+      --canvas:        #121316;
+      --surface:       #1B1C20;
+      --surface-sub:   #141519;
+      --border:        #2E3138;
+      --border-focus:  #F0F2F5;
+      --text:          #F0F2F5;
+      --text-muted:    #9DA3AE;
+      --action-pri-bg: #F0F2F5;
+      --action-pri-fg: #121316;
+      --action-sec-bg: #24262C;
+      --action-sec-fg: #D0D5DD;
+      --action-sec-bd: #3E434D;
+    */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0px !important; /* Strict 0px enforcement */
+    }
+
+    body {
+      background-color: #070708;
+      color: #E4E4E7;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      line-height: 1.5;
+      padding: 32px 24px 64px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header.matrix-header {
+      max-width: 1680px;
+      margin: 0 auto 32px auto;
+      border-bottom: 1px solid #27272A;
+      padding-bottom: 20px;
+    }
+
+    .matrix-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .matrix-tag {
+      background: #18181B;
+      border: 1px solid #3F3F46;
+      color: #A1A1AA;
+      font-size: 10px;
+      padding: 2px 8px;
+      letter-spacing: 0.08em;
+    }
+
+    .matrix-subtitle {
+      color: #71717A;
+      font-size: 12px;
+      margin-top: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    .themes-grid {
+      max-width: 1680px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 24px;
+    }
+
+    /* THEME CARD CONTAINER */
+    .theme-card {
+      border: 1px solid #27272A;
+      background: #09090B;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .theme-meta {
+      border-bottom: 1px solid #27272A;
+      padding-bottom: 16px;
+    }
+
+    .theme-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      margin-bottom: 8px;
+    }
+
+    .theme-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: 0.05em;
+    }
+
+    .theme-register {
+      font-size: 11px;
+      color: #888888;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* PALETTE SWATCHES */
+    .palette-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .palette-label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #71717A;
+    }
+
+    .swatches-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    .swatch-item {
+      border: 1px solid #27272A;
+      padding: 6px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 9px;
+      text-align: center;
+    }
+
+    .swatch-color {
+      height: 24px;
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .swatch-hex {
+      font-size: 9px;
+      letter-spacing: -0.02em;
+    }
+
+    .swatch-role {
+      font-size: 8px;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    /* ==========================================================================
+       THEME SPECIFIC STYLES FOR REALISTIC MINI-UI
+       ========================================================================== */
+
+    /* 1. ZINC RAZOR */
+    .theme-zinc-razor .theme-badge {
+      background: #18181B;
+      color: #FAFAFA;
+      border: 1px solid #3F3F46;
+    }
+    .theme-zinc-razor .mini-app-canvas {
+      background-color: #09090B;
+      border: 1px solid #27272A;
+      padding: 16px;
+      color: #FAFAFA;
+    }
+    .theme-zinc-razor .ui-header-bar {
+      border-bottom: 1px solid #27272A;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .theme-zinc-razor .ui-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #FAFAFA;
+    }
+    .theme-zinc-razor .ui-chip {
+      background: #18181B;
+      border: 1px solid #27272A;
+      color: #A1A1AA;
+      font-size: 9px;
+      padding: 3px 6px;
+      letter-spacing: 0.06em;
+    }
+    .theme-zinc-razor .ui-panel {
+      background: #121215;
+      border: 1px solid #27272A;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .theme-zinc-razor .ui-field-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #A1A1AA;
+      margin-bottom: 4px;
+    }
+    .theme-zinc-razor .ui-input {
+      background: #18181B;
+      border: 1px solid #27272A;
+      color: #FAFAFA;
+      padding: 8px 10px;
+      font-family: inherit;
+      font-size: 12px;
+      width: 100%;
+      outline: none;
+    }
+    .theme-zinc-razor .ui-input:focus,
+    .theme-zinc-razor .ui-input.is-active {
+      border-color: #FAFAFA;
+    }
+    .theme-zinc-razor .ui-dropzone {
+      background: #0E0E11;
+      border: 1px dashed #27272A;
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #FAFAFA;
+      font-size: 11px;
+    }
+    .theme-zinc-razor .btn-pri {
+      background: #FAFAFA;
+      color: #09090B;
+      border: 1px solid #FAFAFA;
+      font-weight: 700;
+      padding: 8px 14px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    .theme-zinc-razor .btn-sec {
+      background: transparent;
+      color: #E4E4E7;
+      border: 1px solid #27272A;
+      padding: 8px 14px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    /* 2. PURE BRUTALIST */
+    .theme-brutalist .theme-badge {
+      background: #FFFFFF;
+      color: #000000;
+      border: 1px solid #FFFFFF;
+    }
+    .theme-brutalist .mini-app-canvas {
+      background-color: #000000;
+      border: 1px solid #444444;
+      padding: 16px;
+      color: #FFFFFF;
+    }
+    .theme-brutalist .ui-header-bar {
+      border-bottom: 1px solid #444444;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .theme-brutalist .ui-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #FFFFFF;
+    }
+    .theme-brutalist .ui-chip {
+      background: #000000;
+      border: 1px solid #FFFFFF;
+      color: #FFFFFF;
+      font-size: 9px;
+      padding: 3px 6px;
+      letter-spacing: 0.06em;
+    }
+    .theme-brutalist .ui-panel {
+      background: #111111;
+      border: 1px solid #444444;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .theme-brutalist .ui-field-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888888;
+      margin-bottom: 4px;
+    }
+    .theme-brutalist .ui-input {
+      background: #000000;
+      border: 1px solid #444444;
+      color: #FFFFFF;
+      padding: 8px 10px;
+      font-family: inherit;
+      font-size: 12px;
+      width: 100%;
+      outline: none;
+    }
+    .theme-brutalist .ui-input:focus,
+    .theme-brutalist .ui-input.is-active {
+      border-color: #FFFFFF;
+    }
+    .theme-brutalist .ui-dropzone {
+      background: #000000;
+      border: 1px solid #FFFFFF;
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #FFFFFF;
+      font-size: 11px;
+    }
+    .theme-brutalist .btn-pri {
+      background: #FFFFFF;
+      color: #000000;
+      border: 1px solid #FFFFFF;
+      font-weight: 700;
+      padding: 8px 14px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    .theme-brutalist .btn-sec {
+      background: #000000;
+      color: #FFFFFF;
+      border: 1px solid #FFFFFF;
+      padding: 8px 14px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    /* 3. INDUSTRIAL GRAPHITE */
+    .theme-graphite .theme-badge {
+      background: #1E2124;
+      color: #E2E8F0;
+      border: 1px solid #32383E;
+    }
+    .theme-graphite .mini-app-canvas {
+      background-color: #141618;
+      border: 1px solid #32383E;
+      padding: 16px;
+      color: #E2E8F0;
+    }
+    .theme-graphite .ui-header-bar {
+      border-bottom: 1px solid #32383E;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .theme-graphite .ui-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #E2E8F0;
+    }
+    .theme-graphite .ui-chip {
+      background: #171A1D;
+      border: 1px solid #32383E;
+      color: #8B949E;
+      font-size: 9px;
+      padding: 3px 6px;
+      letter-spacing: 0.06em;
+    }
+    .theme-graphite .ui-panel {
+      background: #1E2124;
+      border: 1px solid #32383E;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .theme-graphite .ui-field-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #8B949E;
+      margin-bottom: 4px;
+    }
+    .theme-graphite .ui-input {
+      background: #171A1D;
+      border: 1px solid #32383E;
+      color: #E2E8F0;
+      padding: 8px 10px;
+      font-family: inherit;
+      font-size: 12px;
+      width: 100%;
+      outline: none;
+    }
+    .theme-graphite .ui-input:focus,
+    .theme-graphite .ui-input.is-active {
+      border-color: #8B949E;
+    }
+    .theme-graphite .ui-dropzone {
+      background: #171A1D;
+      border: 1px dashed #32383E;
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #E2E8F0;
+      font-size: 11px;
+    }
+    .theme-graphite .btn-pri {
+      background: #E2E8F0;
+      color: #141618;
+      border: 1px solid #E2E8F0;
+      font-weight: 700;
+      padding: 8px 14px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    .theme-graphite .btn-sec {
+      background: #1E2124;
+      color: #C9D1D9;
+      border: 1px solid #32383E;
+      padding: 8px 14px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    /* 4. HIGH-AFFORDANCE CHARCOAL */
+    .theme-charcoal .theme-badge {
+      background: #24262C;
+      color: #F0F2F5;
+      border: 1px solid #2E3138;
+    }
+    .theme-charcoal .mini-app-canvas {
+      background-color: #121316;
+      border: 1px solid #2E3138;
+      padding: 16px;
+      color: #F0F2F5;
+    }
+    .theme-charcoal .ui-header-bar {
+      border-bottom: 1px solid #2E3138;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .theme-charcoal .ui-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #F0F2F5;
+    }
+    .theme-charcoal .ui-chip {
+      background: #24262C;
+      border: 1px solid #2E3138;
+      color: #9DA3AE;
+      font-size: 9px;
+      padding: 3px 6px;
+      letter-spacing: 0.06em;
+    }
+    .theme-charcoal .ui-panel {
+      background: #1B1C20;
+      border: 1px solid #2E3138;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .theme-charcoal .ui-field-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9DA3AE;
+      margin-bottom: 4px;
+    }
+    .theme-charcoal .ui-input {
+      background: #141519;
+      border: 1px solid #2E3138;
+      color: #F0F2F5;
+      padding: 8px 10px;
+      font-family: inherit;
+      font-size: 12px;
+      width: 100%;
+      outline: none;
+    }
+    .theme-charcoal .ui-input:focus,
+    .theme-charcoal .ui-input.is-active {
+      border-color: #D0D5DD;
+    }
+    .theme-charcoal .ui-dropzone {
+      background: #141519;
+      border: 1px dashed #2E3138;
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #F0F2F5;
+      font-size: 11px;
+    }
+    .theme-charcoal .btn-pri {
+      background: #F0F2F5;
+      color: #121316;
+      border: 1px solid #F0F2F5;
+      font-weight: 700;
+      padding: 8px 14px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    .theme-charcoal .btn-sec {
+      background: #24262C;
+      color: #D0D5DD;
+      border: 1px solid #3E434D;
+      padding: 8px 14px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    /* Common layout helpers inside mini-app */
+    .ui-actions-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .ui-browse-btn {
+      font-size: 10px;
+      padding: 2px 6px;
+      text-transform: uppercase;
+      opacity: 0.8;
+      border: 1px solid currentColor;
+      display: inline-block;
+    }
+    .ui-status-bar {
+      font-size: 9px;
+      opacity: 0.65;
+      display: flex;
+      justify-content: space-between;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="matrix-header">
+    <div class="matrix-title">
+      <span>TOOLBOX // MONOCHROME PALETTE MATRIX</span>
+      <span class="matrix-tag">SLINTCN COMPLIANT // 0PX RADIUS</span>
+    </div>
+    <div class="matrix-subtitle">
+      Evaluation matrix for desktop developer tools: high contrast, zero border radius, crisp 1px division, no gradients.
+    </div>
+  </header>
+
+  <main class="themes-grid">
+
+    <!-- ====================================================================
+         THEME 1: ZINC RAZOR
+         ==================================================================== -->
+    <article class="theme-card theme-zinc-razor">
+      <div class="theme-meta">
+        <span class="theme-badge">Option 01</span>
+        <h2 class="theme-name">Zinc Razor</h2>
+        <p class="theme-register">Modern obsidian darkroom precision (Linear / Vercel dark). Deep zinc hues with razor-sharp neutral contrast.</p>
+      </div>
+
+      <div class="palette-section">
+        <div class="palette-label">Semantic Tokens</div>
+        <div class="swatches-row">
+          <div class="swatch-item" style="background:#09090B; color:#FAFAFA;">
+            <div class="swatch-color" style="background:#09090B;"></div>
+            <span class="swatch-hex">#09090B</span>
+            <span class="swatch-role">Canvas</span>
+          </div>
+          <div class="swatch-item" style="background:#121215; color:#FAFAFA;">
+            <div class="swatch-color" style="background:#121215;"></div>
+            <span class="swatch-hex">#121215</span>
+            <span class="swatch-role">Card</span>
+          </div>
+          <div class="swatch-item" style="background:#18181B; color:#FAFAFA;">
+            <div class="swatch-color" style="background:#27272A;"></div>
+            <span class="swatch-hex">#27272A</span>
+            <span class="swatch-role">Border</span>
+          </div>
+          <div class="swatch-item" style="background:#18181B; color:#A1A1AA;">
+            <div class="swatch-color" style="background:#A1A1AA;"></div>
+            <span class="swatch-hex">#A1A1AA</span>
+            <span class="swatch-role">Muted</span>
+          </div>
+          <div class="swatch-item" style="background:#18181B; color:#FAFAFA;">
+            <div class="swatch-color" style="background:#FAFAFA;"></div>
+            <span class="swatch-hex">#FAFAFA</span>
+            <span class="swatch-role">Action</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-app-canvas">
+        <div class="ui-header-bar">
+          <span class="ui-title">IMAGE SUITE // RESIZE & OPTIMIZE</span>
+          <span class="ui-chip">AIR-GAPPED // OFFLINE</span>
+        </div>
+
+        <div class="ui-panel">
+          <div>
+            <div class="ui-field-label">Quality Preset</div>
+            <input type="text" class="ui-input is-active" value="85%" readonly />
+          </div>
+
+          <div>
+            <div class="ui-field-label">Input File</div>
+            <div class="ui-dropzone">
+              <span>/home/dev/hero.png</span>
+              <span class="ui-browse-btn">Browse</span>
+            </div>
+          </div>
+
+          <div class="ui-actions-row">
+            <button class="btn-pri">Compress Image</button>
+            <button class="btn-sec">Copy CLI</button>
+          </div>
+
+          <div class="ui-status-bar">
+            <span>TARGET: WEBP</span>
+            <span>RATIO: ~68% SAVINGS</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         THEME 2: PURE BRUTALIST
+         ==================================================================== -->
+    <article class="theme-card theme-brutalist">
+      <div class="theme-meta">
+        <span class="theme-badge">Option 02</span>
+        <h2 class="theme-name">Pure Brutalist</h2>
+        <p class="theme-register">Tactile hardware instrument (Teenage Engineering style). Pitch black canvas, stark white wireframe boundaries and intense focus.</p>
+      </div>
+
+      <div class="palette-section">
+        <div class="palette-label">Semantic Tokens</div>
+        <div class="swatches-row">
+          <div class="swatch-item" style="background:#000000; color:#FFFFFF;">
+            <div class="swatch-color" style="background:#000000;"></div>
+            <span class="swatch-hex">#000000</span>
+            <span class="swatch-role">Canvas</span>
+          </div>
+          <div class="swatch-item" style="background:#111111; color:#FFFFFF;">
+            <div class="swatch-color" style="background:#111111;"></div>
+            <span class="swatch-hex">#111111</span>
+            <span class="swatch-role">Card</span>
+          </div>
+          <div class="swatch-item" style="background:#111111; color:#FFFFFF;">
+            <div class="swatch-color" style="background:#444444;"></div>
+            <span class="swatch-hex">#444444</span>
+            <span class="swatch-role">Border</span>
+          </div>
+          <div class="swatch-item" style="background:#111111; color:#888888;">
+            <div class="swatch-color" style="background:#888888;"></div>
+            <span class="swatch-hex">#888888</span>
+            <span class="swatch-role">Muted</span>
+          </div>
+          <div class="swatch-item" style="background:#111111; color:#FFFFFF;">
+            <div class="swatch-color" style="background:#FFFFFF;"></div>
+            <span class="swatch-hex">#FFFFFF</span>
+            <span class="swatch-role">Action</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-app-canvas">
+        <div class="ui-header-bar">
+          <span class="ui-title">IMAGE SUITE // RESIZE & OPTIMIZE</span>
+          <span class="ui-chip">AIR-GAPPED // OFFLINE</span>
+        </div>
+
+        <div class="ui-panel">
+          <div>
+            <div class="ui-field-label">Quality Preset</div>
+            <input type="text" class="ui-input is-active" value="85%" readonly />
+          </div>
+
+          <div>
+            <div class="ui-field-label">Input File</div>
+            <div class="ui-dropzone">
+              <span>/home/dev/hero.png</span>
+              <span class="ui-browse-btn">Browse</span>
+            </div>
+          </div>
+
+          <div class="ui-actions-row">
+            <button class="btn-pri">Compress Image</button>
+            <button class="btn-sec">Copy CLI</button>
+          </div>
+
+          <div class="ui-status-bar">
+            <span>TARGET: WEBP</span>
+            <span>RATIO: ~68% SAVINGS</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         THEME 3: INDUSTRIAL GRAPHITE
+         ==================================================================== -->
+    <article class="theme-card theme-graphite">
+      <div class="theme-meta">
+        <span class="theme-badge">Option 03</span>
+        <h2 class="theme-name">Industrial Graphite</h2>
+        <p class="theme-register">Technical CAD / engineering workstation. Deep cold slate canvas with surgical steel borders and calm silver typography.</p>
+      </div>
+
+      <div class="palette-section">
+        <div class="palette-label">Semantic Tokens</div>
+        <div class="swatches-row">
+          <div class="swatch-item" style="background:#141618; color:#E2E8F0;">
+            <div class="swatch-color" style="background:#141618;"></div>
+            <span class="swatch-hex">#141618</span>
+            <span class="swatch-role">Canvas</span>
+          </div>
+          <div class="swatch-item" style="background:#1E2124; color:#E2E8F0;">
+            <div class="swatch-color" style="background:#1E2124;"></div>
+            <span class="swatch-hex">#1E2124</span>
+            <span class="swatch-role">Card</span>
+          </div>
+          <div class="swatch-item" style="background:#1E2124; color:#E2E8F0;">
+            <div class="swatch-color" style="background:#32383E;"></div>
+            <span class="swatch-hex">#32383E</span>
+            <span class="swatch-role">Border</span>
+          </div>
+          <div class="swatch-item" style="background:#1E2124; color:#8B949E;">
+            <div class="swatch-color" style="background:#8B949E;"></div>
+            <span class="swatch-hex">#8B949E</span>
+            <span class="swatch-role">Muted</span>
+          </div>
+          <div class="swatch-item" style="background:#1E2124; color:#E2E8F0;">
+            <div class="swatch-color" style="background:#E2E8F0;"></div>
+            <span class="swatch-hex">#E2E8F0</span>
+            <span class="swatch-role">Action</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-app-canvas">
+        <div class="ui-header-bar">
+          <span class="ui-title">IMAGE SUITE // RESIZE & OPTIMIZE</span>
+          <span class="ui-chip">AIR-GAPPED // OFFLINE</span>
+        </div>
+
+        <div class="ui-panel">
+          <div>
+            <div class="ui-field-label">Quality Preset</div>
+            <input type="text" class="ui-input is-active" value="85%" readonly />
+          </div>
+
+          <div>
+            <div class="ui-field-label">Input File</div>
+            <div class="ui-dropzone">
+              <span>/home/dev/hero.png</span>
+              <span class="ui-browse-btn">Browse</span>
+            </div>
+          </div>
+
+          <div class="ui-actions-row">
+            <button class="btn-pri">Compress Image</button>
+            <button class="btn-sec">Copy CLI</button>
+          </div>
+
+          <div class="ui-status-bar">
+            <span>TARGET: WEBP</span>
+            <span>RATIO: ~68% SAVINGS</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ====================================================================
+         THEME 4: HIGH-AFFORDANCE CHARCOAL
+         ==================================================================== -->
+    <article class="theme-card theme-charcoal">
+      <div class="theme-meta">
+        <span class="theme-badge">Option 04</span>
+        <h2 class="theme-name">High-Affordance Charcoal</h2>
+        <p class="theme-register">Maximum utility & input contrast. Elevated charcoal surfaces with pronounced outlines and highest fatigue-free legibility.</p>
+      </div>
+
+      <div class="palette-section">
+        <div class="palette-label">Semantic Tokens</div>
+        <div class="swatches-row">
+          <div class="swatch-item" style="background:#121316; color:#F0F2F5;">
+            <div class="swatch-color" style="background:#121316;"></div>
+            <span class="swatch-hex">#121316</span>
+            <span class="swatch-role">Canvas</span>
+          </div>
+          <div class="swatch-item" style="background:#1B1C20; color:#F0F2F5;">
+            <div class="swatch-color" style="background:#1B1C20;"></div>
+            <span class="swatch-hex">#1B1C20</span>
+            <span class="swatch-role">Card</span>
+          </div>
+          <div class="swatch-item" style="background:#1B1C20; color:#F0F2F5;">
+            <div class="swatch-color" style="background:#2E3138;"></div>
+            <span class="swatch-hex">#2E3138</span>
+            <span class="swatch-role">Border</span>
+          </div>
+          <div class="swatch-item" style="background:#1B1C20; color:#9DA3AE;">
+            <div class="swatch-color" style="background:#9DA3AE;"></div>
+            <span class="swatch-hex">#9DA3AE</span>
+            <span class="swatch-role">Muted</span>
+          </div>
+          <div class="swatch-item" style="background:#1B1C20; color:#F0F2F5;">
+            <div class="swatch-color" style="background:#F0F2F5;"></div>
+            <span class="swatch-hex">#F0F2F5</span>
+            <span class="swatch-role">Action</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-app-canvas">
+        <div class="ui-header-bar">
+          <span class="ui-title">IMAGE SUITE // RESIZE & OPTIMIZE</span>
+          <span class="ui-chip">AIR-GAPPED // OFFLINE</span>
+        </div>
+
+        <div class="ui-panel">
+          <div>
+            <div class="ui-field-label">Quality Preset</div>
+            <input type="text" class="ui-input is-active" value="85%" readonly />
+          </div>
+
+          <div>
+            <div class="ui-field-label">Input File</div>
+            <div class="ui-dropzone">
+              <span>/home/dev/hero.png</span>
+              <span class="ui-browse-btn">Browse</span>
+            </div>
+          </div>
+
+          <div class="ui-actions-row">
+            <button class="btn-pri">Compress Image</button>
+            <button class="btn-sec">Copy CLI</button>
+          </div>
+
+          <div class="ui-status-bar">
+            <span>TARGET: WEBP</span>
+            <span>RATIO: ~68% SAVINGS</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+</body>
+</html>

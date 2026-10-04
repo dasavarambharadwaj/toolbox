@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toolbox — Omarchy Themes Showcase</title>
+  <style>
+    /*
+      ==========================================================================
+      TOOLBOX // OMARCHY THEMES SHOWCASE
+      Aesthetic: All-Monospace Cyberdeck Brutalism
+      Border-radius: Strictly 0px throughout
+      Outlines: 1px crisp solid borders, zero gradients, zero shadows
+      Typography: Monospace only (JetBrains Mono / Fira Code / system-ui monospace)
+      ==========================================================================
+    */
+
+    :root {
+      /* Default Theme: Industrial Graphite */
+      --canvas:        #141618;
+      --surface:       #1E2124;
+      --surface-sub:   #171A1D;
+      --border:        #32383E;
+      --border-focus:  #E2E8F0;
+      --text:          #E2E8F0;
+      --text-muted:    #8B949E;
+      --accent:        #FFFFFF;
+      --accent-fg:     #141618;
+      --tag-bg:        #23282D;
+      --tag-border:    #444C54;
+      --font-mono:     'JetBrains Mono', 'Fira Code', 'Courier New', ui-monospace, Menlo, Monaco, monospace;
+    }
+
+    /* THEME 1: INDUSTRIAL GRAPHITE (DEFAULT) */
+    [data-theme="industrial-graphite"] {
+      --canvas:        #141618;
+      --surface:       #1E2124;
+      --surface-sub:   #171A1D;
+      --border:        #32383E;
+      --border-focus:  #E2E8F0;
+      --text:          #E2E8F0;
+      --text-muted:    #8B949E;
+      --accent:        #FFFFFF;
+      --accent-fg:     #141618;
+      --tag-bg:        #23282D;
+      --tag-border:    #444C54;
+    }
+
+    /* THEME 2: VANTABLACK / MATTE BLACK */
+    [data-theme="vantablack"] {
+      --canvas:        #000000;
+      --surface:       #0D0D0D;
+      --surface-sub:   #141414;
+      --border:        #262626;
+      --border-focus:  #FAFAFA;
+      --text:          #FAFAFA;
+      --text-muted:    #737373;
+      --accent:        #FFFFFF;
+      --accent-fg:     #000000;
+      --tag-bg:        #171717;
+      --tag-border:    #333333;
+    }
+
+    /* THEME 3: TOKYO NIGHT */
+    [data-theme="tokyo-night"] {
+      --canvas:        #1A1B26;
+      --surface:       #24283B;
+      --surface-sub:   #1F2335;
+      --border:        #414868;
+      --border-focus:  #7AA2F7;
+      --text:          #C0CAF5;
+      --text-muted:    #565F89;
+      --accent:        #7AA2F7;
+      --accent-fg:     #1A1B26;
+      --tag-bg:        #292E42;
+      --tag-border:    #565F89;
+    }
+
+    /* THEME 4: NORD */
+    [data-theme="nord"] {
+      --canvas:        #2E3440;
+      --surface:       #3B4252;
+      --surface-sub:   #434C5E;
+      --border:        #4C566A;
+      --border-focus:  #88C0D0;
+      --text:          #ECEFF4;
+      --text-muted:    #9AA5B8;
+      --accent:        #88C0D0;
+      --accent-fg:     #2E3440;
+      --tag-bg:        #434C5E;
+      --tag-border:    #616E85;
+    }
+
+    /* THEME 5: GRUVBOX DARK */
+    [data-theme="gruvbox-dark"] {
+      --canvas:        #1D2021;
+      --surface:       #282828;
+      --surface-sub:   #32302F;
+      --border:        #3C3836;
+      --border-focus:  #FE8019;
+      --text:          #EBDBB2;
+      --text-muted:    #A89984;
+      --accent:        #FE8019;
+      --accent-fg:     #1D2021;
+      --tag-bg:        #3C3836;
+      --tag-border:    #504945;
+    }
+
+    /* THEME 6: HACKERMAN */
+    [data-theme="hackerman"] {
+      --canvas:        #080C08;
+      --surface:       #0E160E;
+      --surface-sub:   #132013;
+      --border:        #1A2B1A;
+      --border-focus:  #00FF66;
+      --text:          #00FF66;
+      --text-muted:    #00A844;
+      --accent:        #33FF77;
+      --accent-fg:     #080C08;
+      --tag-bg:        #112411;
+      --tag-border:    #1F421F;
+    }
+
+    /* THEME 7: KANAGAWA */
+    [data-theme="kanagawa"] {
+      --canvas:        #1F1F28;
+      --surface:       #2A2A37;
+      --surface-sub:   #22222E;
+      --border:        #363646;
+      --border-focus:  #7E9CD8;
+      --text:          #DCD7BA;
+      --text-muted:    #727169;
+      --accent:        #7E9CD8;
+      --accent-fg:     #1F1F28;
+      --tag-bg:        #2D2E3F;
+      --tag-border:    #49495E;
+    }
+
+    /* THEME 8: CATPPUCCIN MOCHA */
+    [data-theme="catppuccin-mocha"] {
+      --canvas:        #1E1E2E;
+      --surface:       #181825;
+      --surface-sub:   #11111B;
+      --border:        #313244;
+      --border-focus:  #CBA6F7;
+      --text:          #CDD6F4;
+      --text-muted:    #9399B2;
+      --accent:        #CBA6F7;
+      --accent-fg:     #181825;
+      --tag-bg:        #232338;
+      --tag-border:    #45475A;
+    }
+
+    /* THEME 9: ROSE PINE */
+    [data-theme="rose-pine"] {
+      --canvas:        #191724;
+      --surface:       #1F1D2E;
+      --surface-sub:   #26233A;
+      --border:        #36334A;
+      --border-focus:  #EBBCBA;
+      --text:          #E0DEF4;
+      --text-muted:    #908CAA;
+      --accent:        #EBBCBA;
+      --accent-fg:     #191724;
+      --tag-bg:        #2A273F;
+      --tag-border:    #433F5E;
+    }
+
+    /* THEME 10: EVERFOREST */
+    [data-theme="everforest"] {
+      --canvas:        #272E33;
+      --surface:       #2D353B;
+      --surface-sub:   #343F44;
+      --border:        #414B50;
+      --border-focus:  #A7C080;
+      --text:          #D3C6AA;
+      --text-muted:    #859289;
+      --accent:        #A7C080;
+      --accent-fg:     #272E33;
+      --tag-bg:        #353E44;
+      --tag-border:    #4F5B58;
+    }
+
+    /* Universal Reset - Enforcing 0px Brutalism */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0px !important;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--canvas);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.4;
+      padding: 24px;
+      transition: background-color 0.15s ease, color 0.15s ease;
+      min-width: 1180px;
+    }
+
+    /* Main Showcase Header */
+    .showcase-header {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .showcase-title-area h1 {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--text);
+    }
+
+    .badge-accent {
+      background: var(--accent);
+      color: var(--accent-fg);
+      font-weight: 700;
+      padding: 2px 8px;
+      font-size: 11px;
+    }
+
+    .showcase-title-area p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .meta-tags {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* Top Horizontal Theme Selector */
+    .selector-container {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      margin-bottom: 24px;
+    }
+
+    .selector-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .theme-buttons-row {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 6px;
+    }
+
+    .theme-btn {
+      background-color: var(--surface-sub);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: border-color 0.1s ease, background-color 0.1s ease;
+      position: relative;
+    }
+
+    .theme-btn:hover {
+      border-color: var(--border-focus);
+      background-color: var(--surface);
+    }
+
+    .theme-btn.active {
+      background-color: var(--surface);
+      border: 1px solid var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+
+    .theme-btn .theme-num {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .theme-btn .theme-name {
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .theme-btn .theme-swatches {
+      display: flex;
+      height: 6px;
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .theme-btn .swatch-pip {
+      flex: 1;
+      height: 100%;
+    }
+
+    /* SECTION TITLE */
+    .section-title-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      border-left: 3px solid var(--accent);
+      padding-left: 10px;
+    }
+
+    .section-title-bar h2 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .section-title-bar span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* HERO DUAL-PANE WORKBENCH SHELL (MODEL A) */
+    .workbench-window {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      margin-bottom: 36px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Workbench Top Titlebar */
+    .wb-titlebar {
+      height: 38px;
+      background-color: var(--canvas);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      user-select: none;
+    }
+
+    .wb-titlebar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .app-brand {
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    .app-brand span {
+      color: var(--accent);
+    }
+
+    .wb-titlebar-center {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .active-tool-crumb {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.04em;
+    }
+
+    .wb-titlebar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .shortcut-pill {
+      background: var(--surface-sub);
+      border: 1px solid var(--border);
+      padding: 2px 7px;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* Workbench Main Split (Left Tree + Right Workspace) */
+    .wb-body {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 520px;
+      background-color: var(--canvas);
+    }
+
+    /* Left Sidebar: Tool Tree */
+    .wb-sidebar {
+      background-color: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .sidebar-header {
+      padding: 10px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--border);
+      background-color: var(--surface-sub);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .tool-tree {
+      padding: 8px 0;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .tree-group {
+      margin-bottom: 12px;
+    }
+
+    .tree-group-header {
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tree-group-header .group-num {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .tree-item {
+      padding: 6px 12px 6px 24px;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text);
+      border-left: 2px solid transparent;
+      user-select: none;
+    }
+
+    .tree-item:hover {
+      background-color: var(--surface-sub);
+      color: var(--text);
+    }
+
+    .tree-item.active {
+      background-color: var(--surface-sub);
+      color: var(--accent);
+      border-left: 2px solid var(--accent);
+      font-weight: 700;
+    }
+
+    .tree-item .badge-count {
+      font-size: 9px;
+      color: var(--text-muted);
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid var(--border);
+      padding: 8px 12px;
+      background-color: var(--surface-sub);
+      font-size: 10px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Right Workspace: Active Tool */
+    .wb-workspace {
+      background-color: var(--canvas);
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .tool-header-block {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px;
+    }
+
+    .tool-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+
+    .tool-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .tool-engine-badge {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+    .tool-engine-badge span {
+      color: var(--accent);
+    }
+
+    /* Drop Zone */
+    .dropzone-box {
+      border: 1px dashed var(--border-focus);
+      background-color: var(--surface);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .dropzone-box:hover {
+      border-color: var(--accent);
+      background-color: var(--surface-sub);
+    }
+
+    .dropzone-prompt {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dropzone-prompt-text {
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dropzone-btn {
+      background-color: var(--surface-sub);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .file-meta-card {
+      background-color: var(--canvas);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+    }
+
+    .file-path {
+      color: var(--accent);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .file-stats {
+      display: flex;
+      gap: 14px;
+      color: var(--text-muted);
+    }
+
+    .file-stats strong {
+      color: var(--text);
+    }
+
+    /* Parameter Controls Form */
+    .param-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+    }
+
+    .param-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .param-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .param-label-val {
+      color: var(--accent);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .text-input {
+      background-color: var(--canvas);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      outline: none;
+      width: 100%;
+    }
+
+    .text-input:focus {
+      border-color: var(--accent);
+    }
+
+    /* Button Selectors (Format buttons) */
+    .btn-group {
+      display: flex;
+      border: 1px solid var(--border);
+      background-color: var(--canvas);
+    }
+
+    .btn-group-option {
+      flex: 1;
+      padding: 6px 8px;
+      text-align: center;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      border-right: 1px solid var(--border);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-group-option:last-child {
+      border-right: none;
+    }
+
+    .btn-group-option:hover {
+      background-color: var(--surface-sub);
+      color: var(--text);
+    }
+
+    .btn-group-option.active {
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      font-weight: 800;
+    }
+
+    /* Checkbox Group */
+    .checkbox-row {
+      grid-column: span 2;
+      display: flex;
+      gap: 24px;
+      padding-top: 6px;
+      border-top: 1px solid var(--border);
+    }
+
+    .custom-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      cursor: pointer;
+      user-select: none;
+      color: var(--text);
+    }
+
+    .check-box-indicator {
+      width: 14px;
+      height: 14px;
+      border: 1px solid var(--border-focus);
+      background-color: var(--canvas);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    /* Action Buttons */
+    .action-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      border: 1px solid var(--accent);
+      padding: 10px 24px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.92;
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--border-focus);
+      background-color: var(--surface);
+    }
+
+    /* Persistent Live CLI Dock */
+    .cli-dock {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cli-dock-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .cli-string-container {
+      background-color: var(--canvas);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .cli-code {
+      font-size: 12px;
+      color: var(--text);
+      white-space: nowrap;
+      overflow-x: auto;
+      letter-spacing: 0.02em;
+    }
+
+    .cli-code .cli-prompt {
+      color: var(--accent);
+      font-weight: 800;
+      margin-right: 6px;
+    }
+
+    .cli-code .cli-flag {
+      color: var(--accent);
+    }
+
+    .cli-code .cli-arg {
+      color: var(--text);
+    }
+
+    .copy-btn {
+      background-color: var(--surface-sub);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 5px 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.1s ease;
+    }
+
+    .copy-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .copy-btn.copied {
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      border-color: var(--accent);
+    }
+
+    /* ==========================================================================
+       ALL 10 OMARCHY THEMES COMPREHENSIVE MATRIX GRID (BELOW HERO)
+       ========================================================================== */
+    .matrix-grid-section {
+      margin-top: 10px;
+    }
+
+    .themes-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    @media (min-width: 1400px) {
+      .themes-matrix-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .theme-card {
+      border: 1px solid var(--border);
+      background-color: var(--surface);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, transform 0.1s ease;
+    }
+
+    .theme-card:hover {
+      border-color: var(--border-focus);
+    }
+
+    .theme-card.is-active {
+      border: 2px solid var(--accent);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .card-title-group h3 {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .card-swatches-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    .swatch-box {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-height: 48px;
+      justify-content: flex-end;
+    }
+
+    .swatch-role {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      opacity: 0.85;
+    }
+
+    .swatch-hex {
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    /* Miniature Wireframe Simulation inside each card */
+    .mini-mockup {
+      border: 1px solid;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      height: 120px;
+    }
+
+    .mini-topbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 6px;
+      font-size: 9px;
+      font-weight: 700;
+      border-bottom: 1px solid;
+    }
+
+    .mini-content {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .mini-sidebar {
+      border-right: 1px solid;
+      padding: 4px;
+      font-size: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .mini-item {
+      padding: 2px 4px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .mini-item.active {
+      font-weight: 800;
+    }
+
+    .mini-pane {
+      padding: 4px 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      justify-content: space-between;
+    }
+
+    .mini-hero-box {
+      border: 1px dashed;
+      padding: 4px;
+      font-size: 8px;
+      text-align: center;
+    }
+
+    .mini-controls {
+      display: flex;
+      gap: 4px;
+    }
+
+    .mini-ctrl-btn {
+      padding: 2px 6px;
+      font-size: 8px;
+      font-weight: 700;
+    }
+
+    .mini-clibar {
+      border: 1px solid;
+      padding: 2px 4px;
+      font-size: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .select-theme-btn {
+      background-color: var(--surface-sub);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .theme-card:hover .select-theme-btn {
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body data-theme="industrial-graphite">
+
+  <!-- TOP SHOWCASE HEADER -->
+  <header class="showcase-header">
+    <div class="showcase-title-area">
+      <h1>
+        <span>[ TOOLBOX // OMARCHY THEMES SHOWCASE ]</span>
+        <span class="badge-pill" id="active-theme-pill">ACTIVE: INDUSTRIAL GRAPHITE (DEFAULT)</span>
+      </h1>
+      <p>Multi-Theme Exploration for Toolbox • Model A Dual-Pane Workbench • Strict 0px Monospace Brutalism</p>
+    </div>
+    <div class="meta-tags">
+      <span class="badge-pill">ARCH: SLINT DESKTOP</span>
+      <span class="badge-pill">SIMD: AVX2/NEON</span>
+      <span class="badge-accent">10 THEMES LOADED</span>
+    </div>
+  </header>
+
+  <!-- 10-THEME QUICK SELECTOR BAR -->
+  <section class="selector-container">
+    <div class="selector-label">
+      <span>SWITCH ACTIVE WORKBENCH THEME (CLICK TO PREVIEW LIVE)</span>
+      <span>INSPIRED BY OMARCHY'S PALETTES</span>
+    </div>
+    <div class="theme-buttons-row">
+      <!-- 1: Industrial Graphite -->
+      <button class="theme-btn active" data-target="industrial-graphite" onclick="setTheme('industrial-graphite')">
+        <span class="theme-num">[01] DEFAULT</span>
+        <span class="theme-name">Graphite</span>
+        <div class="theme-swatches">
+          <div class="swatch-pip" style="background:#141618"></div>
+          <div class="swatch-pip" style="background:#1E2124"></div>
+          <div class="swatch-pip" style="background:#32383E"></div>
+          <div class="swatch-pip" style="background:#E2E8F0"></div>
+          <div class="swatch-pip" style="background:#FFFFFF"></div>
+        </div>
+      </button>
+
+      <!-- 2: Vantablack -->
+      <button class="theme-btn" data-target="vantablack" onclick="setTheme('vantablack')">
+        <span class="theme-num">[02] OLED</span>
+        <span class="theme-name">Vantablack</span>
+        <div class="theme-swatches">
+          <div class="swatch-pip" style="background:#000000"></div>
+          <div class="swatch-pip" style="background:#0D0D0D"></div>
+          <div class="swatch-pip" style="background:#262626"></div>
+          <div class="swatch-pip" style="background:#FAFAFA"></div>
+          <div class="swatch-pip" style="background:#FFFFFF"></div>
+        </div>
+      </button>
+
+      <!-- 3: Tokyo Night -->
+      <button class="theme-btn" data-target="tokyo-night" onclick="setTheme('tokyo-night')">
+        <span class="theme-num">[03] NEON</span>
+        <span class="theme-name">Tokyo Night</span>
+        <div class="theme-swatches">
+          <div class="swatch-pip" style="background:#1A1B26"></div>
+          <div class="swatch-pip" style="background:#24283B"></div>
+          <div class="swatch-pip" style="background:#414868"></div>
+          <div class="swatch-pip" style="background:#C0CAF5"></div>
+          <div class="swatch-pip" style="background:#7AA2F7"></div>
+        </div>
+      </button>
+
+      <!-- 4: Nord -->
+      <button class="theme-btn" data-target="nord" onclick="setTheme('nord')">
+        <span class="theme-num">[04] ARCTIC</span>
+        <span class="theme-name">Nord</span>
+        <div class="theme-swatches">
+          <div class="swatch-pip" style="background:#2E3440"></div>
+          <div class="swatch-pip" style="background:#3B4252"></div>
+          <div class="swatch-pip" style="background:#4C566A"></div>
+          <div class="swatch-pip" style="background:#ECEFF4"></div>
+          <div class="swatch-pip" style="background:#88C0D0"></div>
+        </div>
+      </button>
+
+      <!-- 5: Gruvbox Dark -->
+      <button class="theme-btn" data-target="gruvbox-dark" onclick="setTheme('gruvbox-dark')">
+        <span class="theme-num">[05] RETRO</span>
+        <span class="theme-name">Gruvbox</span>
+        <div class="theme-swatches">
+          <div class="swatch-pip" style="background:#1D2021"></div>
+          <div class="swatch-pip" style="background:#282828"></div>
+          <div class="swatch-pip" style="background:#3C3836"></div>
+          <div class="swatch-pip" style="background:#EBDBB2"></div>
+          <div class="swatch-pip" style="background:#FE8019"></div>
+        </div>
+      </button>
+
+      <!-- 6: Hackerman -->
+      <button class="theme-btn" data-target="hackerman" onclick="setTheme('hackerman')">
+        <span class="theme-num">[06] MATRIX</span>
+        <span class="theme-name">Hackerman</span>
+        <div class="theme-swatches">
+          <div class="swatch-pip" style="background:#080C08"></div>
+          <div class="swatch-pip" style="background:#0E160E"></div>
+          <div class="swatch-pip" style="background:#1A2B1A"></div>
+          <div class="swatch-pip" style="background:#00FF66"></div>
+          <div class="swatch-pip" style="background:#33FF77"></div>
+        </div>
+      </button>
+
+      <!-- 7: Kanagawa -->
+      <button class="theme-btn" data-target="kanagawa" onclick="setTheme('kanagawa')">
+        <span class="theme-num">[07] WAVE</span>
+        <span class="theme-name">Kanagawa</span>
+        <div class="theme-swatches">
+          <div class="swatch-pip" style="background:#1F1F28"></div>
+          <div class="swatch-pip" style="background:#2A2A37"></div>
+          <div class="swatch-pip" style="background:#363646"></div>
+          <div class="swatch-pip" style="background:#DCD7BA"></div>
+          <div class="swatch-pip" style="background:#7E9CD8"></div>
+        </div>
+      </button>
+
+      <!-- 8: Catppuccin Mocha -->
+      <button class="theme-btn" data-target="catppuccin-mocha" onclick="setTheme('catppuccin-mocha')">
+        <span class="theme-num">[08] PASTEL</span>
+        <span class="theme-name">Catppuccin</span>
+        <div class="theme-swatches">
+          <div class="swatch-pip" style="background:#1E1E2E"></div>
+          <div class="swatch-pip" style="background:#181825"></div>
+          <div class="swatch-pip" style="background:#313244"></div>
+          <div class="swatch-pip" style="background:#CDD6F4"></div>
+          <div class="swatch-pip" style="background:#CBA6F7"></div>
+        </div>
+      </button>
+
+      <!-- 9: Rose Pine -->
+      <button class="theme-btn" data-target="rose-pine" onclick="setTheme('rose-pine')">
+        <span class="theme-num">[09] ROSE</span>
+        <span class="theme-name">Rose Pine</span>
+        <div class="theme-swatches">
+          <div class="swatch-pip" style="background:#191724"></div>
+          <div class="swatch-pip" style="background:#1F1D2E"></div>
+          <div class="swatch-pip" style="background:#36334A"></div>
+          <div class="swatch-pip" style="background:#E0DEF4"></div>
+          <div class="swatch-pip" style="background:#EBBCBA"></div>
+        </div>
+      </button>
+
+      <!-- 10: Everforest -->
+      <button class="theme-btn" data-target="everforest" onclick="setTheme('everforest')">
+        <span class="theme-num">[10] NATURE</span>
+        <span class="theme-name">Everforest</span>
+        <div class="theme-swatches">
+          <div class="swatch-pip" style="background:#272E33"></div>
+          <div class="swatch-pip" style="background:#2D353B"></div>
+          <div class="swatch-pip" style="background:#414B50"></div>
+          <div class="swatch-pip" style="background:#D3C6AA"></div>
+          <div class="swatch-pip" style="background:#A7C080"></div>
+        </div>
+      </button>
+    </div>
+  </section>
+
+  <!-- SECTION 1: HERO DUAL-PANE WORKBENCH PREVIEW -->
+  <div class="section-title-bar">
+    <h2>Interactive Workbench Shell [Model A: Dual-Pane]</h2>
+    <span id="active-theme-subtag">CURRENT THEME: INDUSTRIAL GRAPHITE // CANV: #141618 SURF: #1E2124 ACC: #FFFFFF</span>
+  </div>
+
+  <div class="workbench-window">
+    <!-- Workbench Window Titlebar -->
+    <div class="wb-titlebar">
+      <div class="wb-titlebar-left">
+        <div class="app-brand">[ TOOLBOX // <span>tb v1.0</span> ]</div>
+        <div class="shortcut-pill">PID: 40922</div>
+      </div>
+      <div class="wb-titlebar-center">
+        <div class="active-tool-crumb">> [02] IMAGE SUITE / RESIZE & OPTIMIZE</div>
+      </div>
+      <div class="wb-titlebar-right">
+        <div class="badge-pill">[ OFFLINE // AIR-GAPPED ]</div>
+        <div class="shortcut-pill">[ Super+Shift+T ] OMNI-BAR</div>
+      </div>
+    </div>
+
+    <!-- Dual-Pane Body -->
+    <div class="wb-body">
+      <!-- Left Sidebar: Tool Tree -->
+      <aside class="wb-sidebar">
+        <div>
+          <div class="sidebar-header">
+            <span>TOOL REGISTRY [5 SUITES]</span>
+            <span>FILTER: [/]</span>
+          </div>
+
+          <div class="tool-tree">
+            <!-- [01] PDF SUITE -->
+            <div class="tree-group">
+              <div class="tree-group-header">
+                <span class="group-num">[01]</span> PDF SUITE
+              </div>
+              <div class="tree-item">
+                <span>MERGE & SPLIT</span>
+                <span class="badge-count">CLI</span>
+              </div>
+              <div class="tree-item">
+                <span>OCR & EXTRACT</span>
+                <span class="badge-count">TESS</span>
+              </div>
+              <div class="tree-item">
+                <span>COMPRESS PDF</span>
+                <span class="badge-count">GS</span>
+              </div>
+            </div>
+
+            <!-- [02] IMAGE SUITE (ACTIVE) -->
+            <div class="tree-group">
+              <div class="tree-group-header">
+                <span class="group-num">[02]</span> IMAGE SUITE
+              </div>
+              <div class="tree-item active">
+                <span>> RESIZE & OPTIMIZE</span>
+                <span class="badge-count">[ACTIVE]</span>
+              </div>
+              <div class="tree-item">
+                <span>SVG CONVERTER</span>
+                <span class="badge-count">VECT</span>
+              </div>
+              <div class="tree-item">
+                <span>ICON MAKER (.ICO/ICNS)</span>
+                <span class="badge-count">MULTI</span>
+              </div>
+              <div class="tree-item">
+                <span>EXIF SCRUBBER</span>
+                <span class="badge-count">RAW</span>
+              </div>
+            </div>
+
+            <!-- [03] ARCHIVE SUITE -->
+            <div class="tree-group">
+              <div class="tree-group-header">
+                <span class="group-num">[03]</span> ARCHIVE SUITE
+              </div>
+              <div class="tree-item">
+                <span>7Z RECOMPRESS</span>
+                <span class="badge-count">LZMA2</span>
+              </div>
+              <div class="tree-item">
+                <span>TAR / ZSTD STREAM</span>
+                <span class="badge-count">ZSTD</span>
+              </div>
+            </div>
+
+            <!-- [04] DEV & CRYPTO -->
+            <div class="tree-group">
+              <div class="tree-group-header">
+                <span class="group-num">[04]</span> DEV & CRYPTO
+              </div>
+              <div class="tree-item">
+                <span>HASH / CHECKSUM</span>
+                <span class="badge-count">SHA256</span>
+              </div>
+              <div class="tree-item">
+                <span>CERT INSPECTOR</span>
+                <span class="badge-count">X509</span>
+              </div>
+              <div class="tree-item">
+                <span>JWT DECODER</span>
+                <span class="badge-count">RSA</span>
+              </div>
+            </div>
+
+            <!-- [05] SYSTEM / DEPS -->
+            <div class="tree-group">
+              <div class="tree-group-header">
+                <span class="group-num">[05]</span> SYSTEM / DEPS
+              </div>
+              <div class="tree-item">
+                <span>FFMPEG RUNTIME</span>
+                <span class="badge-count">OK</span>
+              </div>
+              <div class="tree-item">
+                <span>SIMD SPEED BENCH</span>
+                <span class="badge-count">AVX2</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <span>RAM: 38.4 MB</span>
+          <span>THREADS: 16 (RAYON)</span>
+        </div>
+      </aside>
+
+      <!-- Right Main Workspace -->
+      <main class="wb-workspace">
+        <!-- Tool Header -->
+        <div class="tool-header-block">
+          <div>
+            <h2 class="tool-title">IMAGE RESIZE & COMPRESSION</h2>
+            <p class="tool-subtitle">Hardware-accelerated SIMD resize via fast_image_resize + oxipng engine</p>
+          </div>
+          <div class="tool-engine-badge">
+            ENGINE: <span>fast_image_resize v4.1 [SIMD-ACCEL]</span>
+          </div>
+        </div>
+
+        <!-- Boxy Drag & Drop Zone -->
+        <div class="dropzone-box">
+          <div class="dropzone-prompt">
+            <span class="dropzone-prompt-text">
+              <span>[+]</span> DROP IMAGE FILE (PNG / JPG / WEBP / AVIF) OR CLICK TO BROWSE
+            </span>
+            <button class="dropzone-btn" type="button">CHOOSE FILE</button>
+          </div>
+
+          <!-- Staged File Metadata Preview -->
+          <div class="file-meta-card">
+            <div class="file-path">
+              <span>FILE:</span> /home/dev/assets/hero.png
+            </div>
+            <div class="file-stats">
+              <span>SIZE: <strong>4.2 MB</strong></span>
+              <span>DIM: <strong>3840 x 2160</strong></span>
+              <span>FORMAT: <strong>PNG-24</strong></span>
+              <span>COLOR: <strong>sRGB</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Boxy Parameter Form -->
+        <div class="param-form-grid">
+          <!-- Target Scale -->
+          <div class="param-group">
+            <div class="param-label">
+              <span>TARGET SCALE:</span>
+              <span class="param-label-val" id="scale-val-display">[ 50% ] [ 1920 x 1080 ]</span>
+            </div>
+            <div class="input-row">
+              <input type="range" min="10" max="100" value="50" step="5" class="text-input" id="scale-slider" oninput="updateCli()" style="height: 32px; padding: 0 4px;">
+              <input type="text" value="50%" class="text-input" id="scale-text" style="width: 70px; text-align: center;" readonly>
+            </div>
+          </div>
+
+          <!-- Target Format -->
+          <div class="param-group">
+            <div class="param-label">
+              <span>TARGET FORMAT:</span>
+              <span class="param-label-val" id="format-val-display">[ WEBP ]</span>
+            </div>
+            <div class="btn-group">
+              <button class="btn-group-option" onclick="setFormat('png', this)">PNG</button>
+              <button class="btn-group-option" onclick="setFormat('jpg', this)">JPG</button>
+              <button class="btn-group-option active" onclick="setFormat('webp', this)">WEBP</button>
+              <button class="btn-group-option" onclick="setFormat('avif', this)">AVIF</button>
+            </div>
+          </div>
+
+          <!-- Quality Preset -->
+          <div class="param-group">
+            <div class="param-label">
+              <span>QUALITY PRESET:</span>
+              <span class="param-label-val" id="quality-val-display">[ 85 ] [ MEDIUM-HIGH ]</span>
+            </div>
+            <div class="input-row">
+              <input type="range" min="20" max="100" value="85" step="5" class="text-input" id="quality-slider" oninput="updateCli()" style="height: 32px; padding: 0 4px;">
+              <input type="text" value="85" class="text-input" id="quality-text" style="width: 70px; text-align: center;" readonly>
+            </div>
+          </div>
+
+          <!-- Filter Algorithm -->
+          <div class="param-group">
+            <div class="param-label">
+              <span>SAMPLING FILTER:</span>
+              <span class="param-label-val">[ LANCZOS3 ]</span>
+            </div>
+            <div class="btn-group">
+              <button class="btn-group-option">NEAREST</button>
+              <button class="btn-group-option">BILINEAR</button>
+              <button class="btn-group-option active">LANCZOS3</button>
+            </div>
+          </div>
+
+          <!-- Checkboxes -->
+          <div class="checkbox-row">
+            <label class="custom-checkbox" onclick="toggleCheckbox('strip-exif')">
+              <span class="check-box-indicator" id="chk-strip-exif">X</span>
+              <span>STRIP EXIF DATA</span>
+            </label>
+
+            <label class="custom-checkbox" onclick="toggleCheckbox('preserve-icc')">
+              <span class="check-box-indicator" id="chk-preserve-icc">X</span>
+              <span>PRESERVE ICC COLOR PROFILE</span>
+            </label>
+
+            <label class="custom-checkbox" onclick="toggleCheckbox('fast-simd')">
+              <span class="check-box-indicator" id="chk-fast-simd">X</span>
+              <span>ENABLE AVX2 MULTITHREAD</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-bar">
+          <button class="btn-primary" type="button" onclick="flashExecute(this)">
+            <span>[ EXECUTE COMPRESSION (Enter) ]</span>
+          </button>
+          <button class="btn-secondary" type="button">
+            [ PREVIEW DIFF (Space) ]
+          </button>
+          <button class="btn-secondary" type="button">
+            [ RESET DEFAULTS ]
+          </button>
+        </div>
+
+        <!-- Persistent Live CLI Dock -->
+        <div class="cli-dock">
+          <div class="cli-dock-header">
+            <span>PERSISTENT LIVE CLI DOCK // EXACT 1:1 REPRODUCIBLE COMMAND</span>
+            <span>HEADLESS COMPLIANT</span>
+          </div>
+          <div class="cli-string-container">
+            <div class="cli-code" id="live-cli-code">
+              <span class="cli-prompt">$</span>tb image resize <span class="cli-arg">hero.png</span> <span class="cli-flag">--scale</span> <span class="cli-arg" id="cli-scale">50</span> <span class="cli-flag">--format</span> <span class="cli-arg" id="cli-format">webp</span> <span class="cli-flag">--quality</span> <span class="cli-arg" id="cli-quality">85</span> <span class="cli-flag" id="cli-exif">--strip-exif</span>
+            </div>
+            <button class="copy-btn" id="copy-cli-btn" onclick="copyCliCommand()">[ COPY CLI ]</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- SECTION 2: ALL 10 OMARCHY THEMES COMPREHENSIVE MATRIX -->
+  <section class="matrix-grid-section">
+    <div class="section-title-bar">
+      <h2>All 10 Omarchy Themes // Matrix Overview</h2>
+      <span>Click any theme card to preview in the main interactive workbench above</span>
+    </div>
+
+    <div class="themes-matrix-grid">
+      <!-- 01: Industrial Graphite -->
+      <div class="theme-card is-active" id="card-industrial-graphite" onclick="setTheme('industrial-graphite')">
+        <div class="card-top">
+          <div class="card-title-group">
+            <h3>[01] Industrial Graphite <span class="badge-accent">DEFAULT</span></h3>
+            <p class="card-desc">Technical CAD / Slate Engineering • High-precision mechanical contrast</p>
+          </div>
+          <button class="select-theme-btn">ACTIVATE</button>
+        </div>
+
+        <div class="card-swatches-grid">
+          <div class="swatch-box" style="background:#141618; color:#E2E8F0;">
+            <span class="swatch-role">Canvas</span>
+            <span class="swatch-hex">#141618</span>
+          </div>
+          <div class="swatch-box" style="background:#1E2124; color:#E2E8F0;">
+            <span class="swatch-role">Surface</span>
+            <span class="swatch-hex">#1E2124</span>
+          </div>
+          <div class="swatch-box" style="background:#32383E; color:#E2E8F0;">
+            <span class="swatch-role">Border</span>
+            <span class="swatch-hex">#32383E</span>
+          </div>
+          <div class="swatch-box" style="background:#141618; color:#E2E8F0; border: 1px solid #32383E;">
+            <span class="swatch-role">Text</span>
+            <span class="swatch-hex">#E2E8F0</span>
+          </div>
+          <div class="swatch-box" style="background:#FFFFFF; color:#141618;">
+            <span class="swatch-role">Accent</span>
+            <span class="swatch-hex">#FFFFFF</span>
+          </div>
+        </div>
+
+        <!-- Mini Wireframe -->
+        <div class="mini-mockup" style="background:#141618; border-color:#32383E; color:#E2E8F0;">
+          <div class="mini-topbar" style="background:#1E2124; border-color:#32383E;">
+            <span>[ TOOLBOX // tb ]</span>
+            <span style="color:#FFFFFF">[02] IMAGE RESIZE</span>
+            <span>AIR-GAPPED</span>
+          </div>
+          <div class="mini-content">
+            <div class="mini-sidebar" style="background:#1E2124; border-color:#32383E;">
+              <span style="color:#8B949E;">[01] PDF SUITE</span>
+              <span class="mini-item active" style="background:#171A1D; color:#FFFFFF; border-left: 2px solid #FFFFFF;">> RESIZE</span>
+              <span style="color:#8B949E;">[03] ARCHIVE</span>
+            </div>
+            <div class="mini-pane">
+              <div class="mini-hero-box" style="background:#1E2124; border-color:#E2E8F0;">
+                hero.png (4.2 MB) &bull; SCALE 50%
+              </div>
+              <div class="mini-controls">
+                <div class="mini-ctrl-btn" style="background:#FFFFFF; color:#141618;">EXECUTE</div>
+                <div class="mini-ctrl-btn" style="border: 1px solid #32383E; color:#E2E8F0;">DIFF</div>
+              </div>
+              <div class="mini-clibar" style="background:#1E2124; border-color:#32383E; color:#E2E8F0;">
+                $ tb image resize hero.png --scale 50 --format webp
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02: Vantablack / Matte Black -->
+      <div class="theme-card" id="card-vantablack" onclick="setTheme('vantablack')">
+        <div class="card-top">
+          <div class="card-title-group">
+            <h3>[02] Vantablack / Matte Black</h3>
+            <p class="card-desc">Pure Monochrome OLED • Teenage Engineering brutalist starkness</p>
+          </div>
+          <button class="select-theme-btn">ACTIVATE</button>
+        </div>
+
+        <div class="card-swatches-grid">
+          <div class="swatch-box" style="background:#000000; color:#FAFAFA; border: 1px solid #262626;">
+            <span class="swatch-role">Canvas</span>
+            <span class="swatch-hex">#000000</span>
+          </div>
+          <div class="swatch-box" style="background:#0D0D0D; color:#FAFAFA;">
+            <span class="swatch-role">Surface</span>
+            <span class="swatch-hex">#0D0D0D</span>
+          </div>
+          <div class="swatch-box" style="background:#262626; color:#FAFAFA;">
+            <span class="swatch-role">Border</span>
+            <span class="swatch-hex">#262626</span>
+          </div>
+          <div class="swatch-box" style="background:#000000; color:#FAFAFA; border: 1px solid #262626;">
+            <span class="swatch-role">Text</span>
+            <span class="swatch-hex">#FAFAFA</span>
+          </div>
+          <div class="swatch-box" style="background:#FFFFFF; color:#000000;">
+            <span class="swatch-role">Accent</span>
+            <span class="swatch-hex">#FFFFFF</span>
+          </div>
+        </div>
+
+        <!-- Mini Wireframe -->
+        <div class="mini-mockup" style="background:#000000; border-color:#262626; color:#FAFAFA;">
+          <div class="mini-topbar" style="background:#0D0D0D; border-color:#262626;">
+            <span>[ TOOLBOX // tb ]</span>
+            <span style="color:#FFFFFF">[02] IMAGE RESIZE</span>
+            <span>AIR-GAPPED</span>
+          </div>
+          <div class="mini-content">
+            <div class="mini-sidebar" style="background:#0D0D0D; border-color:#262626;">
+              <span style="color:#737373;">[01] PDF SUITE</span>
+              <span class="mini-item active" style="background:#141414; color:#FFFFFF; border-left: 2px solid #FFFFFF;">> RESIZE</span>
+              <span style="color:#737373;">[03] ARCHIVE</span>
+            </div>
+            <div class="mini-pane">
+              <div class="mini-hero-box" style="background:#0D0D0D; border-color:#FAFAFA;">
+                hero.png (4.2 MB) &bull; SCALE 50%
+              </div>
+              <div class="mini-controls">
+                <div class="mini-ctrl-btn" style="background:#FFFFFF; color:#000000;">EXECUTE</div>
+                <div class="mini-ctrl-btn" style="border: 1px solid #262626; color:#FAFAFA;">DIFF</div>
+              </div>
+              <div class="mini-clibar" style="background:#0D0D0D; border-color:#262626; color:#FAFAFA;">
+                $ tb image resize hero.png --scale 50 --format webp
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03: Tokyo Night -->
+      <div class="theme-card" id="card-tokyo-night" onclick="setTheme('tokyo-night')">
+        <div class="card-top">
+          <div class="card-title-group">
+            <h3>[03] Tokyo Night</h3>
+            <p class="card-desc">Neon Cyberpunk • Deep indigo canvas with electric cobalt accents</p>
+          </div>
+          <button class="select-theme-btn">ACTIVATE</button>
+        </div>
+
+        <div class="card-swatches-grid">
+          <div class="swatch-box" style="background:#1A1B26; color:#C0CAF5;">
+            <span class="swatch-role">Canvas</span>
+            <span class="swatch-hex">#1A1B26</span>
+          </div>
+          <div class="swatch-box" style="background:#24283B; color:#C0CAF5;">
+            <span class="swatch-role">Surface</span>
+            <span class="swatch-hex">#24283B</span>
+          </div>
+          <div class="swatch-box" style="background:#414868; color:#C0CAF5;">
+            <span class="swatch-role">Border</span>
+            <span class="swatch-hex">#414868</span>
+          </div>
+          <div class="swatch-box" style="background:#1A1B26; color:#C0CAF5; border: 1px solid #414868;">
+            <span class="swatch-role">Text</span>
+            <span class="swatch-hex">#C0CAF5</span>
+          </div>
+          <div class="swatch-box" style="background:#7AA2F7; color:#1A1B26;">
+            <span class="swatch-role">Accent</span>
+            <span class="swatch-hex">#7AA2F7</span>
+          </div>
+        </div>
+
+        <!-- Mini Wireframe -->
+        <div class="mini-mockup" style="background:#1A1B26; border-color:#414868; color:#C0CAF5;">
+          <div class="mini-topbar" style="background:#24283B; border-color:#414868;">
+            <span>[ TOOLBOX // tb ]</span>
+            <span style="color:#7AA2F7">[02] IMAGE RESIZE</span>
+            <span>AIR-GAPPED</span>
+          </div>
+          <div class="mini-content">
+            <div class="mini-sidebar" style="background:#24283B; border-color:#414868;">
+              <span style="color:#565F89;">[01] PDF SUITE</span>
+              <span class="mini-item active" style="background:#1F2335; color:#7AA2F7; border-left: 2px solid #7AA2F7;">> RESIZE</span>
+              <span style="color:#565F89;">[03] ARCHIVE</span>
+            </div>
+            <div class="mini-pane">
+              <div class="mini-hero-box" style="background:#24283B; border-color:#7AA2F7;">
+                hero.png (4.2 MB) &bull; SCALE 50%
+              </div>
+              <div class="mini-controls">
+                <div class="mini-ctrl-btn" style="background:#7AA2F7; color:#1A1B26;">EXECUTE</div>
+                <div class="mini-ctrl-btn" style="border: 1px solid #414868; color:#C0CAF5;">DIFF</div>
+              </div>
+              <div class="mini-clibar" style="background:#24283B; border-color:#414868; color:#C0CAF5;">
+                $ tb image resize hero.png --scale 50 --format webp
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04: Nord -->
+      <div class="theme-card" id="card-nord" onclick="setTheme('nord')">
+        <div class="card-top">
+          <div class="card-title-group">
+            <h3>[04] Nord</h3>
+            <p class="card-desc">Arctic Blue Monospace • Cool polar slate with frost glacier cyan</p>
+          </div>
+          <button class="select-theme-btn">ACTIVATE</button>
+        </div>
+
+        <div class="card-swatches-grid">
+          <div class="swatch-box" style="background:#2E3440; color:#ECEFF4;">
+            <span class="swatch-role">Canvas</span>
+            <span class="swatch-hex">#2E3440</span>
+          </div>
+          <div class="swatch-box" style="background:#3B4252; color:#ECEFF4;">
+            <span class="swatch-role">Surface</span>
+            <span class="swatch-hex">#3B4252</span>
+          </div>
+          <div class="swatch-box" style="background:#4C566A; color:#ECEFF4;">
+            <span class="swatch-role">Border</span>
+            <span class="swatch-hex">#4C566A</span>
+          </div>
+          <div class="swatch-box" style="background:#2E3440; color:#ECEFF4; border: 1px solid #4C566A;">
+            <span class="swatch-role">Text</span>
+            <span class="swatch-hex">#ECEFF4</span>
+          </div>
+          <div class="swatch-box" style="background:#88C0D0; color:#2E3440;">
+            <span class="swatch-role">Accent</span>
+            <span class="swatch-hex">#88C0D0</span>
+          </div>
+        </div>
+
+        <!-- Mini Wireframe -->
+        <div class="mini-mockup" style="background:#2E3440; border-color:#4C566A; color:#ECEFF4;">
+          <div class="mini-topbar" style="background:#3B4252; border-color:#4C566A;">
+            <span>[ TOOLBOX // tb ]</span>
+            <span style="color:#88C0D0">[02] IMAGE RESIZE</span>
+            <span>AIR-GAPPED</span>
+          </div>
+          <div class="mini-content">
+            <div class="mini-sidebar" style="background:#3B4252; border-color:#4C566A;">
+              <span style="color:#9AA5B8;">[01] PDF SUITE</span>
+              <span class="mini-item active" style="background:#434C5E; color:#88C0D0; border-left: 2px solid #88C0D0;">> RESIZE</span>
+              <span style="color:#9AA5B8;">[03] ARCHIVE</span>
+            </div>
+            <div class="mini-pane">
+              <div class="mini-hero-box" style="background:#3B4252; border-color:#88C0D0;">
+                hero.png (4.2 MB) &bull; SCALE 50%
+              </div>
+              <div class="mini-controls">
+                <div class="mini-ctrl-btn" style="background:#88C0D0; color:#2E3440;">EXECUTE</div>
+                <div class="mini-ctrl-btn" style="border: 1px solid #4C566A; color:#ECEFF4;">DIFF</div>
+              </div>
+              <div class="mini-clibar" style="background:#3B4252; border-color:#4C566A; color:#ECEFF4;">
+                $ tb image resize hero.png --scale 50 --format webp
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05: Gruvbox Dark -->
+      <div class="theme-card" id="card-gruvbox-dark" onclick="setTheme('gruvbox-dark')">
+        <div class="card-top">
+          <div class="card-title-group">
+            <h3>[05] Gruvbox Dark</h3>
+            <p class="card-desc">Retro Groove • Warm earthy stone with blaze orange accent</p>
+          </div>
+          <button class="select-theme-btn">ACTIVATE</button>
+        </div>
+
+        <div class="card-swatches-grid">
+          <div class="swatch-box" style="background:#1D2021; color:#EBDBB2;">
+            <span class="swatch-role">Canvas</span>
+            <span class="swatch-hex">#1D2021</span>
+          </div>
+          <div class="swatch-box" style="background:#282828; color:#EBDBB2;">
+            <span class="swatch-role">Surface</span>
+            <span class="swatch-hex">#282828</span>
+          </div>
+          <div class="swatch-box" style="background:#3C3836; color:#EBDBB2;">
+            <span class="swatch-role">Border</span>
+            <span class="swatch-hex">#3C3836</span>
+          </div>
+          <div class="swatch-box" style="background:#1D2021; color:#EBDBB2; border: 1px solid #3C3836;">
+            <span class="swatch-role">Text</span>
+            <span class="swatch-hex">#EBDBB2</span>
+          </div>
+          <div class="swatch-box" style="background:#FE8019; color:#1D2021;">
+            <span class="swatch-role">Accent</span>
+            <span class="swatch-hex">#FE8019</span>
+          </div>
+        </div>
+
+        <!-- Mini Wireframe -->
+        <div class="mini-mockup" style="background:#1D2021; border-color:#3C3836; color:#EBDBB2;">
+          <div class="mini-topbar" style="background:#282828; border-color:#3C3836;">
+            <span>[ TOOLBOX // tb ]</span>
+            <span style="color:#FE8019">[02] IMAGE RESIZE</span>
+            <span>AIR-GAPPED</span>
+          </div>
+          <div class="mini-content">
+            <div class="mini-sidebar" style="background:#282828; border-color:#3C3836;">
+              <span style="color:#A89984;">[01] PDF SUITE</span>
+              <span class="mini-item active" style="background:#32302F; color:#FE8019; border-left: 2px solid #FE8019;">> RESIZE</span>
+              <span style="color:#A89984;">[03] ARCHIVE</span>
+            </div>
+            <div class="mini-pane">
+              <div class="mini-hero-box" style="background:#282828; border-color:#FE8019;">
+                hero.png (4.2 MB) &bull; SCALE 50%
+              </div>
+              <div class="mini-controls">
+                <div class="mini-ctrl-btn" style="background:#FE8019; color:#1D2021;">EXECUTE</div>
+                <div class="mini-ctrl-btn" style="border: 1px solid #3C3836; color:#EBDBB2;">DIFF</div>
+              </div>
+              <div class="mini-clibar" style="background:#282828; border-color:#3C3836; color:#EBDBB2;">
+                $ tb image resize hero.png --scale 50 --format webp
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 06: Hackerman -->
+      <div class="theme-card" id="card-hackerman" onclick="setTheme('hackerman')">
+        <div class="card-top">
+          <div class="card-title-group">
+            <h3>[06] Hackerman</h3>
+            <p class="card-desc">Matrix Phosphor • CRT terminal glow on deep black obsidian</p>
+          </div>
+          <button class="select-theme-btn">ACTIVATE</button>
+        </div>
+
+        <div class="card-swatches-grid">
+          <div class="swatch-box" style="background:#080C08; color:#00FF66;">
+            <span class="swatch-role">Canvas</span>
+            <span class="swatch-hex">#080C08</span>
+          </div>
+          <div class="swatch-box" style="background:#0E160E; color:#00FF66;">
+            <span class="swatch-role">Surface</span>
+            <span class="swatch-hex">#0E160E</span>
+          </div>
+          <div class="swatch-box" style="background:#1A2B1A; color:#00FF66;">
+            <span class="swatch-role">Border</span>
+            <span class="swatch-hex">#1A2B1A</span>
+          </div>
+          <div class="swatch-box" style="background:#080C08; color:#00FF66; border: 1px solid #1A2B1A;">
+            <span class="swatch-role">Text</span>
+            <span class="swatch-hex">#00FF66</span>
+          </div>
+          <div class="swatch-box" style="background:#33FF77; color:#080C08;">
+            <span class="swatch-role">Accent</span>
+            <span class="swatch-hex">#33FF77</span>
+          </div>
+        </div>
+
+        <!-- Mini Wireframe -->
+        <div class="mini-mockup" style="background:#080C08; border-color:#1A2B1A; color:#00FF66;">
+          <div class="mini-topbar" style="background:#0E160E; border-color:#1A2B1A;">
+            <span>[ TOOLBOX // tb ]</span>
+            <span style="color:#33FF77">[02] IMAGE RESIZE</span>
+            <span>AIR-GAPPED</span>
+          </div>
+          <div class="mini-content">
+            <div class="mini-sidebar" style="background:#0E160E; border-color:#1A2B1A;">
+              <span style="color:#00A844;">[01] PDF SUITE</span>
+              <span class="mini-item active" style="background:#132013; color:#33FF77; border-left: 2px solid #33FF77;">> RESIZE</span>
+              <span style="color:#00A844;">[03] ARCHIVE</span>
+            </div>
+            <div class="mini-pane">
+              <div class="mini-hero-box" style="background:#0E160E; border-color:#00FF66;">
+                hero.png (4.2 MB) &bull; SCALE 50%
+              </div>
+              <div class="mini-controls">
+                <div class="mini-ctrl-btn" style="background:#33FF77; color:#080C08;">EXECUTE</div>
+                <div class="mini-ctrl-btn" style="border: 1px solid #1A2B1A; color:#00FF66;">DIFF</div>
+              </div>
+              <div class="mini-clibar" style="background:#0E160E; border-color:#1A2B1A; color:#00FF66;">
+                $ tb image resize hero.png --scale 50 --format webp
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 07: Kanagawa -->
+      <div class="theme-card" id="card-kanagawa" onclick="setTheme('kanagawa')">
+        <div class="card-top">
+          <div class="card-title-group">
+            <h3>[07] Kanagawa</h3>
+            <p class="card-desc">Woodblock Elegance • Autumn ink wash, paper parchment, and wave blue</p>
+          </div>
+          <button class="select-theme-btn">ACTIVATE</button>
+        </div>
+
+        <div class="card-swatches-grid">
+          <div class="swatch-box" style="background:#1F1F28; color:#DCD7BA;">
+            <span class="swatch-role">Canvas</span>
+            <span class="swatch-hex">#1F1F28</span>
+          </div>
+          <div class="swatch-box" style="background:#2A2A37; color:#DCD7BA;">
+            <span class="swatch-role">Surface</span>
+            <span class="swatch-hex">#2A2A37</span>
+          </div>
+          <div class="swatch-box" style="background:#363646; color:#DCD7BA;">
+            <span class="swatch-role">Border</span>
+            <span class="swatch-hex">#363646</span>
+          </div>
+          <div class="swatch-box" style="background:#1F1F28; color:#DCD7BA; border: 1px solid #363646;">
+            <span class="swatch-role">Text</span>
+            <span class="swatch-hex">#DCD7BA</span>
+          </div>
+          <div class="swatch-box" style="background:#7E9CD8; color:#1F1F28;">
+            <span class="swatch-role">Accent</span>
+            <span class="swatch-hex">#7E9CD8</span>
+          </div>
+        </div>
+
+        <!-- Mini Wireframe -->
+        <div class="mini-mockup" style="background:#1F1F28; border-color:#363646; color:#DCD7BA;">
+          <div class="mini-topbar" style="background:#2A2A37; border-color:#363646;">
+            <span>[ TOOLBOX // tb ]</span>
+            <span style="color:#7E9CD8">[02] IMAGE RESIZE</span>
+            <span>AIR-GAPPED</span>
+          </div>
+          <div class="mini-content">
+            <div class="mini-sidebar" style="background:#2A2A37; border-color:#363646;">
+              <span style="color:#727169;">[01] PDF SUITE</span>
+              <span class="mini-item active" style="background:#22222E; color:#7E9CD8; border-left: 2px solid #7E9CD8;">> RESIZE</span>
+              <span style="color:#727169;">[03] ARCHIVE</span>
+            </div>
+            <div class="mini-pane">
+              <div class="mini-hero-box" style="background:#2A2A37; border-color:#7E9CD8;">
+                hero.png (4.2 MB) &bull; SCALE 50%
+              </div>
+              <div class="mini-controls">
+                <div class="mini-ctrl-btn" style="background:#7E9CD8; color:#1F1F28;">EXECUTE</div>
+                <div class="mini-ctrl-btn" style="border: 1px solid #363646; color:#DCD7BA;">DIFF</div>
+              </div>
+              <div class="mini-clibar" style="background:#2A2A37; border-color:#363646; color:#DCD7BA;">
+                $ tb image resize hero.png --scale 50 --format webp
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 08: Catppuccin Mocha -->
+      <div class="theme-card" id="card-catppuccin-mocha" onclick="setTheme('catppuccin-mocha')">
+        <div class="card-top">
+          <div class="card-title-group">
+            <h3>[08] Catppuccin Mocha</h3>
+            <p class="card-desc">Soothing Pastel Dark • Warm velvety dusk with dreamy mauve lavender</p>
+          </div>
+          <button class="select-theme-btn">ACTIVATE</button>
+        </div>
+
+        <div class="card-swatches-grid">
+          <div class="swatch-box" style="background:#1E1E2E; color:#CDD6F4;">
+            <span class="swatch-role">Canvas</span>
+            <span class="swatch-hex">#1E1E2E</span>
+          </div>
+          <div class="swatch-box" style="background:#181825; color:#CDD6F4;">
+            <span class="swatch-role">Surface</span>
+            <span class="swatch-hex">#181825</span>
+          </div>
+          <div class="swatch-box" style="background:#313244; color:#CDD6F4;">
+            <span class="swatch-role">Border</span>
+            <span class="swatch-hex">#313244</span>
+          </div>
+          <div class="swatch-box" style="background:#1E1E2E; color:#CDD6F4; border: 1px solid #313244;">
+            <span class="swatch-role">Text</span>
+            <span class="swatch-hex">#CDD6F4</span>
+          </div>
+          <div class="swatch-box" style="background:#CBA6F7; color:#181825;">
+            <span class="swatch-role">Accent</span>
+            <span class="swatch-hex">#CBA6F7</span>
+          </div>
+        </div>
+
+        <!-- Mini Wireframe -->
+        <div class="mini-mockup" style="background:#1E1E2E; border-color:#313244; color:#CDD6F4;">
+          <div class="mini-topbar" style="background:#181825; border-color:#313244;">
+            <span>[ TOOLBOX // tb ]</span>
+            <span style="color:#CBA6F7">[02] IMAGE RESIZE</span>
+            <span>AIR-GAPPED</span>
+          </div>
+          <div class="mini-content">
+            <div class="mini-sidebar" style="background:#181825; border-color:#313244;">
+              <span style="color:#9399B2;">[01] PDF SUITE</span>
+              <span class="mini-item active" style="background:#11111B; color:#CBA6F7; border-left: 2px solid #CBA6F7;">> RESIZE</span>
+              <span style="color:#9399B2;">[03] ARCHIVE</span>
+            </div>
+            <div class="mini-pane">
+              <div class="mini-hero-box" style="background:#181825; border-color:#CBA6F7;">
+                hero.png (4.2 MB) &bull; SCALE 50%
+              </div>
+              <div class="mini-controls">
+                <div class="mini-ctrl-btn" style="background:#CBA6F7; color:#181825;">EXECUTE</div>
+                <div class="mini-ctrl-btn" style="border: 1px solid #313244; color:#CDD6F4;">DIFF</div>
+              </div>
+              <div class="mini-clibar" style="background:#181825; border-color:#313244; color:#CDD6F4;">
+                $ tb image resize hero.png --scale 50 --format webp
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 09: Rose Pine -->
+      <div class="theme-card" id="card-rose-pine" onclick="setTheme('rose-pine')">
+        <div class="card-top">
+          <div class="card-title-group">
+            <h3>[09] Rose Pine</h3>
+            <p class="card-desc">Minimal Elegant Rose • Dark violet midnight with frosted rose quartz</p>
+          </div>
+          <button class="select-theme-btn">ACTIVATE</button>
+        </div>
+
+        <div class="card-swatches-grid">
+          <div class="swatch-box" style="background:#191724; color:#E0DEF4;">
+            <span class="swatch-role">Canvas</span>
+            <span class="swatch-hex">#191724</span>
+          </div>
+          <div class="swatch-box" style="background:#1F1D2E; color:#E0DEF4;">
+            <span class="swatch-role">Surface</span>
+            <span class="swatch-hex">#1F1D2E</span>
+          </div>
+          <div class="swatch-box" style="background:#36334A; color:#E0DEF4;">
+            <span class="swatch-role">Border</span>
+            <span class="swatch-hex">#36334A</span>
+          </div>
+          <div class="swatch-box" style="background:#191724; color:#E0DEF4; border: 1px solid #36334A;">
+            <span class="swatch-role">Text</span>
+            <span class="swatch-hex">#E0DEF4</span>
+          </div>
+          <div class="swatch-box" style="background:#EBBCBA; color:#191724;">
+            <span class="swatch-role">Accent</span>
+            <span class="swatch-hex">#EBBCBA</span>
+          </div>
+        </div>
+
+        <!-- Mini Wireframe -->
+        <div class="mini-mockup" style="background:#191724; border-color:#36334A; color:#E0DEF4;">
+          <div class="mini-topbar" style="background:#1F1D2E; border-color:#36334A;">
+            <span>[ TOOLBOX // tb ]</span>
+            <span style="color:#EBBCBA">[02] IMAGE RESIZE</span>
+            <span>AIR-GAPPED</span>
+          </div>
+          <div class="mini-content">
+            <div class="mini-sidebar" style="background:#1F1D2E; border-color:#36334A;">
+              <span style="color:#908CAA;">[01] PDF SUITE</span>
+              <span class="mini-item active" style="background:#26233A; color:#EBBCBA; border-left: 2px solid #EBBCBA;">> RESIZE</span>
+              <span style="color:#908CAA;">[03] ARCHIVE</span>
+            </div>
+            <div class="mini-pane">
+              <div class="mini-hero-box" style="background:#1F1D2E; border-color:#EBBCBA;">
+                hero.png (4.2 MB) &bull; SCALE 50%
+              </div>
+              <div class="mini-controls">
+                <div class="mini-ctrl-btn" style="background:#EBBCBA; color:#191724;">EXECUTE</div>
+                <div class="mini-ctrl-btn" style="border: 1px solid #36334A; color:#E0DEF4;">DIFF</div>
+              </div>
+              <div class="mini-clibar" style="background:#1F1D2E; border-color:#36334A; color:#E0DEF4;">
+                $ tb image resize hero.png --scale 50 --format webp
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10: Everforest -->
+      <div class="theme-card" id="card-everforest" onclick="setTheme('everforest')">
+        <div class="card-top">
+          <div class="card-title-group">
+            <h3>[10] Everforest</h3>
+            <p class="card-desc">Organic Nature Earth • Deep coniferous pine with moss green accent</p>
+          </div>
+          <button class="select-theme-btn">ACTIVATE</button>
+        </div>
+
+        <div class="card-swatches-grid">
+          <div class="swatch-box" style="background:#272E33; color:#D3C6AA;">
+            <span class="swatch-role">Canvas</span>
+            <span class="swatch-hex">#272E33</span>
+          </div>
+          <div class="swatch-box" style="background:#2D353B; color:#D3C6AA;">
+            <span class="swatch-role">Surface</span>
+            <span class="swatch-hex">#2D353B</span>
+          </div>
+          <div class="swatch-box" style="background:#414B50; color:#D3C6AA;">
+            <span class="swatch-role">Border</span>
+            <span class="swatch-hex">#414B50</span>
+          </div>
+          <div class="swatch-box" style="background:#272E33; color:#D3C6AA; border: 1px solid #414B50;">
+            <span class="swatch-role">Text</span>
+            <span class="swatch-hex">#D3C6AA</span>
+          </div>
+          <div class="swatch-box" style="background:#A7C080; color:#272E33;">
+            <span class="swatch-role">Accent</span>
+            <span class="swatch-hex">#A7C080</span>
+          </div>
+        </div>
+
+        <!-- Mini Wireframe -->
+        <div class="mini-mockup" style="background:#272E33; border-color:#414B50; color:#D3C6AA;">
+          <div class="mini-topbar" style="background:#2D353B; border-color:#414B50;">
+            <span>[ TOOLBOX // tb ]</span>
+            <span style="color:#A7C080">[02] IMAGE RESIZE</span>
+            <span>AIR-GAPPED</span>
+          </div>
+          <div class="mini-content">
+            <div class="mini-sidebar" style="background:#2D353B; border-color:#414B50;">
+              <span style="color:#859289;">[01] PDF SUITE</span>
+              <span class="mini-item active" style="background:#343F44; color:#A7C080; border-left: 2px solid #A7C080;">> RESIZE</span>
+              <span style="color:#859289;">[03] ARCHIVE</span>
+            </div>
+            <div class="mini-pane">
+              <div class="mini-hero-box" style="background:#2D353B; border-color:#A7C080;">
+                hero.png (4.2 MB) &bull; SCALE 50%
+              </div>
+              <div class="mini-controls">
+                <div class="mini-ctrl-btn" style="background:#A7C080; color:#272E33;">EXECUTE</div>
+                <div class="mini-ctrl-btn" style="border: 1px solid #414868; color:#D3C6AA;">DIFF</div>
+              </div>
+              <div class="mini-clibar" style="background:#2D353B; border-color:#414B50; color:#D3C6AA;">
+                $ tb image resize hero.png --scale 50 --format webp
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE LOGIC SCRIPT -->
+  <script>
+    const themeMetadata = {
+      'industrial-graphite': {
+        name: 'INDUSTRIAL GRAPHITE (DEFAULT)',
+        subtag: 'CURRENT THEME: INDUSTRIAL GRAPHITE // CANV: #141618 SURF: #1E2124 ACC: #FFFFFF',
+        accent: '#FFFFFF'
+      },
+      'vantablack': {
+        name: 'VANTABLACK / MATTE BLACK',
+        subtag: 'CURRENT THEME: VANTABLACK // CANV: #000000 SURF: #0D0D0D ACC: #FFFFFF (PURE MONOCHROME OLED)',
+        accent: '#FFFFFF'
+      },
+      'tokyo-night': {
+        name: 'TOKYO NIGHT',
+        subtag: 'CURRENT THEME: TOKYO NIGHT // CANV: #1A1B26 SURF: #24283B ACC: #7AA2F7 (NEON CYBERPUNK)',
+        accent: '#7AA2F7'
+      },
+      'nord': {
+        name: 'NORD',
+        subtag: 'CURRENT THEME: NORD // CANV: #2E3440 SURF: #3B4252 ACC: #88C0D0 (ARCTIC BLUE)',
+        accent: '#88C0D0'
+      },
+      'gruvbox-dark': {
+        name: 'GRUVBOX DARK',
+        subtag: 'CURRENT THEME: GRUVBOX DARK // CANV: #1D2021 SURF: #282828 ACC: #FE8019 (RETRO GROOVE)',
+        accent: '#FE8019'
+      },
+      'hackerman': {
+        name: 'HACKERMAN',
+        subtag: 'CURRENT THEME: HACKERMAN // CANV: #080C08 SURF: #0E160E ACC: #33FF77 (MATRIX PHOSPHOR)',
+        accent: '#33FF77'
+      },
+      'kanagawa': {
+        name: 'KANAGAWA',
+        subtag: 'CURRENT THEME: KANAGAWA // CANV: #1F1F28 SURF: #2A2A37 ACC: #7E9CD8 (WOODBLOCK ELEGANCE)',
+        accent: '#7E9CD8'
+      },
+      'catppuccin-mocha': {
+        name: 'CATPPUCCIN MOCHA',
+        subtag: 'CURRENT THEME: CATPPUCCIN MOCHA // CANV: #1E1E2E SURF: #181825 ACC: #CBA6F7 (PASTEL SOOTHING)',
+        accent: '#CBA6F7'
+      },
+      'rose-pine': {
+        name: 'ROSE PINE',
+        subtag: 'CURRENT THEME: ROSE PINE // CANV: #191724 SURF: #1F1D2E ACC: #EBBCBA (MINIMAL ELEGANT ROSE)',
+        accent: '#EBBCBA'
+      },
+      'everforest': {
+        name: 'EVERFOREST',
+        subtag: 'CURRENT THEME: EVERFOREST // CANV: #272E33 SURF: #2D353B ACC: #A7C080 (ORGANIC NATURE)',
+        accent: '#A7C080'
+      }
+    };
+
+    let currentFormat = 'webp';
+    let stripExif = true;
+
+    function setTheme(themeId) {
+      document.body.setAttribute('data-theme', themeId);
+
+      // Update pill & subtag text
+      const meta = themeMetadata[themeId];
+      if (meta) {
+        document.getElementById('active-theme-pill').textContent = 'ACTIVE: ' + meta.name;
+        document.getElementById('active-theme-subtag').textContent = meta.subtag;
+      }
+
+      // Update selector buttons
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        if (btn.getAttribute('data-target') === themeId) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // Update matrix cards
+      document.querySelectorAll('.theme-card').forEach(card => {
+        if (card.id === 'card-' + themeId) {
+          card.classList.add('is-active');
+        } else {
+          card.classList.remove('is-active');
+        }
+      });
+    }
+
+    function setFormat(fmt, btn) {
+      currentFormat = fmt;
+      document.querySelectorAll('.btn-group-option').forEach(b => {
+        if (['PNG', 'JPG', 'WEBP', 'AVIF'].includes(b.textContent.trim())) {
+          b.classList.remove('active');
+        }
+      });
+      btn.classList.add('active');
+      document.getElementById('format-val-display').textContent = '[ ' + fmt.toUpperCase() + ' ]';
+      updateCli();
+    }
+
+    function toggleCheckbox(id) {
+      if (id === 'strip-exif') {
+        stripExif = !stripExif;
+        document.getElementById('chk-strip-exif').textContent = stripExif ? 'X' : ' ';
+        updateCli();
+      } else {
+        const el = document.getElementById('chk-' + id);
+        if (el) {
+          el.textContent = el.textContent.trim() === 'X' ? ' ' : 'X';
+        }
+      }
+    }
+
+    function updateCli() {
+      const scale = document.getElementById('scale-slider').value;
+      const quality = document.getElementById('quality-slider').value;
+
+      document.getElementById('scale-text').value = scale + '%';
+      const calcW = Math.round(3840 * (scale / 100));
+      const calcH = Math.round(2160 * (scale / 100));
+      document.getElementById('scale-val-display').textContent = `[ ${scale}% ] [ ${calcW} x ${calcH} ]`;
+
+      document.getElementById('quality-text').value = quality;
+      let qLabel = 'HIGH';
+      if (quality < 50) qLabel = 'LOW';
+      else if (quality < 80) qLabel = 'MEDIUM';
+      else if (quality < 95) qLabel = 'MEDIUM-HIGH';
+      else qLabel = 'MAXIMUM';
+      document.getElementById('quality-val-display').textContent = `[ ${quality} ] [ ${qLabel} ]`;
+
+      document.getElementById('cli-scale').textContent = scale;
+      document.getElementById('cli-format').textContent = currentFormat;
+      document.getElementById('cli-quality').textContent = quality;
+      document.getElementById('cli-exif').textContent = stripExif ? '--strip-exif' : '';
+    }
+
+    function copyCliCommand() {
+      const scale = document.getElementById('scale-slider').value;
+      const quality = document.getElementById('quality-slider').value;
+      const exifPart = stripExif ? ' --strip-exif' : '';
+      const textToCopy = `tb image resize hero.png --scale ${scale} --format ${currentFormat} --quality ${quality}${exifPart}`;
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const copyBtn = document.getElementById('copy-cli-btn');
+        copyBtn.textContent = '[ COPIED TO CLIPBOARD! ]';
+        copyBtn.classList.add('copied');
+        setTimeout(() => {
+          copyBtn.textContent = '[ COPY CLI ]';
+          copyBtn.classList.remove('copied');
+        }, 1800);
+      }).catch(() => {
+        const copyBtn = document.getElementById('copy-cli-btn');
+        copyBtn.textContent = '[ COPIED! ]';
+        setTimeout(() => {
+          copyBtn.textContent = '[ COPY CLI ]';
+        }, 1800);
+      });
+    }
+
+    function flashExecute(btn) {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<span>[ EXECUTING SIMD RESIZE... ]</span>';
+      btn.style.opacity = '0.7';
+      setTimeout(() => {
+        btn.innerHTML = '<span>[ COMPRESSION COMPLETE (0.42s) ]</span>';
+        btn.style.opacity = '1';
+        setTimeout(() => {
+          btn.innerHTML = orig;
+        }, 1500);
+      }, 420);
+    }
+  </script>
+</body>
+</html>

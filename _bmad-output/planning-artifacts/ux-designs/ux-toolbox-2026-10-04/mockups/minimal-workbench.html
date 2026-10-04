@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toolbox — Minimal Workbench Mockup</title>
+  <style>
+    /*
+      ==========================================================================
+      TOOLBOX // MINIMAL WORKBENCH (RADICAL REDUCTION)
+      Design Language: Pure Monospace Brutalism (Omarchy Themes)
+      Border-radius: Strictly 0px throughout
+      Lines: 1px crisp solid borders, zero shadows, zero gradients
+      Typography: Monospace only
+      Goal: 1-second cognitive clarity: Drop file -> Pick preset -> Done.
+      ==========================================================================
+    */
+
+    :root {
+      /* Default Theme: Industrial Graphite */
+      --canvas:        #141618;
+      --surface:       #1E2124;
+      --surface-sub:   #171A1D;
+      --border:        #32383E;
+      --border-focus:  #E2E8F0;
+      --text:          #E2E8F0;
+      --text-muted:    #8B949E;
+      --accent:        #FFFFFF;
+      --accent-fg:     #141618;
+      --tag-bg:        #23282D;
+      --tag-border:    #444C54;
+      --success:       #3FB950;
+      --font-mono:     'JetBrains Mono', 'Fira Code', 'Courier New', ui-monospace, Menlo, Monaco, monospace;
+    }
+
+    [data-theme="industrial-graphite"] {
+      --canvas:        #141618;
+      --surface:       #1E2124;
+      --surface-sub:   #171A1D;
+      --border:        #32383E;
+      --border-focus:  #E2E8F0;
+      --text:          #E2E8F0;
+      --text-muted:    #8B949E;
+      --accent:        #FFFFFF;
+      --accent-fg:     #141618;
+      --tag-bg:        #23282D;
+      --tag-border:    #444C54;
+      --success:       #3FB950;
+    }
+
+    [data-theme="vantablack"] {
+      --canvas:        #000000;
+      --surface:       #0D0D0D;
+      --surface-sub:   #141414;
+      --border:        #262626;
+      --border-focus:  #FAFAFA;
+      --text:          #FAFAFA;
+      --text-muted:    #737373;
+      --accent:        #FFFFFF;
+      --accent-fg:     #000000;
+      --tag-bg:        #171717;
+      --tag-border:    #333333;
+      --success:       #4ADE80;
+    }
+
+    [data-theme="tokyo-night"] {
+      --canvas:        #1A1B26;
+      --surface:       #24283B;
+      --surface-sub:   #1F2335;
+      --border:        #414868;
+      --border-focus:  #7AA2F7;
+      --text:          #C0CAF5;
+      --text-muted:    #565F89;
+      --accent:        #7AA2F7;
+      --accent-fg:     #1A1B26;
+      --tag-bg:        #292E42;
+      --tag-border:    #565F89;
+      --success:       #9ECE6A;
+    }
+
+    [data-theme="nord"] {
+      --canvas:        #2E3440;
+      --surface:       #3B4252;
+      --surface-sub:   #434C5E;
+      --border:        #4C566A;
+      --border-focus:  #88C0D0;
+      --text:          #ECEFF4;
+      --text-muted:    #9AA5B8;
+      --accent:        #88C0D0;
+      --accent-fg:     #2E3440;
+      --tag-bg:        #434C5E;
+      --tag-border:    #616E85;
+      --success:       #A3BE8C;
+    }
+
+    [data-theme="gruvbox-dark"] {
+      --canvas:        #1D2021;
+      --surface:       #282828;
+      --surface-sub:   #32302F;
+      --border:        #3C3836;
+      --border-focus:  #FE8019;
+      --text:          #EBDBB2;
+      --text-muted:    #A89984;
+      --accent:        #FE8019;
+      --accent-fg:     #1D2021;
+      --tag-bg:        #3C3836;
+      --tag-border:    #504945;
+      --success:       #B8BB26;
+    }
+
+    [data-theme="hackerman"] {
+      --canvas:        #080C08;
+      --surface:       #0E160E;
+      --surface-sub:   #132013;
+      --border:        #1A2B1A;
+      --border-focus:  #00FF66;
+      --text:          #00FF66;
+      --text-muted:    #00A844;
+      --accent:        #33FF77;
+      --accent-fg:     #080C08;
+      --tag-bg:        #112411;
+      --tag-border:    #1F421F;
+      --success:       #00FF66;
+    }
+
+    [data-theme="kanagawa"] {
+      --canvas:        #1F1F28;
+      --surface:       #2A2A37;
+      --surface-sub:   #22222E;
+      --border:        #363646;
+      --border-focus:  #7E9CD8;
+      --text:          #DCD7BA;
+      --text-muted:    #727169;
+      --accent:        #7E9CD8;
+      --accent-fg:     #1F1F28;
+      --tag-bg:        #2D2E3F;
+      --tag-border:    #49495E;
+      --success:       #98BB6C;
+    }
+
+    [data-theme="catppuccin-mocha"] {
+      --canvas:        #1E1E2E;
+      --surface:       #181825;
+      --surface-sub:   #11111B;
+      --border:        #313244;
+      --border-focus:  #CBA6F7;
+      --text:          #CDD6F4;
+      --text-muted:    #9399B2;
+      --accent:        #CBA6F7;
+      --accent-fg:     #181825;
+      --tag-bg:        #232338;
+      --tag-border:    #45475A;
+      --success:       #A6E3A1;
+    }
+
+    [data-theme="rose-pine"] {
+      --canvas:        #191724;
+      --surface:       #1F1D2E;
+      --surface-sub:   #26233A;
+      --border:        #36334A;
+      --border-focus:  #EBBCBA;
+      --text:          #E0DEF4;
+      --text-muted:    #908CAA;
+      --accent:        #EBBCBA;
+      --accent-fg:     #191724;
+      --tag-bg:        #2A273F;
+      --tag-border:    #433F5E;
+      --success:       #9CCFD8;
+    }
+
+    [data-theme="everforest"] {
+      --canvas:        #272E33;
+      --surface:       #2D353B;
+      --surface-sub:   #343F44;
+      --border:        #414B50;
+      --border-focus:  #A7C080;
+      --text:          #D3C6AA;
+      --text-muted:    #859289;
+      --accent:        #A7C080;
+      --accent-fg:     #272E33;
+      --tag-bg:        #353E44;
+      --tag-border:    #4F5B58;
+      --success:       #A7C080;
+    }
+
+    /* Universal Reset - Strict 0px Brutalism */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0px !important;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--canvas);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.5;
+      padding: 24px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    /* ==========================================================================
+       TOP CONTROL BAR (PROTOTYPE CONTROLS)
+       ========================================================================== */
+    .proto-controls {
+      width: 100%;
+      max-width: 1060px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+    }
+
+    .proto-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .proto-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .proto-btn-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .proto-btn {
+      background-color: var(--surface-sub);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: border-color 0.1s ease, background-color 0.1s ease;
+    }
+
+    .proto-btn:hover {
+      border-color: var(--border-focus);
+      background-color: var(--surface);
+    }
+
+    .proto-btn.active {
+      background-color: var(--text);
+      color: var(--canvas);
+      border-color: var(--text);
+      font-weight: 700;
+    }
+
+    .theme-swatch {
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* ==========================================================================
+       WORKBENCH APP CONTAINER
+       ========================================================================== */
+    .workbench-container {
+      width: 100%;
+      max-width: 1060px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* Dual Compare Mode Layout */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .compare-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .compare-label span {
+      color: var(--text);
+    }
+
+    /* Slint Desktop App Frame */
+    .app-frame {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      min-height: 540px;
+      width: 100%;
+    }
+
+    /* ==========================================================================
+       SIDEBAR (ULTRA-QUIET, ZERO CLUTTER)
+       ========================================================================== */
+    .app-sidebar {
+      background-color: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
+    }
+
+    .sidebar-top {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .app-brand {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      padding-left: 8px;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-item {
+      padding: 7px 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: color 0.1s ease, border-color 0.1s ease;
+    }
+
+    .nav-item:hover {
+      color: var(--text);
+    }
+
+    .nav-item.active {
+      color: var(--text);
+      font-weight: 700;
+      border: 1px solid var(--border-focus);
+      background-color: var(--surface-sub);
+    }
+
+    .sidebar-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar-bottom .nav-item {
+      font-size: 12px;
+    }
+
+    /* ==========================================================================
+       MAIN CANVAS (CALM, ROOMY, OBVIOUS NEXT STEP)
+       ========================================================================== */
+    .app-canvas {
+      background-color: var(--canvas);
+      padding: 44px 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .canvas-content {
+      display: flex;
+      flex-direction: column;
+      max-width: 620px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .canvas-heading {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+
+    /* Dropzone (Empty State) */
+    .dropzone {
+      border: 1px dashed var(--border);
+      background-color: var(--surface-sub);
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: border-color 0.12s ease, background-color 0.12s ease;
+      position: relative;
+    }
+
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--border-focus);
+      background-color: var(--surface);
+    }
+
+    .dropzone-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .dropzone-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .dropzone-icon {
+      font-size: 22px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    /* Dropped File Card (File Dropped State) */
+    .file-card {
+      border: 1px solid var(--border);
+      background-color: var(--surface);
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .file-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .file-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .file-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .file-action-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      transition: color 0.1s ease, border-color 0.1s ease;
+    }
+
+    .file-action-btn:hover {
+      color: var(--text);
+      border-color: var(--border-focus);
+    }
+
+    /* Preset Selection Row */
+    .preset-section {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .preset-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .preset-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .preset-btn {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      transition: border-color 0.1s ease, background-color 0.1s ease;
+    }
+
+    .preset-btn:hover {
+      border-color: var(--border-focus);
+    }
+
+    .preset-btn.active {
+      border-color: var(--text);
+      background-color: var(--surface-sub);
+      box-shadow: inset 0 0 0 1px var(--text);
+    }
+
+    .preset-btn-sub {
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .preset-btn.active .preset-btn-sub {
+      color: var(--text);
+    }
+
+    /* Primary Action Button */
+    .action-row {
+      margin-top: 24px;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background-color: var(--accent);
+      color: var(--accent-fg);
+      border: 1px solid var(--accent);
+      padding: 12px 18px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: opacity 0.1s ease;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-primary.disabled {
+      background-color: var(--surface-sub);
+      color: var(--text-muted);
+      border-color: var(--border);
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    /* Success / Result View */
+    .result-box {
+      border: 1px solid var(--success);
+      background-color: var(--surface);
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .result-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--success);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .result-stats {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .result-saved {
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    /* Footer CLI Bar */
+    .canvas-footer {
+      max-width: 620px;
+      width: 100%;
+      margin: 36px auto 0 auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .cli-snippet {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .cli-snippet code {
+      color: var(--text);
+    }
+
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 2px 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      cursor: pointer;
+      margin-left: 12px;
+      flex-shrink: 0;
+    }
+
+    .copy-btn:hover {
+      color: var(--text);
+      border-color: var(--border-focus);
+    }
+
+    /* Hidden file input */
+    #hidden-file-input {
+      display: none;
+    }
+
+    /* Responsive adjustment */
+    @media (max-width: 860px) {
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body data-theme="industrial-graphite">
+
+  <!-- ==========================================================================
+       PROTOTYPE CONTROL BAR (Theme Switcher + State Toggle)
+       ========================================================================== -->
+  <header class="proto-controls">
+    <!-- Row 1: State View Modes -->
+    <div class="proto-row">
+      <div class="proto-label">
+        <span>VIEW STATE:</span>
+      </div>
+      <div class="proto-btn-group">
+        <button class="proto-btn active" id="btn-state-empty" onclick="setViewMode('empty')">
+          [ 1. Empty State ]
+        </button>
+        <button class="proto-btn" id="btn-state-dropped" onclick="setViewMode('dropped')">
+          [ 2. File Dropped ]
+        </button>
+        <button class="proto-btn" id="btn-state-result" onclick="setViewMode('result')">
+          [ 3. Result Done ]
+        </button>
+        <button class="proto-btn" id="btn-state-compare" onclick="setViewMode('compare')">
+          [ Side-by-Side Compare ]
+        </button>
+      </div>
+    </div>
+
+    <!-- Row 2: Omarchy Themes Quick Switcher -->
+    <div class="proto-row">
+      <div class="proto-label">
+        <span>THEME:</span>
+      </div>
+      <div class="proto-btn-group">
+        <button class="proto-btn active" onclick="setTheme('industrial-graphite', this)">
+          <span class="theme-swatch" style="background:#E2E8F0;"></span> Graphite (Default)
+        </button>
+        <button class="proto-btn" onclick="setTheme('vantablack', this)">
+          <span class="theme-swatch" style="background:#000000; border-color:#555;"></span> Vantablack
+        </button>
+        <button class="proto-btn" onclick="setTheme('tokyo-night', this)">
+          <span class="theme-swatch" style="background:#7AA2F7;"></span> Tokyo Night
+        </button>
+        <button class="proto-btn" onclick="setTheme('nord', this)">
+          <span class="theme-swatch" style="background:#88C0D0;"></span> Nord
+        </button>
+        <button class="proto-btn" onclick="setTheme('gruvbox-dark', this)">
+          <span class="theme-swatch" style="background:#FE8019;"></span> Gruvbox
+        </button>
+        <button class="proto-btn" onclick="setTheme('hackerman', this)">
+          <span class="theme-swatch" style="background:#00FF66;"></span> Hackerman
+        </button>
+        <button class="proto-btn" onclick="setTheme('kanagawa', this)">
+          <span class="theme-swatch" style="background:#7E9CD8;"></span> Kanagawa
+        </button>
+        <button class="proto-btn" onclick="setTheme('catppuccin-mocha', this)">
+          <span class="theme-swatch" style="background:#CBA6F7;"></span> Catppuccin
+        </button>
+        <button class="proto-btn" onclick="setTheme('rose-pine', this)">
+          <span class="theme-swatch" style="background:#EBBCBA;"></span> Rose Pine
+        </button>
+        <button class="proto-btn" onclick="setTheme('everforest', this)">
+          <span class="theme-swatch" style="background:#A7C080;"></span> Everforest
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hidden native file input for real interactions -->
+  <input type="file" id="hidden-file-input" accept="image/*" onchange="handleRealFileSelected(event)">
+
+  <!-- ==========================================================================
+       MAIN WORKBENCH AREA
+       ========================================================================== -->
+  <main class="workbench-container" id="workbench-container">
+
+    <!-- SINGLE VIEW WRAPPER -->
+    <div id="single-view-wrapper">
+      <div class="app-frame">
+
+        <!-- Left Sidebar: Minimal, clean, quiet -->
+        <aside class="app-sidebar">
+          <div class="sidebar-top">
+            <div class="app-brand">tb</div>
+            <ul class="sidebar-nav">
+              <li class="nav-item active">Image</li>
+              <li class="nav-item">PDF</li>
+              <li class="nav-item">Archive</li>
+              <li class="nav-item">Developer</li>
+            </ul>
+          </div>
+          <div class="sidebar-bottom">
+            <div class="nav-item">Settings</div>
+          </div>
+        </aside>
+
+        <!-- Main Canvas -->
+        <section class="app-canvas">
+          <div class="canvas-content">
+            <h1 class="canvas-heading">Image Compress</h1>
+
+            <!-- DYNAMIC STATE 1: EMPTY STATE -->
+            <div id="view-empty-state">
+              <!-- Centered Large Dropzone -->
+              <div class="dropzone" id="dropzone-box" onclick="triggerFileInput()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+                <div class="dropzone-icon">↓</div>
+                <div class="dropzone-title">Drop image here</div>
+                <div class="dropzone-sub">or click to browse</div>
+              </div>
+
+              <!-- Preset Row -->
+              <div class="preset-section">
+                <div class="preset-label">Preset</div>
+                <div class="preset-row">
+                  <button type="button" class="preset-btn" onclick="selectPreset('small', this)">
+                    <span>Small</span>
+                    <span class="preset-btn-sub">~85% smaller</span>
+                  </button>
+                  <button type="button" class="preset-btn active" onclick="selectPreset('balanced', this)">
+                    <span>Balanced</span>
+                    <span class="preset-btn-sub">Recommended</span>
+                  </button>
+                  <button type="button" class="preset-btn" onclick="selectPreset('best', this)">
+                    <span>Best</span>
+                    <span class="preset-btn-sub">Visually lossless</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Action Button (Disabled until file is dropped) -->
+              <div class="action-row">
+                <button type="button" class="btn-primary disabled" onclick="triggerFileInput()">
+                  Compress
+                </button>
+              </div>
+            </div>
+
+            <!-- DYNAMIC STATE 2: FILE DROPPED STATE -->
+            <div id="view-dropped-state" style="display:none;">
+              <!-- Dropped File Row -->
+              <div class="file-card">
+                <div class="file-info">
+                  <div class="file-name" id="display-filename">hero-banner.png</div>
+                  <div class="file-meta" id="display-filemeta">4.2 MB • 3840 × 2160 • PNG</div>
+                </div>
+                <button type="button" class="file-action-btn" onclick="resetToEmpty()">Remove</button>
+              </div>
+
+              <!-- Preset Row -->
+              <div class="preset-section">
+                <div class="preset-label">Preset</div>
+                <div class="preset-row">
+                  <button type="button" class="preset-btn" onclick="selectPreset('small', this)">
+                    <span>Small</span>
+                    <span class="preset-btn-sub">~85% smaller</span>
+                  </button>
+                  <button type="button" class="preset-btn active" onclick="selectPreset('balanced', this)">
+                    <span>Balanced</span>
+                    <span class="preset-btn-sub">Recommended</span>
+                  </button>
+                  <button type="button" class="preset-btn" onclick="selectPreset('best', this)">
+                    <span>Best</span>
+                    <span class="preset-btn-sub">Visually lossless</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Primary Action Button (Enabled & Bold) -->
+              <div class="action-row">
+                <button type="button" class="btn-primary" id="btn-compress-action" onclick="simulateCompression()">
+                  Compress
+                </button>
+              </div>
+            </div>
+
+            <!-- DYNAMIC STATE 3: RESULT DONE STATE -->
+            <div id="view-result-state" style="display:none;">
+              <div class="result-box">
+                <div class="result-row">
+                  <div class="result-title">
+                    <span>✓</span> Compressed Successfully
+                  </div>
+                  <div class="result-stats">
+                    4.2 MB → <span class="result-saved">840 KB (-80%)</span>
+                  </div>
+                </div>
+                <div class="result-actions">
+                  <button type="button" class="proto-btn active" onclick="alert('Simulated: Opening compressed file...')">Open File</button>
+                  <button type="button" class="proto-btn" onclick="alert('Simulated: Revealing in system file manager...')">Show in Folder</button>
+                  <button type="button" class="proto-btn" onclick="resetToEmpty()">Compress Another</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Footer CLI Command -->
+          <footer class="canvas-footer">
+            <div class="cli-snippet">
+              $ <code id="cli-preview">tb image compress file.png --preset balanced</code>
+            </div>
+            <button type="button" class="copy-btn" onclick="copyCliCommand(this)">[copy]</button>
+          </footer>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- DUAL COMPARE WRAPPER (HIDDEN BY DEFAULT) -->
+    <div id="dual-compare-wrapper" style="display:none;">
+      <div class="compare-grid">
+
+        <!-- Column 1: Empty State -->
+        <div>
+          <div class="compare-label">State 1: <span>Empty (First Glance)</span></div>
+          <div class="app-frame" style="min-height:480px;">
+            <aside class="app-sidebar">
+              <div class="sidebar-top">
+                <div class="app-brand">tb</div>
+                <ul class="sidebar-nav">
+                  <li class="nav-item active">Image</li>
+                  <li class="nav-item">PDF</li>
+                  <li class="nav-item">Archive</li>
+                  <li class="nav-item">Developer</li>
+                </ul>
+              </div>
+              <div class="sidebar-bottom">
+                <div class="nav-item">Settings</div>
+              </div>
+            </aside>
+            <section class="app-canvas" style="padding:32px 36px;">
+              <div class="canvas-content">
+                <h1 class="canvas-heading" style="font-size:18px; margin-bottom:20px;">Image Compress</h1>
+                <div class="dropzone" style="height:170px;">
+                  <div class="dropzone-icon">↓</div>
+                  <div class="dropzone-title">Drop image here</div>
+                  <div class="dropzone-sub">or click to browse</div>
+                </div>
+                <div class="preset-section">
+                  <div class="preset-label">Preset</div>
+                  <div class="preset-row">
+                    <div class="preset-btn"><span>Small</span></div>
+                    <div class="preset-btn active"><span>Balanced</span></div>
+                    <div class="preset-btn"><span>Best</span></div>
+                  </div>
+                </div>
+                <div class="action-row">
+                  <div class="btn-primary disabled" style="text-align:center;">Compress</div>
+                </div>
+              </div>
+              <footer class="canvas-footer" style="margin-top:24px;">
+                <div class="cli-snippet">$ <code>tb image compress &lt;file&gt;</code></div>
+                <span class="copy-btn">[copy]</span>
+              </footer>
+            </section>
+          </div>
+        </div>
+
+        <!-- Column 2: File Dropped State -->
+        <div>
+          <div class="compare-label">State 2: <span>File Dropped (Ready to Act)</span></div>
+          <div class="app-frame" style="min-height:480px;">
+            <aside class="app-sidebar">
+              <div class="sidebar-top">
+                <div class="app-brand">tb</div>
+                <ul class="sidebar-nav">
+                  <li class="nav-item active">Image</li>
+                  <li class="nav-item">PDF</li>
+                  <li class="nav-item">Archive</li>
+                  <li class="nav-item">Developer</li>
+                </ul>
+              </div>
+              <div class="sidebar-bottom">
+                <div class="nav-item">Settings</div>
+              </div>
+            </aside>
+            <section class="app-canvas" style="padding:32px 36px;">
+              <div class="canvas-content">
+                <h1 class="canvas-heading" style="font-size:18px; margin-bottom:20px;">Image Compress</h1>
+                <div class="file-card">
+                  <div class="file-info">
+                    <div class="file-name">hero-banner.png</div>
+                    <div class="file-meta">4.2 MB • 3840 × 2160 • PNG</div>
+                  </div>
+                  <button type="button" class="file-action-btn">Remove</button>
+                </div>
+                <div class="preset-section">
+                  <div class="preset-label">Preset</div>
+                  <div class="preset-row">
+                    <div class="preset-btn"><span>Small</span></div>
+                    <div class="preset-btn active"><span>Balanced</span></div>
+                    <div class="preset-btn"><span>Best</span></div>
+                  </div>
+                </div>
+                <div class="action-row">
+                  <button type="button" class="btn-primary">Compress</button>
+                </div>
+              </div>
+              <footer class="canvas-footer" style="margin-top:24px;">
+                <div class="cli-snippet">$ <code>tb image compress hero-banner.png</code></div>
+                <span class="copy-btn">[copy]</span>
+              </footer>
+            </section>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    let currentPreset = 'balanced';
+    let currentFileName = 'hero-banner.png';
+    let currentFileSize = '4.2 MB';
+
+    // Theme Switcher
+    function setTheme(themeName, btnElement) {
+      document.body.setAttribute('data-theme', themeName);
+      if (btnElement) {
+        document.querySelectorAll('.proto-controls .proto-row:nth-child(2) .proto-btn').forEach(b => b.classList.remove('active'));
+        btnElement.classList.add('active');
+      }
+    }
+
+    // View Mode Switcher
+    function setViewMode(mode) {
+      const singleWrap = document.getElementById('single-view-wrapper');
+      const dualWrap = document.getElementById('dual-compare-wrapper');
+
+      document.getElementById('btn-state-empty').classList.remove('active');
+      document.getElementById('btn-state-dropped').classList.remove('active');
+      document.getElementById('btn-state-result').classList.remove('active');
+      document.getElementById('btn-state-compare').classList.remove('active');
+
+      if (mode === 'compare') {
+        singleWrap.style.display = 'none';
+        dualWrap.style.display = 'block';
+        document.getElementById('btn-state-compare').classList.add('active');
+        return;
+      }
+
+      singleWrap.style.display = 'block';
+      dualWrap.style.display = 'none';
+
+      document.getElementById('view-empty-state').style.display = 'none';
+      document.getElementById('view-dropped-state').style.display = 'none';
+      document.getElementById('view-result-state').style.display = 'none';
+
+      if (mode === 'empty') {
+        document.getElementById('view-empty-state').style.display = 'block';
+        document.getElementById('btn-state-empty').classList.add('active');
+        updateCli('file.png');
+      } else if (mode === 'dropped') {
+        document.getElementById('view-dropped-state').style.display = 'block';
+        document.getElementById('btn-state-dropped').classList.add('active');
+        updateCli(currentFileName);
+      } else if (mode === 'result') {
+        document.getElementById('view-result-state').style.display = 'block';
+        document.getElementById('btn-state-result').classList.add('active');
+        updateCli(currentFileName);
+      }
+    }
+
+    // Preset Selection
+    function selectPreset(preset, btnElement) {
+      currentPreset = preset;
+      document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+      const filename = (document.getElementById('view-empty-state').style.display !== 'none') ? 'file.png' : currentFileName;
+      updateCli(filename);
+    }
+
+    // CLI String Updater
+    function updateCli(filename) {
+      const cliEl = document.getElementById('cli-preview');
+      cliEl.textContent = `tb image compress ${filename} --preset ${currentPreset}`;
+    }
+
+    // Reset to Empty
+    function resetToEmpty() {
+      setViewMode('empty');
+    }
+
+    // Trigger Hidden File Chooser
+    function triggerFileInput() {
+      document.getElementById('hidden-file-input').click();
+    }
+
+    // Handle Native File Chooser
+    function handleRealFileSelected(e) {
+      if (e.target.files && e.target.files[0]) {
+        const file = e.target.files[0];
+        currentFileName = file.name;
+        const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+        currentFileSize = `${sizeMb} MB`;
+
+        document.getElementById('display-filename').textContent = currentFileName;
+        document.getElementById('display-filemeta').textContent = `${currentFileSize} • ${file.type || 'Image'}`;
+        setViewMode('dropped');
+      }
+    }
+
+    // Drag and Drop support
+    function handleDragOver(e) {
+      e.preventDefault();
+      document.getElementById('dropzone-box').classList.add('dragover');
+    }
+
+    function handleDragLeave(e) {
+      e.preventDefault();
+      document.getElementById('dropzone-box').classList.remove('dragover');
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      document.getElementById('dropzone-box').classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        const file = e.dataTransfer.files[0];
+        currentFileName = file.name;
+        const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+        currentFileSize = `${sizeMb} MB`;
+
+        document.getElementById('display-filename').textContent = currentFileName;
+        document.getElementById('display-filemeta').textContent = `${currentFileSize} • ${file.type || 'Image'}`;
+        setViewMode('dropped');
+      }
+    }
+
+    // Simulate Compression
+    function simulateCompression() {
+      const btn = document.getElementById('btn-compress-action');
+      btn.textContent = 'Compressing... [=======>   ]';
+      btn.style.opacity = '0.7';
+
+      setTimeout(() => {
+        btn.textContent = 'Compress';
+        btn.style.opacity = '1';
+        setViewMode('result');
+      }, 550);
+    }
+
+    // Copy CLI Snippet
+    function copyCliCommand(btn) {
+      const text = `$ ${document.getElementById('cli-preview').textContent}`;
+      navigator.clipboard.writeText(text).then(() => {
+        const oldText = btn.textContent;
+        btn.textContent = '[copied!]';
+        setTimeout(() => {
+          btn.textContent = oldText;
+        }, 1500);
+      }).catch(() => {
+        btn.textContent = '[copied!]';
+        setTimeout(() => {
+          btn.textContent = '[copy]';
+        }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -8,6 +8,8 @@ inputDocuments:
   - _bmad-output/planning-artifacts/PRD.md
   - _bmad-output/planning-artifacts/ARCHITECTURE-SPINE.md
   - _bmad-output/planning-artifacts/ARCHITECTURE-DESIGN.md
+  - _bmad-output/planning-artifacts/ux-designs/ux-toolbox-2026-10-04/DESIGN.md
+  - _bmad-output/planning-artifacts/ux-designs/ux-toolbox-2026-10-04/EXPERIENCE.md
 ---
 
 # Toolbox (tb) - Epic Breakdown
@@ -82,13 +84,15 @@ This document provides the complete epic and story breakdown for Toolbox (`tb`),
 
 ### UX Design Requirements (Embedded UX Specifications)
 
-* **UX-DR1: Slint Omni-Bar Command Palette** — Auto-focused, keyboard-navigable command palette with instant fuzzy search (<16ms latency), category filtering, and integrated drag-and-drop dropzone.
-* **UX-DR2: Proactive Focus Clipboard Detection** — Non-intrusive interactive suggestion chip appearing upon window focus when valid JWT, unformatted JSON, or hex color is detected in clipboard.
-* **UX-DR3: Dynamic GUI-to-CLI Live Command Button** — Persistent `[Copy CLI Command]` button on every tool view that updates in real-time as users modify settings, copying the exact terminal command to clipboard.
-* **UX-DR4: Actionable Error Healing Card** — Visual diagnostic card with red outline, human-readable cause explanation, and 1-click healing action (e.g. `[Attempt Non-Destructive Repair via QPDF]`).
-* **UX-DR5: Embedded Extension Viewport Container** — Reserved Slint `<ExtensionViewport>` panel with standardized loading skeleton, title header, and extension heartbeat monitor.
-* **UX-DR6: Storage & Engines Dashboard View** — Visual storage management screen displaying installed static engines, disk usage bars, *"Last used: X days ago"* metadata, and explicit `[Uninstall]` buttons.
-* **UX-DR7: Air-Gap Verification Status Badge** — Desktop window footer badge displaying air-gapped status (*"100% Local / Network Sockets Disabled in Core"*).
+* **UX-DR1: Slint Omni-Bar Command Palette (`Super+Shift+T`)** — Auto-focused, keyboard-navigable command palette with instant fuzzy search (<16ms latency), category filtering, integrated drag-and-drop dropzone, and proactive focus clipboard detection chips (`[↵ Decode JWT]`, `[↵ Prettify JSON]`).
+* **UX-DR2: Omarchy Theme Engine & All-Monospace Brutalism** — `crates/tb-ui/ui/theme.slint` design token singleton enforcing strict `0px` border-radius (`radius-none`), pure monospace typography (`ui-monospace, "JetBrains Mono", monospace`), 1px crisp borders, zero gradients, and dynamic runtime switching across all 10 Omarchy palettes (Default: Industrial Graphite `#141618`).
+* **UX-DR3: `slintcn` Boxy Component Foundation** — In-repo `crates/tb-ui/ui/slintcn/` copy-paste components (`Button`, `Card`, `Input`, `Dialog`, `Badge`, `Dropzone`) bound to `Theme` tokens with high-contrast, instantly recognizable visual affordances.
+* **UX-DR4: Model A Dual-Pane Workbench Shell** — Quiet `200px` left sidebar navigation (`Image`, `PDF`, `Archive`, `Developer`, `Settings`) paired with a single-task focused main canvas, `1`–`4` category hotkeys, and full keyboard navigation.
+* **UX-DR5: 1-Second Comprehension & 3-Preset Action Flow** — Primary tool screens enforce radical visual reduction (zero cockpit badges or marketing clutter): Tool Header $\rightarrow$ Calm Large Dropzone $\rightarrow$ 3-Preset Row (`[ Small ]  [ Balanced ]  [ Best ]`) $\rightarrow$ Primary Inverted Action Button (`[ Compress ]` / `[ Convert ]`).
+* **UX-DR6: Discreet Live GUI-to-CLI Dock** — Pinned single-line footer on every tool screen displaying the exact terminal command (`$ tb ...`) with real-time parameter synchronization and a 1-click `[Copy]` button.
+* **UX-DR7: Five Canonical State Transitions & Actionable Inline Error Strips** — Standardized tool screen state pipeline: `Empty State` $\rightarrow$ `Configured State` $\rightarrow$ `Processing State` $\rightarrow$ `Result Done State` (with byte savings & open actions) $\rightarrow$ non-modal, inline actionable error strips (e.g. `[Attempt Non-Destructive Repair via QPDF]`).
+* **UX-DR8: Embedded Extension Viewport Container** — Reserved Slint `<ExtensionViewport>` panel with standardized loading skeleton, title header, and extension heartbeat monitor.
+* **UX-DR9: Storage & Engines Dashboard View** — Visual storage management screen in Settings displaying installed static engines, disk usage bars, *"Last used: X days ago"* metadata, air-gap status indicator, and explicit manual uninstall buttons.
 
 ---
 
@@ -255,19 +259,21 @@ So that tools and local agents can parse results deterministically without scrap
 
 ---
 
-### Story 1.4: Base Slint Desktop Window Shell & Dark Mode Theme
+### Story 1.4: Base Slint Window Shell, Dual-Pane Workbench & Omarchy Theme Engine
 
 As a desktop user,
-I want a native, hardware-accelerated dark-themed window that opens in under 350ms and never crashes on older GPUs,
-So that the application feels instant, buttery smooth, and stable on any Linux machine.
+I want a native, hardware-accelerated, boxy brutalist window with all-monospace typography, quiet sidebar navigation, and dynamic Omarchy theme support,
+So that Toolbox opens in <350ms, provides immediate 1-second task clarity, and matches my Linux terminal aesthetic.
 
 **Acceptance Criteria:**
 
 **Given** `tb` is launched in GUI mode
 **When** the main window appears
-**Then** cold-start time to first frame presentation is under 350ms
-**And** baseline idle memory usage is under 60MB RAM
-**And** when running on a system without Vulkan/OpenGL acceleration, it automatically falls back to Slint's software renderer (`femtovg-software`) at 60Hz without crashing
+**Then** cold-start time to first frame presentation is under 350ms with baseline idle memory under 60MB RAM
+**And** when running without Vulkan/OpenGL acceleration, it automatically falls back to Slint's software renderer (`femtovg-software`) at 60Hz without crashing
+**And** `crates/tb-ui/ui/theme.slint` defines global `Theme` tokens with strict `0px` border-radius (`radius-none`), pure monospace typography (`ui-monospace, "JetBrains Mono", monospace`), and runtime palette switching across all 10 Omarchy themes (Default: Industrial Graphite `#141618`, Vantablack, Tokyo Night, Nord, Gruvbox, Hackerman, Kanagawa, Catppuccin Mocha, Rose Pine, Everforest)
+**And** `crates/tb-ui/ui/slintcn/` integrates `slintcn` copy-paste components (`Button`, `Card`, `Input`, `Dialog`, `Badge`, `Dropzone`) bound to `Theme` tokens with 0px boxy borders and 1px crisp lines
+**And** the window implements the Model A Dual-Pane Workbench shell matching `mockups/minimal-workbench.html`: quiet 200px left sidebar (`Image`, `PDF`, `Archive`, `Developer`, `Settings`) and centered single-task canvas
 **And** pressing `Escape` or the window close button cleanly terminates the process with exit code 0.
 
 ---
@@ -292,19 +298,19 @@ So that I can search for and launch Toolbox using the system Super key like any 
 
 **Epic Goal:** Build the standalone image conversion tool in `tb-core` supporting PNG, JPG, WebP, AVIF, and BMP transcoding with hardware SIMD image resizing (`fast_image_resize` with AVX2/NEON), exposed via `tb image convert` and an interactive Slint GUI dropzone with live `[Copy CLI Command]` parity and Rayon batching.
 
-### Story 2.1: Image Engine Transcoding & Hardware SIMD Resize in `tb-core`
+### Story 2.1: Image Engine Transcoding via ImageMagick & SIMD Resize in `tb-core`
 
 As a developer,
-I want a pure Rust image engine that converts between major formats and resizes images using CPU SIMD vector instructions,
-So that image transformations are blazingly fast, lossless where requested, and memory-safe.
+I want an image engine that wraps ImageMagick (`magick`) for universal format transcoding (PNG, JPG, WebP, AVIF, BMP, HEIC) and utilizes `fast_image_resize` for CPU SIMD vector resizing,
+So that image transformations leverage proven Linux CLI tools, are blazingly fast, and memory-safe.
 
 **Acceptance Criteria:**
 
-**Given** an input image file (PNG, JPG, WebP, AVIF, or BMP)
+**Given** an input image file (PNG, JPG, WebP, AVIF, BMP, or HEIC)
 **When** format conversion is requested with an optional target dimension (e.g. 1920x1080)
-**Then** `fast_image_resize` utilizes hardware SIMD (AVX2 on x86_64, NEON on ARM64) to downscale a 4K image in under 100ms
+**Then** `tb-core` invokes `magick` (or in-memory `fast_image_resize` with AVX2 on x86_64, NEON on ARM64) to downscale and convert a 4K image in under 100ms
 **And** the output is saved to the source directory as `<name>_converted.<ext>` by default
-**And** if the source directory is on a read-only filesystem or lacks write permissions, the engine falls back to saving in `~/Downloads/<name>_converted.<ext>` and emits an advisory notification indicating the fallback path
+**And** if the source directory is read-only, it falls back to saving in `~/Downloads/<name>_converted.<ext>` with an advisory notice
 **And** if `<name>_converted.<ext>` already exists, it auto-increments to `<name>_converted (1).<ext>` without overwriting
 **And** `ImageConvertOptions` implements a deterministic `to_cli_args()` method for CLI command parity.
 
@@ -326,20 +332,20 @@ So that I can automate image resizing and conversion in bash scripts or CI pipel
 
 ---
 
-### Story 2.3: Slint GUI Drag-and-Drop View & Live `[Copy CLI Command]` Parity
+### Story 2.3: Slint GUI Drag-and-Drop View with 1-Second 3-Preset Flow & Live CLI Dock
 
 As a desktop user,
-I want a visual drag-and-drop image converter view with format sliders and a live `[Copy CLI Command]` button,
-So that I can convert images visually and copy the exact terminal command for my shell scripts.
+I want a calm, uncluttered drag-and-drop image converter view with a 3-preset selector and a discreet live CLI command dock,
+So that I can convert images in 1 second without cognitive overload and copy the exact terminal command.
 
 **Acceptance Criteria:**
 
-**Given** the Image Converter view in the Slint GUI
-**When** an image file is dropped onto the dropzone
-**Then** a thumbnail preview appears with current dimensions and file size
-**And** when settings are adjusted (e.g. format changed to WebP, resize set to 1920x1080), the header `[Copy CLI Command]` button live-updates to show the exact equivalent CLI invocation
-**And** clicking `[Copy CLI Command]` copies `tb image convert --format webp --resize 1920x1080 <file>` to the system clipboard
-**And** clicking "Convert" spawns a background worker thread, throttles progress events to 16ms intervals, and displays a non-destructive completion banner with a `[Reveal in Folder]` button.
+**Given** the Image Converter view in the Slint GUI matching `mockups/minimal-workbench.html`
+**When** the screen is opened, it displays a calm 1px dashed dropzone: `"Drop image here or click to browse"` with zero technical cockpit clutter
+**And** when an image is dropped, it transitions immediately to the File Configured state: displays filename and size chip (e.g. `photo.png (4.2 MB)`), reveals the 3-preset row (`[ Small ]`, `[ Balanced ]`, `[ Best ]`), and focuses the primary `[ Convert ]` button
+**And** selecting a preset live-updates the discreet single-line CLI dock footer: `$ tb image convert photo.png --format webp --preset balanced`
+**And** clicking `[Copy]` on the CLI dock copies the command to the system clipboard and flashes `[Copied]`
+**And** clicking `[ Convert ]` or hitting `Enter` spawns a background worker thread, displays a 1px progress indicator, and transitions to the Result Done state with byte savings and `[ Open File ]` action.
 
 ---
 
@@ -415,20 +421,20 @@ So that I get instant feedback on how much storage space I saved.
 
 **Epic Goal:** Build the standalone PDF compression tool in `tb-core` providing 3 distinct optimization presets (Low: lossless structure cleanup, Medium: 150 DPI downsampling, High: 72 DPI downsampling) with byte savings indicators, non-destructive `_compressed.pdf` output, and CLI `tb pdf compress`.
 
-### Story 4.1: PDF Optimization & Font/Image Downsampling in `tb-core`
+### Story 4.1: PDF Optimization & Compression via `qpdf` in `tb-core`
 
-As a user with large scanned documents,
-I want to compress bloated PDF files locally without sending my confidential legal or financial records to a remote web server,
-So that I can shrink file sizes for email attachments while preserving document security.
+As a user with large documents,
+I want to compress bloated PDF files locally via `qpdf` without sending my confidential records to a remote web server,
+So that I can shrink file sizes for email attachments while preserving document security and vector fidelity.
 
 **Acceptance Criteria:**
 
-**Given** a multi-page PDF document containing scanned images and embedded fonts
-**When** compression is executed using the High preset
-**Then** embedded images are resampled to 72 DPI and redundant stream objects are deduplicated, achieving >50% byte size reduction
-**And** all vector elements, hyperlinks, and text searchability remain completely intact
-**And** the output file is saved to the source directory as `<name>_compressed.pdf` by default
-**And** if the source directory is on a read-only filesystem, the output gracefully falls back to `~/Downloads/<name>_compressed.pdf` with an explanatory notification.
+**Given** a multi-page PDF document
+**When** compression is executed using the `qpdf` backend
+**Then** `tb-core` invokes `qpdf` with `--linearize` and `--object-streams=generate` to optimize cross-references and compress uncompressed streams
+**And** all vector elements, hyperlinks, forms, and text searchability remain completely intact
+**And** the output file is saved to the source directory as `<name>_compressed.pdf` by default (auto-incrementing sequentially on collision)
+**And** if the source directory is read-only, it falls back to `~/Downloads/<name>_compressed.pdf` with an explanatory notification.
 
 ---
 
@@ -441,25 +447,27 @@ So that I can batch-compress documents via shell scripts.
 **Acceptance Criteria:**
 
 **Given** a valid PDF file on disk
-**When** executing `tb pdf compress report.pdf --preset medium`
-**Then** `report_compressed.pdf` is generated and terminal prints original size, compressed size, and percentage reduction
+**When** executing `tb pdf compress report.pdf --preset balanced`
+**Then** `report_compressed.pdf` is generated via `qpdf` and terminal prints original size, compressed size, and percentage reduction
 **And** when executed with `--json`, stdout prints `{"pages": 12, "original_bytes": 15420100, "compressed_bytes": 3120500, "savings_pct": 79.8}`
-**And** when given a password-encrypted PDF, it exits with code 1 and explicitly reports that the document is password-protected.
+**And** when given a password-encrypted PDF, it exits with code 1 and explicitly prompts that the document is password-protected.
 
-### Story 4.3: Slint GUI PDF Compression View & Live Preset Selector
+---
+
+### Story 4.3: Slint GUI PDF Compression View with 1-Second 3-Preset Flow & Live CLI Dock
 
 As a desktop user,
-I want a visual PDF compression dropzone with Low/Medium/High preset cards and before/after size comparisons,
-So that I can shrink documents with visual feedback and copy the equivalent terminal command.
+I want a calm, uncluttered PDF compression view with a 3-preset row (`[ Small ]`, `[ Balanced ]`, `[ Best ]`) and live CLI dock,
+So that I can compress PDFs in 1 second and copy the exact terminal command.
 
 **Acceptance Criteria:**
 
-**Given** the PDF Compressor view in the Slint GUI
+**Given** the PDF Compressor view in the Slint GUI matching `mockups/minimal-workbench.html`
 **When** a PDF document is dragged and dropped onto the dropzone
-**Then** page count, thumbnail preview, and current file size are displayed
-**And** selecting between "Low (Clean structure)", "Medium (150 DPI)", and "High (72 DPI)" preset cards estimates output reduction
-**And** changing presets live-updates the header `[Copy CLI Command]` button to `tb pdf compress <file> --preset <preset>`
-**And** clicking "Compress PDF" isolates computation on a background worker thread, displays a smooth progress bar, and renders a completion badge with `[Reveal in Folder]`.
+**Then** the screen reveals the file card (filename and size), presents the 3 presets (`[ Small ]`, `[ Balanced ]`, `[ Best ]`), and focuses the primary `[ Compress ]` button
+**And** changing presets live-updates the single-line footer CLI dock: `$ tb pdf compress document.pdf --preset balanced`
+**And** clicking `[Copy]` on the CLI dock copies the command to the system clipboard
+**And** clicking `[ Compress ]` or hitting `Enter` spawns background worker execution, updates progress at 60–120 FPS, and transitions to the Result Done state showing `"Saved XX%"` with an `[ Open File ]` button.
 
 ## Epic 5: PDF Merge, Page Splitting & Reordering
 
@@ -570,18 +578,18 @@ So that I can automate batch document encryption in shell scripts.
 
 **Epic Goal:** Implement local archive decompression for `.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`, and creation of password-protected `.zip` archives with non-destructive extraction directories, exposed via `tb archive extract` and `tb archive create`.
 
-### Story 7.1: Multi-Format Archive Extraction & Zip Creation Engine in `tb-core`
+### Story 7.1: Multi-Format Archive Extraction & Packaging via `7-Zip` in `tb-core`
 
 As a Linux user,
-I want a unified archive engine that extracts tarballs and zip files and packages password-protected zip archives,
-So that I don't have to memorize different tar command flags for `.tar.gz`, `.tar.bz2`, and `.tar.xz`.
+I want a unified archive engine that wraps `7-Zip` (`7z`) to extract tarballs (`.tar.gz`, `.tar.bz2`, `.tar.xz`), `.zip`, and `.7z`, and packages AES-256 password-protected archives,
+So that I don't have to memorize different tar command flags or install separate zip/unzip tools.
 
 **Acceptance Criteria:**
 
-**Given** an archive file (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`)
+**Given** an archive file (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`, or `.7z`)
 **When** extraction is triggered
-**Then** all files are extracted into a dedicated non-destructive folder `<archive_name>_extracted/`
-**And** when creating a zip archive with a password, AES-256 standard encryption is applied
+**Then** `tb-core` invokes `7z x` to extract all contents into a dedicated non-destructive directory `<archive_name>_extracted/`
+**And** when creating an archive with a password, `7z a -p<pass>` applies AES-256 standard encryption
 **And** malicious path-traversal entries (`../` or absolute root paths) are strictly sanitized against the target folder via canonical prefix matching, rejecting any entry that escapes `<archive_name>_extracted/` (Zip Slip vulnerability protection)
 **And** if an archive contains zero files or is 0 bytes, the engine returns a typed `TbError::EmptyArchive` without creating empty destination directories.
 
@@ -959,20 +967,20 @@ So that I can prettify JSON, decode JWTs, or verify hashes without manually past
 
 **Epic Goal:** Implement the 3-tier dependency resolution engine in `tb-deps` (Tier 1 host `$PATH` probe, Tier 2 user-space static `musl` binary downloader to `~/.toolbox/deps/` with compile-time pinned SHA-256 verification, zero sudo), and ship Video Transcoding (MKV/MP4/WebM) via FFmpeg.
 
-### Story 14.1: 3-Tier Dependency Resolution & Zero-Sudo Verifying Downloader in `tb-deps`
+### Story 14.1: Hybrid Smart Dependency Resolver & Zero-Sudo Verifying Downloader in `tb-deps`
 
-As a Linux user without root (`sudo`) privileges,
-I want Toolbox to automatically detect existing host binaries or download standalone static binaries into user-space with pinned SHA-256 integrity checks,
-So that heavy operations like video transcoding work immediately without package manager dependencies or root access.
+As a Linux user (with or without root/sudo privileges),
+I want Toolbox to automatically detect existing host CLI binaries (`qpdf`, `magick`, `7z`, `ffmpeg`), download standalone static binaries into user-space (`~/.toolbox/deps/`) without sudo, or provide the native distro install command,
+So that tools work immediately across all Linux distributions with zero friction.
 
 **Acceptance Criteria:**
 
-**Given** an operation requiring an external heavy engine (e.g. `ffmpeg`)
-**When** `DependencyManager::resolve("ffmpeg")` is called
-**Then** Tier 1 probes `$PATH` and verifies the binary version; if compatible, it uses the host binary with 0MB download
-**And** if absent on host, Tier 2 prompts the user to download a static `musl`-linked binary into `~/.toolbox/deps/bin/ffmpeg` with zero sudo requirements
-**And** the downloaded payload is verified against a compile-time hardcoded SHA-256 hash before setting executable permissions (`0o755`); any checksum mismatch aborts and removes the file immediately
-**And** in an air-gapped environment (Tier 3), it displays exact instructions to copy a sidecar bundle manually: `tb deps import ffmpeg.tar.gz`.
+**Given** an operation requiring an external engine (`qpdf`, `magick`, `7z`, `ffmpeg`)
+**When** `DependencyManager::resolve(tool_name)` is called
+**Then** Tier 1 probes host `$PATH` (e.g. `which qpdf`); if present and compatible, it binds to the host binary immediately with 0MB download
+**And** if absent on host, Tier 2 presents a hybrid option: a 1-click `[ Download (Zero-Sudo) ]` button to pull a verified static `musl` binary into `~/.toolbox/deps/bin/`, alongside a link copying the native package manager command (e.g. `sudo pacman -S qpdf` or `sudo apt install qpdf`) based on `/etc/os-release` detection
+**And** downloaded binaries are cryptographically verified against compile-time pinned SHA-256 hashes before marking executable (`0o755`); any mismatch aborts and removes the file immediately
+**And** in air-gapped environments, it provides an offline import path: `tb deps import <tool>.tar.gz`.
 
 ---
 

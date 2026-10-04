@@ -41,6 +41,8 @@ sources:
   - 'ARCHITECTURE-SPINE.md'
   - 'PRD.md'
   - 'PRODUCT-BRIEF.md'
+  - 'ux-designs/ux-toolbox-2026-10-04/DESIGN.md'
+  - 'ux-designs/ux-toolbox-2026-10-04/EXPERIENCE.md'
 companions:
   - 'ARCHITECTURE-SPINE.md'
 ---

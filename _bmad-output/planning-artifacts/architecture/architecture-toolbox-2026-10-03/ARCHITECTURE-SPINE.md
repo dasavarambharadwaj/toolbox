@@ -40,6 +40,8 @@ binds:
 sources:
   - 'PRD.md'
   - 'PRODUCT-BRIEF.md'
+  - 'ux-designs/ux-toolbox-2026-10-04/DESIGN.md'
+  - 'ux-designs/ux-toolbox-2026-10-04/EXPERIENCE.md'
 companions:
   - 'ARCHITECTURE-DESIGN.md'
 ---
@@ -145,18 +147,30 @@ flowchart TD
     - `tb.clipboard.*` (read/write clipboard)
     - `tb.storage.*` (persistent JSON config at `~/.toolbox/config/<ext>.json`)
 
-### AD-8 — 3-Tier Dependency Engine & User-Space Binaries
+### AD-8 — 3-Tier Dependency Engine & Hybrid Smart Resolver
 - **Binds:** `tb-deps`.
-- **Prevents:** Prompting for `sudo`; prevents package manager differences across distros; prevents broken offline workflows.
-- **Rule:** Heavy dependencies (e.g. FFmpeg) resolve via:
-  1. **Tier 1 (Host Probe):** Check `$PATH` for existing verified binary. If present, use it (0MB download).
-  2. **Tier 2 (Static Download):** If missing, download pre-compiled static `musl` binaries into `~/.toolbox/deps/` with zero root privileges, verifying cryptographically pinned compile-time SHA-256 / BLAKE3 hashes. In Flatpak distributions, common runtimes are resolved via Flatpak runtime extensions.
-  3. **Tier 3 (Manual Storage Control):** Dashboard records *"Last used"*; deletion is strictly explicit and user-initiated. **Automated background deletion is forbidden.**
+- **Prevents:** Prompting for unexpected `sudo`; prevents package manager differences across distros; prevents broken offline workflows.
+- **Rule:** External Linux CLI engines (`qpdf`, `magick`, `7z`, `ffmpeg`) resolve via:
+  1. **Tier 1 (Host Probe):** Check `$PATH` (e.g. `which qpdf`). If present, use it immediately (0MB download, 0 wait).
+  2. **Tier 2 (Hybrid Resolution):** If absent on host, provide a hybrid prompt:
+     - 1-click user-space download of verified static `musl` binaries into `~/.toolbox/deps/bin/` with zero root/sudo privileges, verifying cryptographically pinned compile-time SHA-256 / BLAKE3 hashes before making executable (`chmod +x`).
+     - Option to copy the native package manager install command (e.g. `sudo pacman -S qpdf` or `sudo apt install qpdf`) based on host `/etc/os-release` detection.
+  3. **Tier 3 (Manual Storage Control):** Dashboard in Settings displays disk footprint and "Last used"; deletion is strictly explicit and user-initiated. **Automated background deletion is forbidden.**
 
 ### AD-9 — Non-Destructive Suffix Output Policy
 - **Binds:** `tb-core` file output operations.
 - **Prevents:** Accidental data loss or irreversible source file overwriting.
 - **Rule:** All file conversions and compressions save output to the source directory using a semantic suffix (`<name>_compressed.<ext>`, `<name>_converted.<ext>`) by default. If the suffixed target file already exists, GUI increments sequentially (`<name>_compressed (1).<ext>`) while CLI prompts for confirmation unless `--overwrite` / `-f` is explicitly provided.
+
+### AD-10 — Linux CLI Tool Orchestration & Parity Invariant
+- **Binds:** `tb-core`, `tb-deps`, and presentation crates (`tb-cli`, `tb-ui`).
+- **Prevents:** Reinventing complex, brittle file-format decoders in-house; ensures terminal reproducibility.
+- **Rule:** Toolbox acts as a modern, high-performance GUI and CLI wrapper orchestrating battle-tested Linux tools:
+  - **PDF Operations:** Standardize on `qpdf` for structure optimization, linearization, cross-reference repair, and AES-256 encryption.
+  - **Image Operations:** Standardize on `ImageMagick` (`magick`) for universal multi-format transcoding, paired with `fast_image_resize` for CPU SIMD downscaling and `oxipng` for lossless PNG compression.
+  - **Archive Operations:** Standardize on `7-Zip` (`7z`) for multi-format extraction (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`, `.7z`) and password-protected packaging.
+  - **Video Transcoding:** Standardize on `ffmpeg` static binary for video/audio conversions.
+  - **JSON Processing:** Pure embedded Rust `serde_json` for microsecond in-memory validation and line/col error pointing, emitting native `$ tb dev json` commands.
 
 ---
 
@@ -169,6 +183,9 @@ flowchart TD
 | **CLI Exit Codes** | `0` = Success; `1` = Operation / Conversion error; `2` = Invalid CLI arguments; `3` = Engine / Dependency missing; `130` = Terminated by user (`SIGINT`). |
 | **Machine-Readable Flag** | All CLI subcommands must accept `--json` and output a standardized envelope: `{"success": true, "data": {...}}` or `{"success": false, "error": {...}}`. |
 | **GUI-to-CLI Parity** | All GUI tool screens must provide an interactive, real-time `[Copy CLI Command]` button reflecting the exact current GUI configuration for seamless terminal automation. |
+| **UI Design Tokens & Theming** | `crates/tb-ui/ui/theme.slint` enforces strict `0px` border-radius (`radius-none`), pure monospace typography (`ui-monospace, "JetBrains Mono", monospace`), 1px crisp borders, and dynamic runtime switching across 10 Omarchy themes (Default: Industrial Graphite `#141618`). |
+| **UI Component Library** | In-repo `crates/tb-ui/ui/slintcn/` copy-paste components bound to `Theme` tokens with 0px boxy borders and 1px crisp lines. |
+| **UI Shell Architecture** | Model A Dual-Pane Workbench shell matching `mockups/minimal-workbench.html`: quiet 200px left sidebar (`Image`, `PDF`, `Archive`, `Developer`, `Settings`) and centered single-task canvas. |
 | **Filesystem Paths** | Standardize on XDG base directory specification: Config in `~/.config/toolbox/`, dependencies in `~/.local/share/toolbox/deps/` (symlinked `~/.toolbox/deps/`), logs in `~/.local/state/toolbox/logs/`. |
 | **IPC Protocol** | Authenticated JSON-RPC 2.0 over Unix Domain Sockets (`$XDG_RUNTIME_DIR/toolbox.sock`). |
 
@@ -179,14 +196,17 @@ flowchart TD
 | Component | Pinned Technology | Purpose |
 | :--- | :--- | :--- |
 | **Programming Language** | **Rust 2024 Edition (1.82+)** | Core engine, CLI, and GUI implementation |
-| **UI Framework** | **Slint 1.8+** | Hardware-accelerated native Linux GUI (Wayland & X11) with software fallback |
-| **CLI Argument Parser** | **`clap` 4.5+** (derive) | Type-safe subcommand and argument parsing |
+| **UI Framework** | **Slint 1.8+** with **`slintcn`** & **Omarchy Themes** | Hardware-accelerated native Linux GUI (Wayland & X11) with 10 Omarchy themes and 0px boxy brutalism |
+| **CLI Argument Parser** | **`clap` 4.5+** (derive) | Type-safe subcommand and argument parsing with shell completions |
 | **Concurrency Pool** | **`rayon` 1.10+** | Work-stealing multi-core parallel file processing |
-| **Memory-Mapped I/O** | **`memmap2` 0.9+** | Zero-copy high-throughput file streaming |
-| **Cryptographic Hashing** | **`blake3` 1.5+** | SIMD-accelerated 3-5 GB/s cryptographic hashing |
-| **Image Acceleration** | **`fast_image_resize` 4.0+** | Hardware SIMD-accelerated image scaling |
-| **JSON Serialization** | **`serde` / `serde_json` 1.0+** | High-performance JSON serialization |
-| **PDF Operations** | **`qpdf` / `pdfcpu` (static bindings)** | Robust lossless PDF manipulation |
+| **Memory-Mapped I/O** | **`memmap2` 0.9+** | Zero-copy high-throughput file streaming with `flock(LOCK_SH)` |
+| **Cryptographic Hashing** | **`blake3` 1.5+** + **`sha2`** | SIMD-accelerated 3-5 GB/s cryptographic hashing |
+| **Fuzzy Search Engine** | **`nucleo-matcher` 0.3+** | Blazing-fast SIMD fuzzy matcher for Omni-Bar (<1ms latency) |
+| **PDF Operations** | **`qpdf` 11+** (CLI wrapper & static binary) | Lossless object stream compression, linearization, 1-click corrupt repair, AES-256 |
+| **Image Operations** | **`ImageMagick` (`magick`)** + **`fast_image_resize`** + **`oxipng`** | Universal 200+ format transcoding, CPU SIMD vector resizing, and lossless PNG optimization |
+| **Archive Operations** | **`7-Zip` (`7z`)** (CLI wrapper) | Multi-format archive extraction (`.zip`, `.tar.*`, `.7z`) and AES-256 zip creation |
+| **Video Transcoding** | **`ffmpeg` 6+** (static musl binary) | High-performance video format transcoding (H.264/H.265/MKV/MP4/WebM) |
+| **JSON Serialization** | **`serde` / `serde_json` 1.0+** | Microsecond in-memory parsing, formatting, and line/column syntax error diagnostics |
 | **IPC & Sockets** | **`interprocess` / `tokio` (UDS)** | Unix domain socket communication for extension host API |
 
 ---
