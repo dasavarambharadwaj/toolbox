@@ -88,3 +88,21 @@ All Slint UI development in `crates/tb-ui/` must strictly comply with the **Omar
   4. `cargo clippy --workspace --all-targets -- -D warnings`
 - **Release Profile Constraints**:
   - Size-optimized binary profile in root `Cargo.toml`: `opt-level = "z"`, `lto = "fat"`, `codegen-units = 1`, `panic = "abort"`, `strip = true`. Target binary size $< 20\text{ MB}$.
+
+---
+
+## 6. Test-Driven Development (TDD) Mandatory Protocol
+
+From now on, all agents and developers working in this repository must strictly adhere to **Test-Driven Development (TDD)**:
+
+1. **Strict Red-Green-Refactor Cycle**:
+   - **Step 1 (Red)**: Before writing ANY functional implementation for a story, feature, or bug fix, write the automated unit or integration tests that assert the desired behavior. Run `cargo test` to observe that the tests fail or do not yet compile.
+   - **Step 2 (Green)**: Write the minimal amount of production code needed to make the failing tests pass.
+   - **Step 3 (Refactor)**: Clean up, optimize, and organize the code while ensuring all tests continue to pass with zero regressions and zero clippy warnings.
+2. **End-to-End (E2E) & Integration Tests**:
+   - Multi-crate integration and end-to-end binary tests reside in the top-level `tests/` directory.
+   - Tests must exercise real CLI invocations, environment variables, exit codes, and `--json` payloads using standard Rust process assertions (`assert_cmd`, `std::process::Command`).
+   - Domain unit tests reside in their respective crate's `src/` files under `#[cfg(test)] mod tests`.
+3. **No Code Without Tests**:
+   - PRs, stories, and task implementations that add code without corresponding automated tests written first are considered invalid.
+
