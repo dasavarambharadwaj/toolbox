@@ -19,8 +19,14 @@ where
     I: IntoIterator<Item = T>,
     T: Into<std::ffi::OsString> + Clone,
 {
-    let _args = CliArgs::try_parse_from(args)?;
-    Ok(())
+    match CliArgs::try_parse_from(args) {
+        Ok(_args) => Ok(()),
+        Err(e) if e.use_stderr() => Err(e.into()),
+        Err(e) => {
+            e.print()?;
+            Ok(())
+        }
+    }
 }
 
 #[cfg(test)]
