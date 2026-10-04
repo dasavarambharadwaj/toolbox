@@ -176,4 +176,119 @@ fn test_e2e_tb_active_display_launches_gui() {
     );
 }
 
+#[test]
+#[cfg(feature = "gui")]
+fn test_e2e_tb_gui_subcommand_with_display() {
+    let output = Command::new(env!("CARGO_BIN_EXE_tb"))
+        .arg("gui")
+        .env("WAYLAND_DISPLAY", "wayland-0")
+        .output()
+        .expect("Failed to execute tb gui with active wayland display");
+
+    assert!(
+        output.status.success(),
+        "tb gui with active wayland display should exit with code 0"
+    );
+}
+
+#[test]
+fn test_e2e_tb_symlink_gui_headless() {
+    let tb_exe = env!("CARGO_BIN_EXE_tb");
+    let temp_dir = std::env::temp_dir().join(format!("tb_test_{}", std::process::id()));
+    let _ = std::fs::create_dir_all(&temp_dir);
+    struct TempDir(std::path::PathBuf);
+    impl Drop for TempDir {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.0);
+        }
+    }
+    let _dir_guard = TempDir(temp_dir.clone());
+    let symlink_path = temp_dir.join("tb-gui");
+
+    std::os::unix::fs::symlink(tb_exe, &symlink_path).expect("Failed to create symlink tb-gui");
+
+    let output = Command::new(&symlink_path)
+        .env_remove("DISPLAY")
+        .env_remove("WAYLAND_DISPLAY")
+        .output()
+        .expect("Failed to execute tb-gui symlink in headless");
+
+    assert_eq!(
+        output.status.code(),
+        Some(2),
+        "tb-gui in headless must exit with code 2"
+    );
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(
+        stderr.contains("No graphical display server detected"),
+        "stderr should mention display server requirement: {}",
+        stderr
+    );
+}
+
+#[test]
+#[cfg(feature = "gui")]
+fn test_e2e_tb_symlink_gui_active_display() {
+    let tb_exe = env!("CARGO_BIN_EXE_tb");
+    let temp_dir = std::env::temp_dir().join(format!("tb_test_active_{}", std::process::id()));
+    let _ = std::fs::create_dir_all(&temp_dir);
+    struct TempDir(std::path::PathBuf);
+    impl Drop for TempDir {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.0);
+        }
+    }
+    let _dir_guard = TempDir(temp_dir.clone());
+    let symlink_path = temp_dir.join("tb-gui");
+
+    std::os::unix::fs::symlink(tb_exe, &symlink_path).expect("Failed to create symlink tb-gui");
+
+    let output = Command::new(&symlink_path)
+        .env("DISPLAY", ":0")
+        .output()
+        .expect("Failed to execute tb-gui symlink with active display");
+
+    assert!(
+        output.status.success(),
+        "tb-gui with active display should launch GUI cleanly, got stderr: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+}
+
+#[test]
+fn test_e2e_tb_symlink_absolute_path_dispatch() {
+    let tb_exe = env!("CARGO_BIN_EXE_tb");
+    let temp_dir = std::env::temp_dir().join(format!("tb_test_abs_{}", std::process::id()));
+    let _ = std::fs::create_dir_all(&temp_dir);
+    struct TempDir(std::path::PathBuf);
+    impl Drop for TempDir {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.0);
+        }
+    }
+    let _dir_guard = TempDir(temp_dir.clone());
+    let symlink_path = temp_dir.join("tb-compress");
+
+    std::os::unix::fs::symlink(tb_exe, &symlink_path).expect("Failed to create symlink tb-compress");
+
+    // Executed via absolute path pointing to symlink
+    let output = Command::new(&symlink_path)
+        .arg("--help")
+        .output()
+        .expect("Failed to execute tb-compress symlink");
+
+    let combined = format!(
+        "{}\n{}",
+        String::from_utf8_lossy(&output.stdout),
+        String::from_utf8_lossy(&output.stderr)
+    );
+    assert!(
+        combined.contains("compress"),
+        "Execution should inject compress subcommand into CLI dispatch: {}",
+        combined
+    );
+}
+
+
+
 

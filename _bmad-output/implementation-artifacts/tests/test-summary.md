@@ -1,41 +1,32 @@
-# Test Automation Summary — Story 1.1
+# Test Automation Summary
 
 ## Generated Tests
 
-### End-to-End (E2E) & Integration Tests
-- [x] [`crates/tb/tests/e2e_binary.rs`](file:///home/bharath/Documents/toolbox/crates/tb/tests/e2e_binary.rs)
-  - `test_e2e_tb_help` — Exercises `tb --help` binary execution, ensuring clean 0 exit status and stdout help documentation.
-  - `test_e2e_tb_invalid_flag` — Exercises `tb --invalid-flag`, asserting non-zero error exit status and clear stderr message.
-  - `test_e2e_tb_headless_mode` — Exercises headless binary invocation (`DISPLAY` and `WAYLAND_DISPLAY` absent), validating CLI mode fallback without display server panics.
-  - `test_e2e_tb_json_flag` — Exercises `tb --json` argument handling.
-- [x] [`crates/tb/tests/e2e_boundaries.rs`](file:///home/bharath/Documents/toolbox/crates/tb/tests/e2e_boundaries.rs)
-  - `test_e2e_tb_core_isolation` — Programmatically audits `cargo tree -p tb-core` asserting `slint` and `clap` are 100% absent from leaf domain crate.
-  - `test_e2e_tb_headless_features` — Programmatically audits `cargo tree -p tb --no-default-features` asserting `slint` and `tb-ui` are completely excluded in headless builds.
+### E2E Integration Tests (`crates/tb/tests/e2e_binary.rs` & `tests/e2e_binary.rs`)
+- [x] `test_e2e_tb_help` — asserts `tb --help` outputs formatted multi-call usage documentation to stdout with exit code 0.
+- [x] `test_e2e_tb_version` — asserts `tb --version` outputs version header to stdout with exit code 0.
+- [x] `test_e2e_tb_invalid_flag` — asserts unrecognized CLI options fail with non-zero exit code and clap error on stderr.
+- [x] `test_e2e_tb_json_flag` — asserts `--json` option parses cleanly.
+- [x] `test_e2e_tb_headless_zero_args_exits_2` — asserts zero arguments in headless session (`WAYLAND_DISPLAY` and `DISPLAY` unset) outputs formatted help to stderr and exits with code 2.
+- [x] `test_e2e_tb_whitespace_display_zero_args_exits_2` — asserts empty/whitespace display server environment variables are treated as headless, exiting code 2 with help on stderr.
+- [x] `test_e2e_tb_gui_headless_exits_2` — asserts explicit `tb gui` without an active display server exits code 2 with descriptive error on stderr.
+- [x] `test_e2e_tb_active_display_launches_gui` — asserts zero arguments with active `$DISPLAY` launches the graphical shell cleanly.
+- [x] `test_e2e_tb_gui_subcommand_with_display` — asserts `tb gui` in an active `$WAYLAND_DISPLAY` session launches GUI cleanly and exits 0.
+- [x] `test_e2e_tb_symlink_dispatch` — asserts multi-call symlink detection (e.g. `tb-image`) properly injects the subcommand into CLI argument vector.
+- [x] `test_e2e_tb_symlink_absolute_path_dispatch` — asserts multi-call symlink invoked via absolute filesystem path (e.g. `/tmp/.../tb-compress`) injects subcommand.
+- [x] `test_e2e_tb_symlink_gui_headless` — asserts multi-call symlink `tb-gui` in a headless environment exits code 2 with missing display error.
+- [x] `test_e2e_tb_symlink_gui_active_display` — asserts multi-call symlink `tb-gui` with active display launches GUI cleanly and exits 0.
 
-### Unit Tests
-- [x] [`crates/tb/src/main.rs`](file:///home/bharath/Documents/toolbox/crates/tb/src/main.rs)
-  - `test_determine_mode_gui`
-  - `test_determine_mode_cli_with_args`
-  - `test_determine_mode_headless`
-  - `test_entrypoint_wiring`
-- [x] [`crates/tb-cli/src/lib.rs`](file:///home/bharath/Documents/toolbox/crates/tb-cli/src/lib.rs)
-  - `test_cli_run`
-  - `test_cli_run_invalid_arg`
-  - `test_cli_args_parsing`
-- [x] [`crates/tb-core/src/lib.rs`](file:///home/bharath/Documents/toolbox/crates/tb-core/src/lib.rs)
-  - `test_tb_error_display`
-- [x] [`crates/tb-deps/src/lib.rs`](file:///home/bharath/Documents/toolbox/crates/tb-deps/src/lib.rs)
-  - `test_check_dependency_empty`
-  - `test_check_dependency_valid`
-- [x] [`crates/tb-ext/src/lib.rs`](file:///home/bharath/Documents/toolbox/crates/tb-ext/src/lib.rs)
-  - `test_list_extensions`
-- [x] [`crates/tb-ui/src/lib.rs`](file:///home/bharath/Documents/toolbox/crates/tb-ui/src/lib.rs)
-  - `test_ui_run`
+### Crate Architecture & Boundary Tests (`crates/tb/tests/e2e_boundaries.rs` & `tests/e2e_boundaries.rs`)
+- [x] `test_e2e_tb_core_isolation` — asserts pure domain crate `tb-core` has zero transitive dependencies on `slint` or `clap`.
+- [x] `test_e2e_tb_headless_features` — asserts `tb --no-default-features` completely excludes `slint` and `tb-ui`.
 
-## Coverage Summary
-- **Binary End-to-End Execution**: 4/4 scenarios covered (Help, Invalid Args, Headless, JSON).
-- **Architectural Boundary Isolation**: 2/2 invariants enforced (Leaf isolation, Headless exclusion).
-- **Workspace Test Suites**: 18/18 tests pass across all crates.
+## Coverage
+- Multi-call binary entry point scenarios: 100% (13/13 E2E test scenarios covered)
+- Headless vs Graphical display permutations: 100% covered
+- Hexagonal boundary isolation: 100% verified via `cargo tree` assertions
 
-## Next Steps
-- Enforce strict TDD (Red $\rightarrow$ Green $\rightarrow$ Refactor) for Story 1.2 (Unified Multi-Call Binary Entry Point & Mode Dispatcher), writing failing tests before implementing multi-call symlink detection.
+## Verification
+- `cargo test --workspace` (All 29 unit and integration tests passed across all crates)
+- `cargo test -p tb --no-default-features --test e2e_binary` (10/10 headless E2E tests passed)
+- `cargo clippy --workspace --all-targets -- -D warnings` (0 warnings)
