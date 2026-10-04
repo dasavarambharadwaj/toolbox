@@ -1,4 +1,4 @@
-use clap::Parser;
+use clap::{CommandFactory, Parser};
 
 /// CLI command line arguments parser for Toolbox.
 #[derive(Debug, Parser, Default)]
@@ -28,6 +28,17 @@ where
         }
     }
 }
+
+/// Prints formatted CLI help to stderr.
+pub fn print_help_to_stderr() -> anyhow::Result<()> {
+    use std::io::Write;
+    let mut cmd = CliArgs::command();
+    let help_bytes = cmd.render_help();
+    let mut stderr = std::io::stderr().lock();
+    writeln!(stderr, "{}", help_bytes)?;
+    Ok(())
+}
+
 
 #[cfg(test)]
 mod tests {
