@@ -1,0 +1,9 @@
+[package]
+name = "tb-cli"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+tb-core = { workspace = true }
+clap = { workspace = true }
+anyhow = { workspace = true }

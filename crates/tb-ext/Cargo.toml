@@ -1,0 +1,8 @@
+[package]
+name = "tb-ext"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+tb-core = { workspace = true }
+thiserror = { workspace = true }

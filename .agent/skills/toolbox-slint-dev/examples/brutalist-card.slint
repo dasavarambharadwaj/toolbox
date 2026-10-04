@@ -1,0 +1,51 @@
+import { Theme, Spacing } from "../references/design-tokens.md";
+
+export component BrutalistCard inherits Rectangle {
+    in property <string> title: "";
+    in property <bool> is_active: false;
+
+    background: is_active ? Theme.surface_hover : Theme.surface;
+    border_width: 1px;
+    border_color: is_active ? Theme.border_focus : Theme.border_subtle;
+    border_radius: 0px; // STRICT 0px boxy brutalism
+
+    VerticalLayout {
+        padding: 16px;
+        spacing: 8px;
+
+        if (title != "") : Text {
+            text: root.title;
+            font_family: "ui-monospace, \"JetBrains Mono\", monospace";
+            font_size: 13px;
+            font_weight: 600;
+            color: Theme.text_primary;
+        }
+
+        @children
+    }
+}
+
+export component BrutalistButton inherits Rectangle {
+    in property <string> label: "ACTION";
+    in property <bool> primary: false;
+    callback clicked();
+
+    background: primary ? Theme.accent_primary : transparent;
+    border_width: 1px;
+    border_color: primary ? Theme.accent_primary : Theme.border_prominent;
+    border_radius: 0px; // STRICT 0px boxy brutalism
+
+    TouchArea {
+        clicked => { root.clicked(); }
+    }
+
+    Text {
+        text: root.label;
+        font_family: "ui-monospace, \"JetBrains Mono\", monospace";
+        font_size: 12px;
+        font_weight: 700;
+        color: primary ? Theme.accent_foreground : Theme.text_primary;
+        horizontal_alignment: center;
+        vertical_alignment: center;
+    }
+}

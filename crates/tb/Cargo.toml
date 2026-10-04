@@ -1,0 +1,13 @@
+[package]
+name = "tb"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+tb-cli = { workspace = true }
+tb-ui = { workspace = true, optional = true }
+anyhow = { workspace = true }
+
+[features]
+default = ["gui"]
+gui = ["dep:tb-ui"]
