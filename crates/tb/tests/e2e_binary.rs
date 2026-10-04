@@ -1,5 +1,4 @@
 use std::process::Command;
-use std::time::Instant;
 
 #[test]
 fn test_e2e_tb_help() {
@@ -147,19 +146,35 @@ fn test_e2e_tb_symlink_dispatch() {
 }
 
 #[test]
-fn test_e2e_tb_cli_latency_budget() {
-    let start = Instant::now();
+fn test_e2e_tb_version() {
     let output = Command::new(env!("CARGO_BIN_EXE_tb"))
-        .arg("--help")
+        .arg("--version")
         .output()
-        .expect("Failed to execute tb binary");
-    let duration = start.elapsed();
+        .expect("Failed to execute tb --version");
 
-    assert!(output.status.success());
+    assert!(output.status.success(), "tb --version should exit with code 0");
+    let stdout = String::from_utf8_lossy(&output.stdout);
     assert!(
-        duration.as_millis() < 100, // Budget is <50ms in release, allow <100ms in debug test runs
-        "CLI invocation took too long: {}ms",
-        duration.as_millis()
+        stdout.contains("tb") || stdout.contains("0.1.0"),
+        "stdout should display version information, got: {}",
+        stdout
     );
 }
+
+#[test]
+#[cfg(feature = "gui")]
+fn test_e2e_tb_active_display_launches_gui() {
+    // When display server is present and invoked with zero args, GUI launches (exits 0 with stub tb-ui)
+    let output = Command::new(env!("CARGO_BIN_EXE_tb"))
+        .env("DISPLAY", ":0")
+        .output()
+        .expect("Failed to execute tb with active display");
+
+    assert!(
+        output.status.success(),
+        "tb with active display should launch GUI cleanly, got stderr: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+}
+
 

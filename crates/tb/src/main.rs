@@ -313,6 +313,17 @@ mod tests {
             DispatchTarget::Cli(vec![OsString::from("--help")])
         );
 
+        let target_ver = determine_dispatch_target(
+            Some(Path::new("tb")),
+            vec![OsString::from("--version")],
+            Some(OsStr::new(":0")),
+            None,
+        );
+        assert_eq!(
+            target_ver,
+            DispatchTarget::Cli(vec![OsString::from("--version")])
+        );
+
         let target_dev = determine_dispatch_target(
             Some(Path::new("tb")),
             vec![OsString::from("dev"), OsString::from("json")],

@@ -2,7 +2,7 @@ use clap::{CommandFactory, Parser};
 
 /// CLI command line arguments parser for Toolbox.
 #[derive(Debug, Parser, Default)]
-#[command(name = "tb", about = "Toolbox multi-call utility")]
+#[command(name = "tb", about = "Toolbox multi-call utility", version)]
 pub struct CliArgs {
     #[arg(long, help = "Output machine-readable JSON envelope")]
     pub json: bool,
@@ -59,5 +59,10 @@ mod tests {
         use clap::Parser;
         let args = CliArgs::try_parse_from(["tb", "--json"]).expect("args parse failed");
         assert!(args.json);
+    }
+
+    #[test]
+    fn test_cli_version() {
+        assert!(run_with_args(["tb", "--version"]).is_ok());
     }
 }

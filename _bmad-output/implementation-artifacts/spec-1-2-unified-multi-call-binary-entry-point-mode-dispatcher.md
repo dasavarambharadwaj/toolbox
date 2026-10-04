@@ -89,6 +89,23 @@ context:
 - [x] `crates/tb/src/main.rs` (TDD Step 2: GREEN - Dispatch Implementation) -- Implement `determine_dispatch_target`, symlink detection, display inspection, and process exit handling to satisfy all tests.
 - [x] Verification & Refactoring (TDD Step 3: REFACTOR) -- Run full verification suite (`cargo test`, `cargo check --no-default-features`, `cargo clippy`), ensure zero regressions and zero warnings.
 
+### Review Findings
+
+- [x] [Review][Patch] Fix `tb --version` failure by adding `version` to Clap command derive and adding test [crates/tb-cli/src/lib.rs:5]
+- [x] [Review][Patch] Add E2E process integration test for active graphical display session dispatch [crates/tb/tests/e2e_binary.rs:337]
+- [x] [Review][Patch] Remove unreachable dead code in headless match arm [crates/tb/src/main.rs:340]
+- [x] [Review][Defer] Duplicate root integration tests in `tests/e2e_binary.rs` and `tests/e2e_boundaries.rs` [tests/e2e_binary.rs:1] — deferred: pre-existing workspace scaffolding design where root tests exist alongside crate integration tests
+- [x] [Review][Defer] CLI subcommands not yet modeled in `CliArgs` for symlink help parsing [crates/tb-cli/src/lib.rs:5] — deferred: category subcommands are scheduled for Epic 2 onwards
+
+#### Rejected
+- `has_active_display` non-UTF-8: Linux display sockets are ASCII/UTF-8; handling unusual non-UTF-8 display names adds unnecessary complexity.
+- `exec_stem` non-UTF-8: POSIX binary names conform to standard strings; negligible risk in everyday use.
+- Multi-call `tb-` binary name: edge case with zero real-world occurrence; rejecting empty subcmd is correct behavior.
+- `full_args` argv[0] symlink name: standard UNIX convention to pass the invoked name as argv[0]; Clap handles binary aliases naturally.
+- Symlink test non-Unix platforms: Toolbox is explicitly a Linux-first offline utility suite (Rule 1).
+- JSON error formatting in root `main()`: Story 1.3 explicitly handles standardized CLI JSON envelopes and error taxonomy.
+
+
 **Acceptance Criteria:**
 - All tests are written and fail prior to implementing functional dispatch code (Strict TDD adherence).
 - Given `tb` invoked with zero arguments without `$WAYLAND_DISPLAY` or `$DISPLAY` (or with empty values), when binary executes, then stderr prints CLI help and process exits with exit code 2.
