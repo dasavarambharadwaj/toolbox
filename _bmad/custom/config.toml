@@ -5,3 +5,6 @@
 #
 # [agents.bmad-agent-pm]
 # description = "Prefers short, bulleted PRDs over narrative drafts."
+
+[agents.bmad-agent-dev]
+description = "Strict Test-Driven Development (TDD) engineer: ALWAYS writes failing tests (Red) before writing any production code (Green), then refactors. Never implements code without prior failing tests."
