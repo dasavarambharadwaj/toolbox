@@ -124,14 +124,47 @@ fn main() -> anyhow::Result<()> {
         DispatchTarget::Cli(cli_args) => {
             let mut full_args = vec![exec_path.unwrap_or_else(|| OsString::from("tb"))];
             full_args.extend(cli_args);
-            tb_cli::run_with_args(full_args)
+            let exit_code = tb_cli::run_cli(full_args);
+            std::process::exit(exit_code);
         }
         DispatchTarget::HeadlessHelp => {
             tb_cli::print_help_to_stderr()?;
             std::process::exit(2);
         }
         DispatchTarget::Error(msg, code) => {
-            eprintln!("Error: {}", msg);
+            let (err_code, suggestion) = if msg.contains("disabled") || msg.contains("headless") {
+                (
+                    "FEATURE_UNAVAILABLE",
+                    "Use CLI subcommands or install a build with GUI support enabled.",
+                )
+            } else if msg.contains("display") || msg.contains("Display") {
+                (
+                    "DISPLAY_NOT_FOUND",
+                    "Run in a graphical desktop session (X11 or Wayland) or use CLI commands.",
+                )
+            } else {
+                (
+                    "INVALID_ARGUMENT",
+                    "Check 'tb --help' for valid options and usage.",
+                )
+            };
+
+            let is_json = std::env::args_os().any(|a| a.to_str() == Some("--json"));
+            if is_json {
+                let envelope: tb_cli::JsonEnvelope<()> = tb_cli::JsonEnvelope::error(
+                    err_code,
+                    &msg,
+                    Some(suggestion.to_string()),
+                );
+                println!("{}", serde_json::to_string(&envelope).unwrap());
+            } else {
+                use std::io::IsTerminal;
+                let use_color = tb_cli::should_use_color(std::io::stderr().is_terminal());
+                eprintln!(
+                    "{}",
+                    tb_cli::format_error(&msg, Some(suggestion), use_color)
+                );
+            }
             std::process::exit(code);
         }
     }

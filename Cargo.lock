@@ -4292,6 +4292,7 @@ name = "tb"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "serde_json",
  "tb-cli",
  "tb-ui",
 ]
@@ -4302,6 +4303,8 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
+ "serde",
+ "serde_json",
  "tb-core",
 ]
 

@@ -290,6 +290,97 @@ fn test_e2e_tb_symlink_absolute_path_dispatch() {
     );
 }
 
+#[test]
+fn test_e2e_tb_json_success_envelope() {
+    let output = Command::new(env!("CARGO_BIN_EXE_tb"))
+        .arg("--json")
+        .output()
+        .expect("Failed to execute tb binary with --json");
+
+    assert_eq!(output.status.code(), Some(0));
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let v: serde_json::Value = serde_json::from_str(&stdout)
+        .expect("stdout should be valid JSON success envelope");
+    assert_eq!(v["status"], "success");
+    assert!(v.get("data").is_some());
+}
+
+#[test]
+fn test_e2e_tb_invalid_flag_with_json() {
+    let output = Command::new(env!("CARGO_BIN_EXE_tb"))
+        .arg("--invalid-flag")
+        .arg("--json")
+        .output()
+        .expect("Failed to execute tb with --invalid-flag --json");
+
+    assert_eq!(output.status.code(), Some(2));
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let v: serde_json::Value = serde_json::from_str(&stdout)
+        .expect("stdout should be valid JSON error envelope");
+    assert_eq!(v["status"], "error");
+    assert_eq!(v["error"]["code"], "INVALID_ARGUMENT");
+    assert!(v["error"]["message"].is_string());
+}
+
+#[test]
+fn test_e2e_tb_invalid_flag_without_json() {
+    let output = Command::new(env!("CARGO_BIN_EXE_tb"))
+        .arg("--invalid-flag")
+        .output()
+        .expect("Failed to execute tb with --invalid-flag");
+
+    assert_eq!(output.status.code(), Some(2));
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(stderr.contains("[FAIL]"), "stderr should contain [FAIL] status label");
+}
+
+#[test]
+fn test_e2e_tb_invalid_flag_no_color() {
+    let output = Command::new(env!("CARGO_BIN_EXE_tb"))
+        .arg("--invalid-flag")
+        .env("NO_COLOR", "1")
+        .output()
+        .expect("Failed to execute tb with NO_COLOR=1");
+
+    assert_eq!(output.status.code(), Some(2));
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(stderr.contains("[FAIL]"));
+    assert!(!stderr.contains("\x1b["), "stderr should not contain ANSI escapes when NO_COLOR=1");
+}
+
+#[test]
+fn test_e2e_tb_invalid_flag_term_dumb() {
+    let output = Command::new(env!("CARGO_BIN_EXE_tb"))
+        .arg("--invalid-flag")
+        .env("TERM", "dumb")
+        .output()
+        .expect("Failed to execute tb with TERM=dumb");
+
+    assert_eq!(output.status.code(), Some(2));
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(stderr.contains("[FAIL]"));
+    assert!(!stderr.contains("\x1b["), "stderr should not contain ANSI escapes when TERM=dumb");
+}
+
+#[test]
+fn test_e2e_tb_gui_headless_json() {
+    let output = Command::new(env!("CARGO_BIN_EXE_tb"))
+        .arg("gui")
+        .arg("--json")
+        .env_remove("DISPLAY")
+        .env_remove("WAYLAND_DISPLAY")
+        .output()
+        .expect("Failed to execute tb gui --json in headless mode");
+
+    assert_eq!(output.status.code(), Some(2));
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let v: serde_json::Value = serde_json::from_str(&stdout)
+        .expect("stdout should be valid JSON error envelope");
+    assert_eq!(v["status"], "error");
+    assert_eq!(v["error"]["code"], "DISPLAY_NOT_FOUND");
+    assert!(v["error"]["message"].is_string());
+}
+
 
 
 
