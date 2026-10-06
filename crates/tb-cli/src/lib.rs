@@ -396,4 +396,33 @@ mod tests {
         assert!(json_err.message.contains("ffmpeg"));
         assert!(json_err.suggested_action.is_some());
     }
+
+    #[test]
+    fn test_handle_result_success_cases() {
+        let res_ok: Result<&str, tb_core::TbError> = Ok("sample-output");
+        let code_json = handle_result(res_ok.clone(), true);
+        assert_eq!(code_json, tb_core::EXIT_SUCCESS);
+
+        let code_human = handle_result(res_ok, false);
+        assert_eq!(code_human, tb_core::EXIT_SUCCESS);
+    }
+
+    #[test]
+    fn test_handle_result_error_cases() {
+        let res_err_engine: Result<(), tb_core::TbError> = Err(tb_core::TbError::EngineMissing("qpdf".to_string()));
+        let code_engine_json = handle_result(res_err_engine.clone(), true);
+        assert_eq!(code_engine_json, tb_core::EXIT_MISSING_ENGINE);
+
+        let code_engine_human = handle_result(res_err_engine, false);
+        assert_eq!(code_engine_human, tb_core::EXIT_MISSING_ENGINE);
+
+        let res_err_invalid: Result<(), tb_core::TbError> = Err(tb_core::TbError::InvalidArgument("bad input".to_string()));
+        let code_invalid = handle_result(res_err_invalid, true);
+        assert_eq!(code_invalid, tb_core::EXIT_INVALID_ARGUMENT);
+
+        let res_err_op: Result<(), tb_core::TbError> = Err(tb_core::TbError::OperationFailed("boom".to_string()));
+        let code_op = handle_result(res_err_op, true);
+        assert_eq!(code_op, tb_core::EXIT_OPERATION_ERROR);
+    }
 }
+

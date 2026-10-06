@@ -372,6 +372,11 @@ fn test_e2e_tb_gui_headless_json() {
         .expect("Failed to execute tb gui --json in headless mode");
 
     assert_eq!(output.status.code(), Some(2));
+    assert!(
+        output.stderr.is_empty(),
+        "stderr must be empty when --json is provided, got: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
     let stdout = String::from_utf8_lossy(&output.stdout);
     let v: serde_json::Value = serde_json::from_str(&stdout)
         .expect("stdout should be valid JSON error envelope");
@@ -379,6 +384,126 @@ fn test_e2e_tb_gui_headless_json() {
     assert_eq!(v["error"]["code"], "DISPLAY_NOT_FOUND");
     assert!(v["error"]["message"].is_string());
 }
+
+#[test]
+fn test_e2e_tb_json_stream_isolation() {
+    let output = Command::new(env!("CARGO_BIN_EXE_tb"))
+        .arg("--json")
+        .output()
+        .expect("Failed to execute tb binary with --json");
+
+    assert_eq!(output.status.code(), Some(0));
+    assert!(
+        output.stderr.is_empty(),
+        "stderr must be completely empty when --json succeeds, got: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let v: serde_json::Value = serde_json::from_str(&stdout)
+        .expect("stdout should be valid JSON success envelope");
+    assert_eq!(v["status"], "success");
+    assert!(v.get("data").is_some());
+}
+
+#[test]
+fn test_e2e_tb_json_stream_isolation_on_error() {
+    let output = Command::new(env!("CARGO_BIN_EXE_tb"))
+        .arg("--invalid-flag")
+        .arg("--json")
+        .output()
+        .expect("Failed to execute tb with --invalid-flag --json");
+
+    assert_eq!(output.status.code(), Some(2));
+    assert!(
+        output.stderr.is_empty(),
+        "stderr must be completely empty when --json fails with CLI error, got: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let v: serde_json::Value = serde_json::from_str(&stdout)
+        .expect("stdout should be valid JSON error envelope");
+    assert_eq!(v["status"], "error");
+    assert_eq!(v["error"]["code"], "INVALID_ARGUMENT");
+}
+
+#[test]
+fn test_e2e_tb_symlink_invalid_flag_json() {
+    let tb_exe = env!("CARGO_BIN_EXE_tb");
+    let temp_dir = std::env::temp_dir().join(format!("tb_symlink_json_{}", std::process::id()));
+    let _ = std::fs::create_dir_all(&temp_dir);
+    struct TempDir(std::path::PathBuf);
+    impl Drop for TempDir {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.0);
+        }
+    }
+    let _dir_guard = TempDir(temp_dir.clone());
+    let symlink_path = temp_dir.join("tb-image");
+
+    std::os::unix::fs::symlink(tb_exe, &symlink_path).expect("Failed to create symlink tb-image");
+
+    let output = Command::new(&symlink_path)
+        .arg("--unknown-flag")
+        .arg("--json")
+        .output()
+        .expect("Failed to execute symlink with invalid flag and --json");
+
+    assert_eq!(output.status.code(), Some(2));
+    assert!(
+        output.stderr.is_empty(),
+        "stderr must be empty when --json is provided, got: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let v: serde_json::Value = serde_json::from_str(&stdout)
+        .expect("stdout should be valid JSON error envelope");
+    assert_eq!(v["status"], "error");
+    assert_eq!(v["error"]["code"], "INVALID_ARGUMENT");
+}
+
+#[test]
+#[cfg(not(feature = "gui"))]
+fn test_e2e_tb_gui_headless_build_feature_unavailable_json() {
+    let output = Command::new(env!("CARGO_BIN_EXE_tb"))
+        .arg("gui")
+        .arg("--json")
+        .env("DISPLAY", ":0")
+        .output()
+        .expect("Failed to execute tb gui in headless build");
+
+    assert_eq!(output.status.code(), Some(2));
+    assert!(
+        output.stderr.is_empty(),
+        "stderr should be empty with --json, got: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let v: serde_json::Value = serde_json::from_str(&stdout)
+        .expect("stdout should be valid JSON error envelope");
+    assert_eq!(v["status"], "error");
+    assert_eq!(v["error"]["code"], "FEATURE_UNAVAILABLE");
+    assert_eq!(
+        v["error"]["suggested_action"],
+        "Use CLI subcommands or install a build with GUI support enabled."
+    );
+}
+
+#[test]
+#[cfg(not(feature = "gui"))]
+fn test_e2e_tb_gui_headless_build_feature_unavailable_human() {
+    let output = Command::new(env!("CARGO_BIN_EXE_tb"))
+        .arg("gui")
+        .env("DISPLAY", ":0")
+        .output()
+        .expect("Failed to execute tb gui in headless build");
+
+    assert_eq!(output.status.code(), Some(2));
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(stderr.contains("[FAIL]"));
+    assert!(stderr.contains("GUI support is disabled in this headless build"));
+    assert!(stderr.contains("Suggested: Use CLI subcommands or install a build with GUI support enabled."));
+}
+
 
 
 

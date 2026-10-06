@@ -12,7 +12,7 @@ pub const EXIT_MISSING_ENGINE: i32 = 3;
 pub const EXIT_INTERRUPTED: i32 = 130;
 
 /// Root error enumeration for pure domain operations across Toolbox suites.
-#[derive(Debug, Error, PartialEq, Eq)]
+#[derive(Debug, Clone, Error, PartialEq, Eq)]
 pub enum TbError {
     #[error("Invalid argument: {0}")]
     InvalidArgument(String),
