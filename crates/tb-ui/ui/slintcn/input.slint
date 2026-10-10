@@ -1,0 +1,40 @@
+import { Theme, Spacing } from "../theme.slint";
+
+export component Input inherits Rectangle {
+    in-out property <string> text: "";
+    in property <string> placeholder: "";
+    in property <bool> enabled: true;
+    callback accepted(string);
+    callback edited(string);
+
+    min_height: 36px;
+    background: Theme.active.surface_sunken;
+    border_radius: Spacing.radius_none;
+    border_width: 1px;
+    border_color: input.has_focus ? Theme.active.border_focus : Theme.active.border_prominent;
+
+    HorizontalLayout {
+        padding_left: Spacing.space_3;
+        padding_right: Spacing.space_3;
+
+        input := TextInput {
+            text <=> root.text;
+            enabled: root.enabled;
+            font_family: Theme.font_family;
+            font_size: Theme.font_size_body;
+            color: Theme.active.text_primary;
+            vertical_alignment: center;
+            accepted => { root.accepted(self.text); }
+            edited => { root.edited(self.text); }
+        }
+    }
+
+    if (root.text == "") : Text {
+        x: Spacing.space_3;
+        text: root.placeholder;
+        font_family: Theme.font_family;
+        font_size: Theme.font_size_body;
+        color: Theme.active.text_secondary;
+        vertical_alignment: center;
+    }
+}

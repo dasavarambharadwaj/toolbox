@@ -1,0 +1,26 @@
+import { Theme, Spacing } from "../theme.slint";
+
+export component Card inherits Rectangle {
+    in property <string> title: "";
+    in property <bool> is_active: false;
+
+    background: root.is_active ? Theme.active.surface_hover : Theme.active.surface;
+    border_width: 1px;
+    border_color: root.is_active ? Theme.active.border_focus : Theme.active.border_subtle;
+    border_radius: Spacing.radius_none;
+
+    VerticalLayout {
+        padding: Spacing.space_4;
+        spacing: Spacing.space_2;
+
+        if (root.title != "") : Text {
+            text: root.title;
+            font_family: Theme.font_family;
+            font_size: Theme.font_size_h2;
+            font_weight: 600;
+            color: Theme.active.text_primary;
+        }
+
+        @children
+    }
+}

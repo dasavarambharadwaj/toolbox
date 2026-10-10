@@ -1,0 +1,34 @@
+import { Theme, Spacing } from "../theme.slint";
+
+export component Badge inherits Rectangle {
+    in property <string> text: "READY";
+    in property <string> variant: "default"; // "default", "accent", "subtle"
+
+    border_radius: Spacing.radius_none;
+    border_width: 1px;
+    height: 22px;
+
+    background: root.variant == "accent" ? Theme.active.accent_primary :
+        root.variant == "subtle" ? Theme.active.surface_sunken :
+        Theme.active.surface;
+
+    border_color: root.variant == "accent" ? Theme.active.accent_primary :
+        root.variant == "subtle" ? Theme.active.border_subtle :
+        Theme.active.border_prominent;
+
+    HorizontalLayout {
+        padding_left: Spacing.space_2;
+        padding_right: Spacing.space_2;
+
+        Text {
+            text: root.text;
+            font_family: Theme.font_family;
+            font_size: Theme.font_size_caption;
+            font_weight: 700;
+            color: root.variant == "accent" ? Theme.active.accent_foreground :
+                Theme.active.text_primary;
+            vertical_alignment: center;
+            horizontal_alignment: center;
+        }
+    }
+}

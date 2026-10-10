@@ -3,6 +3,9 @@ name = "tb-ui"
 version.workspace = true
 edition.workspace = true
 
+[build-dependencies]
+slint-build = { workspace = true }
+
 [dependencies]
 tb-core = { workspace = true }
 slint = { workspace = true }

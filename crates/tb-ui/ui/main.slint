@@ -1,0 +1,525 @@
+import { Theme, Spacing, Palette } from "theme.slint";
+import { Button, Card, Input, Badge, Dropzone, Dialog } from "slintcn/mod.slint";
+export { Theme, Spacing, Palette }
+
+export component ComponentHost inherits Window {
+    in property <bool> ready: true;
+    VerticalLayout {
+        Button {}
+        Card {}
+        Input {}
+        Badge {}
+        Dropzone {}
+        Dialog {}
+    }
+}
+
+component NavItem inherits Rectangle {
+    in property <string> label: "";
+    in property <string> icon_tag: "";
+    in property <bool> is_active: false;
+    callback clicked();
+
+    height: 44px;
+    border_radius: Spacing.radius_none;
+    border_width: 1px;
+    border_color: root.is_active ? Theme.active.border_focus :
+        nav_touch.has_hover ? Theme.active.border_prominent : transparent;
+    background: root.is_active ? Theme.active.surface_hover :
+        nav_touch.has_hover ? Theme.active.surface : transparent;
+
+    nav_touch := TouchArea {
+        clicked => { root.clicked(); }
+    }
+
+    HorizontalLayout {
+        padding_left: Spacing.space_3;
+        padding_right: Spacing.space_3;
+        spacing: Spacing.space_2;
+
+        Text {
+            text: root.icon_tag;
+            font_family: Theme.font_family;
+            font_size: Theme.font_size_code;
+            font_weight: 700;
+            color: root.is_active ? Theme.active.accent_primary : Theme.active.text_secondary;
+            vertical_alignment: center;
+        }
+
+        Text {
+            text: root.label;
+            font_family: Theme.font_family;
+            font_size: Theme.font_size_body;
+            font_weight: root.is_active ? 700 : 500;
+            color: root.is_active ? Theme.active.text_primary : Theme.active.text_secondary;
+            vertical_alignment: center;
+        }
+    }
+}
+
+component PresetButton inherits Rectangle {
+    in property <string> label: "";
+    in property <bool> is_selected: false;
+    callback clicked();
+
+    height: 38px;
+    border_radius: Spacing.radius_none;
+    border_width: 1px;
+    border_color: root.is_selected ? Theme.active.accent_primary :
+        preset_touch.has_hover ? Theme.active.border_focus : Theme.active.border_prominent;
+    background: root.is_selected ? Theme.active.accent_primary :
+        preset_touch.has_hover ? Theme.active.surface_hover : Theme.active.surface;
+
+    preset_touch := TouchArea {
+        clicked => { root.clicked(); }
+    }
+
+    Text {
+        text: root.label;
+        font_family: Theme.font_family;
+        font_size: Theme.font_size_body;
+        font_weight: 600;
+        color: root.is_selected ? Theme.active.accent_foreground : Theme.active.text_primary;
+        horizontal_alignment: center;
+        vertical_alignment: center;
+    }
+}
+
+component ThemeChoice inherits Rectangle {
+    in property <string> name: "";
+    in property <int> index: 0;
+    in property <bool> is_active: false;
+    callback selected(int);
+
+    height: 40px;
+    border_radius: Spacing.radius_none;
+    border_width: 1px;
+    border_color: root.is_active ? Theme.active.border_focus :
+        choice_touch.has_hover ? Theme.active.border_prominent : Theme.active.border_subtle;
+    background: root.is_active ? Theme.active.surface_hover :
+        choice_touch.has_hover ? Theme.active.surface : Theme.active.surface_sunken;
+
+    choice_touch := TouchArea {
+        clicked => { root.selected(root.index); }
+    }
+
+    HorizontalLayout {
+        padding_left: Spacing.space_3;
+        padding_right: Spacing.space_3;
+
+        Text {
+            text: root.name;
+            font_family: Theme.font_family;
+            font_size: Theme.font_size_body;
+            font_weight: root.is_active ? 700 : 500;
+            color: root.is_active ? Theme.active.text_primary : Theme.active.text_secondary;
+            vertical_alignment: center;
+        }
+
+        Rectangle { /* spacer */ }
+
+        if (root.is_active) : Text {
+            text: "[ ACTIVE ]";
+            font_family: Theme.font_family;
+            font_size: Theme.font_size_code;
+            font_weight: 700;
+            color: Theme.active.accent_primary;
+            vertical_alignment: center;
+        }
+    }
+}
+
+export component MainWindow inherits Window {
+    title: "Toolbox (tb)";
+    min_width: 800px;
+    min_height: 560px;
+    preferred_width: 960px;
+    preferred_height: 640px;
+    background: Theme.active.canvas;
+
+    in-out property <length> sidebar_width: 200px;
+    in-out property <int> active_category: 0; // 0: Image, 1: PDF, 2: Archive, 3: Developer, 4: Settings
+    in-out property <int> active_preset: 1; // 0: Small, 1: Balanced, 2: Best
+    in-out property <string> cli_command: "tb image compress --preset balanced input.png";
+    in-out property <string> loaded_file: "";
+
+    callback request_close();
+    callback copy_cli();
+    callback execute_action();
+    callback theme_changed(int);
+
+    forward_focus: key_handler;
+
+    key_handler := FocusScope {
+        key_pressed(event) => {
+            if (event.text == Key.Escape) {
+                root.request_close();
+                return accept;
+            }
+            return reject;
+        }
+
+        HorizontalLayout {
+        // Quiet 200px left sidebar
+        sidebar := Rectangle {
+            width: root.sidebar_width;
+            background: Theme.active.surface;
+            border_radius: Spacing.radius_none;
+            border_width: 1px;
+            border_color: Theme.active.border_subtle;
+
+            VerticalLayout {
+                padding: Spacing.space_3;
+                spacing: Spacing.space_2;
+
+                // Brand Header
+                brand := Rectangle {
+                    height: 50px;
+                    border_radius: Spacing.radius_none;
+                    border_width: 1px;
+                    border_color: Theme.active.border_subtle;
+                    background: Theme.active.surface_sunken;
+
+                    HorizontalLayout {
+                        padding_left: Spacing.space_3;
+                        padding_right: Spacing.space_3;
+                        alignment: center;
+
+                        Text {
+                            text: "TB // TOOLBOX";
+                            font_family: Theme.font_family;
+                            font_size: Theme.font_size_h2;
+                            font_weight: 700;
+                            color: Theme.active.accent_primary;
+                            vertical_alignment: center;
+                        }
+                    }
+                }
+
+                Rectangle { height: Spacing.space_2; }
+
+                // 5 Primary Navigation Categories
+                NavItem {
+                    label: "Image";
+                    icon_tag: "[IMG]";
+                    is_active: root.active_category == 0;
+                    clicked => {
+                        root.loaded_file = "";
+                        root.active_category = 0;
+                        root.update_cli_dock();
+                    }
+                }
+
+                NavItem {
+                    label: "PDF";
+                    icon_tag: "[PDF]";
+                    is_active: root.active_category == 1;
+                    clicked => {
+                        root.loaded_file = "";
+                        root.active_category = 1;
+                        root.update_cli_dock();
+                    }
+                }
+
+                NavItem {
+                    label: "Archive";
+                    icon_tag: "[ARC]";
+                    is_active: root.active_category == 2;
+                    clicked => {
+                        root.loaded_file = "";
+                        root.active_category = 2;
+                        root.update_cli_dock();
+                    }
+                }
+
+                NavItem {
+                    label: "Developer";
+                    icon_tag: "[DEV]";
+                    is_active: root.active_category == 3;
+                    clicked => {
+                        root.loaded_file = "";
+                        root.active_category = 3;
+                        root.update_cli_dock();
+                    }
+                }
+
+                NavItem {
+                    label: "Settings";
+                    icon_tag: "[CFG]";
+                    is_active: root.active_category == 4;
+                    clicked => {
+                        root.loaded_file = "";
+                        root.active_category = 4;
+                        root.update_cli_dock();
+                    }
+                }
+
+                Rectangle { /* Spacer pushing bottom info down */ }
+
+                // Bottom Sidebar Status
+                sidebar_footer := Rectangle {
+                    height: 32px;
+                    border_radius: Spacing.radius_none;
+                    background: Theme.active.surface_sunken;
+                    border_width: 1px;
+                    border_color: Theme.active.border_subtle;
+
+                    HorizontalLayout {
+                        padding_left: Spacing.space_2;
+                        padding_right: Spacing.space_2;
+                        alignment: center;
+
+                        Text {
+                            text: "OFFLINE // AIR-GAPPED";
+                            font_family: Theme.font_family;
+                            font_size: Theme.font_size_caption;
+                            font_weight: 600;
+                            color: Theme.active.text_secondary;
+                            vertical_alignment: center;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Right Area: Workbench Canvas + Persistent Live CLI Dock
+        workbench := Rectangle {
+            background: Theme.active.canvas;
+            border_radius: Spacing.radius_none;
+
+            VerticalLayout {
+                // Top Main Tool Canvas
+                canvas_area := Rectangle {
+                    background: Theme.active.canvas;
+                    border_radius: Spacing.radius_none;
+
+                    VerticalLayout {
+                        padding: Spacing.space_6;
+                        spacing: Spacing.space_4;
+
+                        // Tool Header Title
+                        HorizontalLayout {
+                            spacing: Spacing.space_3;
+
+                            Text {
+                                text: root.active_category == 0 ? "IMAGE OPTIMIZATION" :
+                                    root.active_category == 1 ? "PDF TOOLKIT" :
+                                    root.active_category == 2 ? "ARCHIVE PACKER" :
+                                    root.active_category == 3 ? "DEVELOPER UTILITIES" :
+                                    "THEME & SETTINGS";
+                                font_family: Theme.font_family;
+                                font_size: Theme.font_size_h1;
+                                font_weight: 700;
+                                color: Theme.active.text_primary;
+                            }
+
+                            Rectangle { /* spacer */ }
+
+                            Badge {
+                                text: root.active_category == 4 ? "SYSTEM" : "READY";
+                                variant: "accent";
+                            }
+                        }
+
+                        // Tool Views: 1-Second Flow (Image, PDF, Archive, Dev)
+                        if (root.active_category != 4) : VerticalLayout {
+                            spacing: Spacing.space_4;
+
+                            // 1. Dropzone
+                            Dropzone {
+                                prompt: root.active_category == 0 ? "DROP IMAGE FILE HERE OR CLICK TO BROWSE" :
+                                    root.active_category == 1 ? "DROP PDF FILE HERE OR CLICK TO BROWSE" :
+                                    root.active_category == 2 ? "DROP ARCHIVE OR DIRECTORY HERE" :
+                                    "DROP CODE / JSON FILE HERE";
+                                subtitle: root.active_category == 0 ? "Supports PNG, JPEG, WebP, AVIF" :
+                                    root.active_category == 1 ? "Supports single or multiple PDF documents" :
+                                    root.active_category == 2 ? "Supports TAR, ZIP, 7Z, GZ" :
+                                    "Supports JSON, YAML, TOML, Base64";
+                                file_name: root.loaded_file;
+                                clicked => {
+                                    root.loaded_file = root.active_category == 0 ? "sample_photo.png" :
+                                        root.active_category == 1 ? "document.pdf" :
+                                        root.active_category == 2 ? "project_bundle" :
+                                        "payload.json";
+                                    root.update_cli_dock();
+                                }
+                            }
+
+                            // 2. Preset Selection Row (3 presets: Small, Balanced, Best)
+                            Card {
+                                title: "SELECT OPTIMIZATION PRESET";
+
+                                HorizontalLayout {
+                                    spacing: Spacing.space_3;
+
+                                    PresetButton {
+                                        label: "[ SMALL ] - Maximum Compression";
+                                        is_selected: root.active_preset == 0;
+                                        clicked => {
+                                            root.active_preset = 0;
+                                            root.update_cli_dock();
+                                        }
+                                    }
+
+                                    PresetButton {
+                                        label: "[ BALANCED ] - Recommended";
+                                        is_selected: root.active_preset == 1;
+                                        clicked => {
+                                            root.active_preset = 1;
+                                            root.update_cli_dock();
+                                        }
+                                    }
+
+                                    PresetButton {
+                                        label: "[ BEST ] - Maximum Quality";
+                                        is_selected: root.active_preset == 2;
+                                        clicked => {
+                                            root.active_preset = 2;
+                                            root.update_cli_dock();
+                                        }
+                                    }
+                                }
+                            }
+
+                            // 3. Primary Action Button
+                            HorizontalLayout {
+                                Button {
+                                    text: root.active_category == 0 ? "[ EXECUTE IMAGE COMPRESSION ]" :
+                                        root.active_category == 1 ? "[ PROCESS PDF DOCUMENT ]" :
+                                        root.active_category == 2 ? "[ BUILD ARCHIVE ]" :
+                                        "[ FORMAT / TRANSFORM ]";
+                                    variant: "primary";
+                                    clicked => { root.execute_action(); }
+                                }
+
+                                Rectangle { /* spacer */ }
+
+                                Button {
+                                    text: "[ CLEAR ]";
+                                    variant: "secondary";
+                                    clicked => {
+                                        root.loaded_file = "";
+                                        root.update_cli_dock();
+                                    }
+                                }
+                            }
+
+                            Rectangle { /* vertical filler */ }
+                        }
+
+                        // Settings View: Theme Engine Switcher
+                        if (root.active_category == 4) : VerticalLayout {
+                            spacing: Spacing.space_3;
+
+                            Card {
+                                title: "OMARCHY BRUTALIST THEME PALETTES";
+
+                                VerticalLayout {
+                                    spacing: Spacing.space_2;
+
+                                    HorizontalLayout {
+                                        spacing: Spacing.space_2;
+                                        ThemeChoice { name: "1. Industrial Graphite"; index: 0; is_active: Theme.theme_index == 0; selected(i) => { root.apply_theme(i); } }
+                                        ThemeChoice { name: "2. Vantablack / Matte"; index: 1; is_active: Theme.theme_index == 1; selected(i) => { root.apply_theme(i); } }
+                                    }
+                                    HorizontalLayout {
+                                        spacing: Spacing.space_2;
+                                        ThemeChoice { name: "3. Tokyo Night"; index: 2; is_active: Theme.theme_index == 2; selected(i) => { root.apply_theme(i); } }
+                                        ThemeChoice { name: "4. Nord"; index: 3; is_active: Theme.theme_index == 3; selected(i) => { root.apply_theme(i); } }
+                                    }
+                                    HorizontalLayout {
+                                        spacing: Spacing.space_2;
+                                        ThemeChoice { name: "5. Gruvbox Dark"; index: 4; is_active: Theme.theme_index == 4; selected(i) => { root.apply_theme(i); } }
+                                        ThemeChoice { name: "6. Hackerman"; index: 5; is_active: Theme.theme_index == 5; selected(i) => { root.apply_theme(i); } }
+                                    }
+                                    HorizontalLayout {
+                                        spacing: Spacing.space_2;
+                                        ThemeChoice { name: "7. Kanagawa"; index: 6; is_active: Theme.theme_index == 6; selected(i) => { root.apply_theme(i); } }
+                                        ThemeChoice { name: "8. Catppuccin Mocha"; index: 7; is_active: Theme.theme_index == 7; selected(i) => { root.apply_theme(i); } }
+                                    }
+                                    HorizontalLayout {
+                                        spacing: Spacing.space_2;
+                                        ThemeChoice { name: "9. Rose Pine"; index: 8; is_active: Theme.theme_index == 8; selected(i) => { root.apply_theme(i); } }
+                                        ThemeChoice { name: "10. Everforest"; index: 9; is_active: Theme.theme_index == 9; selected(i) => { root.apply_theme(i); } }
+                                    }
+                                }
+                            }
+
+                            Rectangle { /* filler */ }
+                        }
+                    }
+                }
+
+                // Persistent Live CLI Dock at bottom
+                cli_dock := Rectangle {
+                    height: 56px;
+                    background: Theme.active.surface_sunken;
+                    border_radius: Spacing.radius_none;
+                    border_width: 1px;
+                    border_color: Theme.active.border_subtle;
+
+                    HorizontalLayout {
+                        padding_left: Spacing.space_4;
+                        padding_right: Spacing.space_4;
+                        spacing: Spacing.space_3;
+
+                        Text {
+                            text: "CLI DOCK :>";
+                            font_family: Theme.font_family;
+                            font_size: Theme.font_size_code;
+                            font_weight: 700;
+                            color: Theme.active.accent_primary;
+                            vertical_alignment: center;
+                        }
+
+                        Text {
+                            text: root.cli_command;
+                            font_family: Theme.font_family;
+                            font_size: Theme.font_size_code;
+                            color: Theme.active.text_primary;
+                            vertical_alignment: center;
+                            overflow: elide;
+                        }
+
+                        Rectangle { /* spacer */ }
+
+                        Button {
+                            text: "[ COPY CLI ]";
+                            variant: "outline";
+                            clicked => { root.copy_cli(); }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    }
+
+    public function apply_theme(idx: int) {
+        Theme.set_theme(idx);
+        root.theme_changed(idx);
+        root.update_cli_dock();
+    }
+
+    public function update_cli_dock() {
+        let preset_name = root.active_preset == 0 ? "small" :
+            root.active_preset == 1 ? "balanced" : "best";
+        let target_file = root.loaded_file != "" ? root.loaded_file :
+            root.active_category == 0 ? "input.png" :
+            root.active_category == 1 ? "document.pdf" :
+            root.active_category == 2 ? "archive.tar.gz" :
+            "file.json";
+
+        if (root.active_category == 0) {
+            root.cli_command = "tb image compress --preset " + preset_name + " " + target_file;
+        } else if (root.active_category == 1) {
+            root.cli_command = "tb pdf compress --preset " + preset_name + " " + target_file;
+        } else if (root.active_category == 2) {
+            root.cli_command = "tb archive pack --preset " + preset_name + " " + target_file;
+        } else if (root.active_category == 3) {
+            root.cli_command = "tb dev format --preset " + preset_name + " " + target_file;
+        } else {
+            root.cli_command = "tb config --theme " + Theme.theme_index;
+        }
+    }
+}

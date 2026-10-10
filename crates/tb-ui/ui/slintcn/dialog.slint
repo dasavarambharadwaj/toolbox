@@ -1,0 +1,79 @@
+import { Theme, Spacing } from "../theme.slint";
+
+export component Dialog inherits Rectangle {
+    in property <string> title: "DIALOG";
+    in property <bool> is_open: false;
+    callback close();
+
+    visible: root.is_open;
+    background: Theme.active.canvas.with_alpha(0.7);
+
+    // Backdrop click dismissal
+    TouchArea {
+        clicked => { root.close(); }
+    }
+
+    dialog_box := Rectangle {
+        width: 480px;
+        TouchArea {}
+        background: Theme.active.surface;
+        border_radius: Spacing.radius_none;
+        border_width: 1px;
+        border_color: Theme.active.border_focus;
+
+        VerticalLayout {
+            // Header bar
+            header := Rectangle {
+                height: 40px;
+                background: Theme.active.surface_sunken;
+                border_radius: Spacing.radius_none;
+                border_width: 1px;
+                border_color: Theme.active.border_subtle;
+
+                HorizontalLayout {
+                    padding_left: Spacing.space_4;
+                    padding_right: Spacing.space_2;
+
+                    Text {
+                        text: root.title;
+                        font_family: Theme.font_family;
+                        font_size: Theme.font_size_body;
+                        font_weight: 700;
+                        color: Theme.active.text_primary;
+                        vertical_alignment: center;
+                    }
+
+                    Rectangle { /* spacer */ }
+
+                    close_btn := Rectangle {
+                        width: 32px;
+                        height: 32px;
+                        border_radius: Spacing.radius_none;
+                        background: close_touch.has_hover ? Theme.active.surface_hover : transparent;
+
+                        close_touch := TouchArea {
+                            clicked => { root.close(); }
+                        }
+
+                        Text {
+                            text: "[X]";
+                            font_family: Theme.font_family;
+                            font_size: Theme.font_size_code;
+                            font_weight: 700;
+                            color: Theme.active.text_primary;
+                            horizontal_alignment: center;
+                            vertical_alignment: center;
+                        }
+                    }
+                }
+            }
+
+            // Body
+            VerticalLayout {
+                padding: Spacing.space_4;
+                spacing: Spacing.space_3;
+                @children
+            }
+        }
+    }
+}

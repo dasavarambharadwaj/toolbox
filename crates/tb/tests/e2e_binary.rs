@@ -164,9 +164,9 @@ fn test_e2e_tb_version() {
 #[test]
 #[cfg(feature = "gui")]
 fn test_e2e_tb_active_display_launches_gui() {
-    // When display server is present and invoked with zero args, GUI launches (exits 0 with stub tb-ui)
     let output = Command::new(env!("CARGO_BIN_EXE_tb"))
         .env("DISPLAY", ":0")
+        .env("TB_TEST_AUTO_CLOSE", "1")
         .output()
         .expect("Failed to execute tb with active display");
 
@@ -183,6 +183,7 @@ fn test_e2e_tb_gui_subcommand_with_display() {
     let output = Command::new(env!("CARGO_BIN_EXE_tb"))
         .arg("gui")
         .env("WAYLAND_DISPLAY", "wayland-0")
+        .env("TB_TEST_AUTO_CLOSE", "1")
         .output()
         .expect("Failed to execute tb gui with active wayland display");
 
@@ -246,6 +247,7 @@ fn test_e2e_tb_symlink_gui_active_display() {
 
     let output = Command::new(&symlink_path)
         .env("DISPLAY", ":0")
+        .env("TB_TEST_AUTO_CLOSE", "1")
         .output()
         .expect("Failed to execute tb-gui symlink with active display");
 

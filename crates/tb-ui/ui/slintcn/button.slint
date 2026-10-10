@@ -1,0 +1,41 @@
+import { Theme, Spacing } from "../theme.slint";
+
+export component Button inherits Rectangle {
+    in property <string> text: "ACTION";
+    in property <string> variant: "primary"; // "primary", "secondary", "outline"
+    in property <bool> enabled: true;
+    callback clicked();
+
+    min_height: 36px;
+    min_width: 80px;
+    border_radius: Spacing.radius_none;
+    border_width: 1px;
+
+    background: !root.enabled ? Theme.active.surface_sunken :
+        root.variant == "primary" ? (touch.has_hover ? Theme.active.accent_primary.darker(10%) : Theme.active.accent_primary) :
+        root.variant == "secondary" ? (touch.has_hover ? Theme.active.surface_hover : Theme.active.surface) :
+        (touch.has_hover ? Theme.active.surface_hover : transparent);
+
+    border_color: !root.enabled ? Theme.active.border_subtle :
+        root.variant == "primary" ? Theme.active.accent_primary :
+        touch.has_hover ? Theme.active.border_focus :
+        root.variant == "secondary" ? Theme.active.border_prominent :
+        Theme.active.border_subtle;
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        clicked => { root.clicked(); }
+    }
+
+    Text {
+        text: root.text;
+        font_family: Theme.font_family;
+        font_size: Theme.font_size_body;
+        font_weight: 600;
+        color: !root.enabled ? Theme.active.text_secondary :
+            root.variant == "primary" ? Theme.active.accent_foreground :
+            Theme.active.text_primary;
+        horizontal_alignment: center;
+        vertical_alignment: center;
+    }
+}

@@ -1,0 +1,50 @@
+import { Theme, Spacing } from "../theme.slint";
+
+export component Dropzone inherits Rectangle {
+    in property <string> prompt: "DROP FILE HERE OR CLICK TO BROWSE";
+    in property <string> subtitle: "Supports PNG, JPEG, WEBP, PDF, TAR, ZIP";
+    in property <string> file_name: "";
+    callback clicked();
+
+    min_height: 140px;
+    border_radius: Spacing.radius_none;
+    border_width: 1px;
+    border_color: touch.has_hover ? Theme.active.border_focus : Theme.active.border_prominent;
+    background: touch.has_hover ? Theme.active.surface_hover : Theme.active.surface;
+
+    touch := TouchArea {
+        clicked => { root.clicked(); }
+    }
+
+    VerticalLayout {
+        alignment: center;
+        spacing: Spacing.space_2;
+        padding: Spacing.space_4;
+
+        if (root.file_name != "") : Text {
+            text: "[ FILE LOADED ]";
+            font_family: Theme.font_family;
+            font_size: Theme.font_size_caption;
+            font_weight: 700;
+            color: Theme.active.accent_primary;
+            horizontal_alignment: center;
+        }
+
+        Text {
+            text: root.file_name != "" ? root.file_name : root.prompt;
+            font_family: Theme.font_family;
+            font_size: Theme.font_size_body;
+            font_weight: 700;
+            color: Theme.active.text_primary;
+            horizontal_alignment: center;
+        }
+
+        if (root.file_name == "") : Text {
+            text: root.subtitle;
+            font_family: Theme.font_family;
+            font_size: Theme.font_size_caption;
+            color: Theme.active.text_secondary;
+            horizontal_alignment: center;
+        }
+    }
+}

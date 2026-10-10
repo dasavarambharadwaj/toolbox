@@ -1,0 +1,209 @@
+export struct Palette {
+    canvas: color,
+    surface: color,
+    surface_hover: color,
+    surface_sunken: color,
+    border_subtle: color,
+    border_prominent: color,
+    border_focus: color,
+    text_primary: color,
+    text_secondary: color,
+    accent_primary: color,
+    accent_foreground: color,
+}
+
+export global Spacing {
+    in property <length> radius: 0px;
+    in property <length> radius_none: 0px;
+
+    in property <length> space_1: 4px;
+    in property <length> space_2: 8px;
+    in property <length> space_3: 12px;
+    in property <length> space_4: 16px;
+    in property <length> space_6: 24px;
+    in property <length> space_8: 32px;
+    in property <length> space_12: 48px;
+}
+
+export global Theme {
+    in-out property <int> theme_index: 0;
+
+    in-out property <Palette> active: {
+        canvas: #141618,
+        surface: #1E2124,
+        surface_hover: #262A2E,
+        surface_sunken: #0E1012,
+        border_subtle: #282C32,
+        border_prominent: #32383E,
+        border_focus: #FFFFFF,
+        text_primary: #E2E8F0,
+        text_secondary: #94A3B8,
+        accent_primary: #FFFFFF,
+        accent_foreground: #141618,
+    };
+
+    in property <string> font_family: "ui-monospace, \"JetBrains Mono\", \"Fira Code\", \"Courier New\", monospace";
+    in property <length> font_size_h1: 18px;
+    in property <length> font_size_h2: 14px;
+    in property <length> font_size_body: 13px;
+    in property <length> font_size_code: 12px;
+    in property <length> font_size_caption: 11px;
+
+    public pure function palette_for_index(idx: int) -> Palette {
+        if idx == 1 {
+            return {
+                canvas: #000000,
+                surface: #0D0D0D,
+                surface_hover: #1A1A1A,
+                surface_sunken: #050505,
+                border_subtle: #1F1F1F,
+                border_prominent: #262626,
+                border_focus: #FFFFFF,
+                text_primary: #FAFAFA,
+                text_secondary: #888888,
+                accent_primary: #FFFFFF,
+                accent_foreground: #000000,
+            };
+        }
+        if idx == 2 {
+            return {
+                canvas: #1A1B26,
+                surface: #24283B,
+                surface_hover: #2F354F,
+                surface_sunken: #16161E,
+                border_subtle: #343B58,
+                border_prominent: #414868,
+                border_focus: #7AA2F7,
+                text_primary: #C0CAF5,
+                text_secondary: #7982A9,
+                accent_primary: #7AA2F7,
+                accent_foreground: #1A1B26,
+            };
+        }
+        if idx == 3 {
+            return {
+                canvas: #2E3440,
+                surface: #3B4252,
+                surface_hover: #434C5E,
+                surface_sunken: #242933,
+                border_subtle: #434C5E,
+                border_prominent: #4C566A,
+                border_focus: #88C0D0,
+                text_primary: #ECEFF4,
+                text_secondary: #D8DEE9,
+                accent_primary: #88C0D0,
+                accent_foreground: #2E3440,
+            };
+        }
+        if idx == 4 {
+            return {
+                canvas: #1D2021,
+                surface: #282828,
+                surface_hover: #32302F,
+                surface_sunken: #141617,
+                border_subtle: #3C3836,
+                border_prominent: #504945,
+                border_focus: #FE8019,
+                text_primary: #EBDBB2,
+                text_secondary: #A89984,
+                accent_primary: #FE8019,
+                accent_foreground: #1D2021,
+            };
+        }
+        if idx == 5 {
+            return {
+                canvas: #080C08,
+                surface: #0E160E,
+                surface_hover: #142214,
+                surface_sunken: #040604,
+                border_subtle: #1A2B1A,
+                border_prominent: #233B23,
+                border_focus: #00FF66,
+                text_primary: #00FF66,
+                text_secondary: #00AA44,
+                accent_primary: #33FF77,
+                accent_foreground: #080C08,
+            };
+        }
+        if idx == 6 {
+            return {
+                canvas: #1F1F28,
+                surface: #2A2A37,
+                surface_hover: #363646,
+                surface_sunken: #16161D,
+                border_subtle: #363646,
+                border_prominent: #54546D,
+                border_focus: #7E9CD8,
+                text_primary: #DCD7BA,
+                text_secondary: #938AA9,
+                accent_primary: #7E9CD8,
+                accent_foreground: #1F1F28,
+            };
+        }
+        if idx == 7 {
+            return {
+                canvas: #1E1E2E,
+                surface: #181825,
+                surface_hover: #313244,
+                surface_sunken: #11111B,
+                border_subtle: #313244,
+                border_prominent: #45475A,
+                border_focus: #CBA6F7,
+                text_primary: #CDD6F4,
+                text_secondary: #A6ADC8,
+                accent_primary: #CBA6F7,
+                accent_foreground: #1E1E2E,
+            };
+        }
+        if idx == 8 {
+            return {
+                canvas: #191724,
+                surface: #1F1D2E,
+                surface_hover: #26233A,
+                surface_sunken: #14121F,
+                border_subtle: #26233A,
+                border_prominent: #403D52,
+                border_focus: #EBBCBA,
+                text_primary: #E0DEF4,
+                text_secondary: #908CAA,
+                accent_primary: #EBBCBA,
+                accent_foreground: #191724,
+            };
+        }
+        if idx == 9 {
+            return {
+                canvas: #272E33,
+                surface: #2D353B,
+                surface_hover: #343F44,
+                surface_sunken: #1E2326,
+                border_subtle: #3D484D,
+                border_prominent: #414B50,
+                border_focus: #A7C080,
+                text_primary: #D3C6AA,
+                text_secondary: #859289,
+                accent_primary: #A7C080,
+                accent_foreground: #272E33,
+            };
+        }
+        // Default: 0 (Industrial Graphite)
+        return {
+            canvas: #141618,
+            surface: #1E2124,
+            surface_hover: #262A2E,
+            surface_sunken: #0E1012,
+            border_subtle: #282C32,
+            border_prominent: #32383E,
+            border_focus: #FFFFFF,
+            text_primary: #E2E8F0,
+            text_secondary: #94A3B8,
+            accent_primary: #FFFFFF,
+            accent_foreground: #141618,
+        };
+    }
+
+    public function set_theme(idx: int) {
+        let valid_idx = (idx < 0 || idx > 9) ? 0 : idx;
+        self.theme_index = valid_idx;
+        self.active = self.palette_for_index(valid_idx);
+    }
+}
